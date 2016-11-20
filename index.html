@@ -1,0 +1,2310 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <title>Tutorial 1: Getting Started</title>
+    <script src="cytoscape.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.2.5/cytoscape-qtip.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script src="http://arkdao.com/blockies-master/blockies.js"></script>
+<script src="twitter-fetcher.js"></script>
+<script type="text/javascript" src="deploymentpan.js"></script>
+<script type="text/javascript" src="http://arkdao.com/web3.js"></script>
+
+<script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-spread/1.0.9/cytoscape-spread.js"></script>
+
+<script src="jquery.cookie.js"></script>
+</head>
+
+<style>
+.settingsminitab{
+float: left;
+padding: 10px;
+margin: 5px;
+background: #eeeeee;
+border-radius: 3px;
+}
+.walleticon40 {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+.walleticon30 {
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+.walleticon20 {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+.walleticon16 {
+    width: 16px;
+    height: 16px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+
+.removepartnershipminidisplay{cursor: pointer;}
+    #cy {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    #sidebar-right{
+    width: 250px;
+    border-left: solid 1px #ddd;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background: #f9f9f9;
+    position: absolute;
+    }
+
+    #sidebar-left{
+    width: 250px;
+    border-right: solid 1px #ddd;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: #f9f9f9;
+    position: absolute;
+    }
+#coinName{
+    margin: 20px;
+    }
+.qtipbutton{
+    cursor: pointer;
+ float: left;
+ margin-right: 10px;
+    }
+.qtipbuttonlast{
+    cursor: pointer;
+ float: left;
+    }
+.qtipicon{
+   width: 24px; height: 24px;
+    }
+.tab{height: calc(100% - 5);}
+.tablabel{margin: 10px 10px 10px 20px; font-family: arial;}
+.spacer{height: 0px;   clear: both;}
+
+body{margin: 0px;}
+
+h2 {
+  clear:both;
+}
+
+.user img{width: 33px;}
+
+p, a {
+  font-size:9pt;
+  margin:0px 0 0 0;
+  color:#3d3d3d;
+}
+
+a, a:visited {
+  color:gray;
+}
+
+a:hover {
+  color:#82afff;
+}
+
+ul li {
+  list-style:none;
+  overflow:hidden;
+  border:1px solid #dedede;
+  margin:5px;
+  padding:5px;
+}
+
+ul li:hover {
+  background-color:#f0f3fb;
+}
+
+ul li {
+  background-color:white;
+font-family: arial;
+}
+
+.user,  .timePosted {
+ 
+}
+
+ .tweet,{
+  float:left;
+}
+
+.user {
+ 
+}
+
+.tweet {
+ // width:50%;
+}
+
+.timePosted {
+display: none;
+}
+
+.user {
+  clear:left;
+}
+
+.user a {
+ width: 100px;
+}
+
+.user span span {
+  width:100px;
+  display:block;
+  margin-top:10px;
+}
+
+.user img, .user a > span {
+  float:left;
+margin-right: 5px;
+margin-bottom: 5px;
+}
+
+.interact {
+ 
+ margin-top: 10px;
+
+}
+
+.interact a {
+  margin-right:10px;
+  float:left;
+}
+
+.user a > span {
+
+}
+
+.media img {
+  max-width:250px;
+  max-height:250px;
+}
+ul{padding: 0px; margin-top: 5px;}
+
+#linkage {
+  position:fixed;
+  top:0px;
+  right:0px;
+  background-color:#3d3d3d;
+  color:#ffffff;
+  text-decoration:none;
+  padding:5px;
+  width:10%;
+  font-family:arial;
+}
+
+.check{margin-left: 20px; font-family: arial; margin-top: 10px; margin-bottom: 10px;}
+
+.offer{width: 100%; background: white;}
+
+.suboffer{float: left; background: white; font-size: 10px; font-family: arial; margin: 3px 0px 3px 0px; width: 56px; padding-left: 3px;}
+</style>
+
+<body>
+
+
+
+
+ <script>
+var layers = {"hyperLayer" : {},"socialLayer" : {}};
+var hyperLayer = {};
+var hyperIndex = [];
+var socialLayer = {};
+
+var singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
+var social=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+//hyperLayer["k1"] = "abc";
+//alert(hyperLayer["k2"]);
+
+
+var totCoins=0;
+var partnershipsRequests = [];
+var partnerships = [];
+var ownedCoins=1;
+var ownedCoinsList=[];
+
+var singlePartnership=[];
+var display=1;
+var lastnode=0;
+var lastTap="";
+var lastColor="#000";
+var selectedId="";
+var selectedEdgeId="";
+var selectedWallet="";
+function fetchTheySay(id){
+var config = {
+  "id": '347099293930377217',
+  "domId": 'theysay',
+  "maxTweets": 3,
+  "enableLinks": true, 
+  "showUser": true,
+  "showTime": true,
+  "lang": 'en'
+};
+twitterFetcher.fetch(config);
+}
+
+function fetchHashtag(id){
+var config = {
+  "id": '787738518030323712',
+  "domId": 'theysay',
+  "maxTweets": 5,
+  "enableLinks": true,
+  "showImages": true
+};
+twitterFetcher.fetch(config);
+}
+
+function showcontrolpanel(){
+$(".tabright").hide();
+$("#controlpanel").show();
+
+}
+
+function storeToCookie(){
+var myAry = [1, 2, 3];
+$.cookie('name', JSON.stringify(myAry));
+//alert($.cookie('name'));
+}
+
+function createIcon(divid,addr){
+
+
+        var icona = 'url(' + blockies.create({ seed:addr ,size: 8,scale: 16}).toDataURL()+')';
+        
+        $(divid).css('background-image' , icona);
+}
+	
+
+function saveSettings(){
+//0 partnerships
+//1 part requests
+//2 wallets
+var myAry = [1, 2, 3];
+$.cookie('name', JSON.stringify(myAry));
+alert($.cookie('name'));
+}
+
+function saveStats(){
+//0 totcoins
+//1 hypercap
+//2 wallets
+//3 markets
+//4 ico
+//5 partnerships requests
+var myAry = [1, 2, 3];
+$.cookie('name', JSON.stringify(myAry));
+alert($.cookie('name'));
+}
+
+function addFavorite(tempa){
+temp=[];
+if(!checkCookie("favorite")){temp=[];}else{temp=JSON.parse($.cookie('favorite'));}
+if(temp.indexOf(tempa)<0)temp.push(tempa);
+$.cookie('favorite', JSON.stringify(temp));
+}
+
+function showfavorites(){
+cy.elements().remove();
+appendFavorite();
+}
+
+function appendFavorite(){
+temp=JSON.parse($.cookie('favorite'));
+socialLayer=$.cookie('socialLayer');
+if(socialLayer=={})socialLayer={};
+for(var i=0;i<temp.length;i++){
+cy.add([
+        {group: "nodes", data: {id: temp[i] }}    
+    ]);
+
+social=["http://flood.monkeyscage.org/coin.png"];
+if(socialLayer[temp[i]]!=undefined)social=socialLayer[temp[i]];
+cy.$("#"+temp[i]).css('background-image' , 'url('+social[0]+')');
+loadBackground(temp[i]);
+}
+cy.layout({
+    name: 'circle'
+});
+}
+
+function cleanfavorites(){
+$.cookie('favorite', JSON.stringify([]));
+}
+
+function claim(a){
+$(".tabright").hide();
+$("#claimpanel").show();
+}
+
+function showmycoins(){
+cy.elements().remove();
+addMyCoins();
+}
+
+function addMyCoins(){
+temp=$.cookie('myCoinsList');
+for(var i=0;i<temp.length;i++){
+cy.add([
+        {group: "nodes", data: {id: temp[i] }}    
+    ]);
+loadBackground(temp[i]);
+}
+cy.layout({
+    name: 'circle'
+});
+}
+
+function addCoin(addr){
+cy.add([
+        {group: "nodes", data: {id: addr }}    
+    ]);
+loadBackground(addr);
+}
+
+function localLength(){
+return Object.keys($.cookie('hyperLayer')).length;
+}
+
+
+
+function showLocals(){
+cy.elements().remove();
+addLocals();
+}
+
+function addLocals(){
+//alert(localLength());
+for(var i=0;i<localLength();i++){
+//alert(hyper(i,1));
+cy.add([
+        {group: "nodes", data: {id: hyper(i,0) }}    
+    ]);
+loadBackground(hyper(i,0));
+}
+addLocalRequests();
+addLocalPartnerships();
+
+
+cy.layout({
+    name: 'circle'
+});
+}
+
+function addLocalRequests(){
+
+localRequests=$.cookie('localRequests');
+for(var i=0;i<localRequests.length;i++){
+//alert(hyper(i,1));
+cy.add([
+        { group: "edges", data: { id: localRequests[i], source: localRequests[i].substring(0, localRequests[i].indexOf("-")), target: localRequests[i].substring( localRequests[i].indexOf("-")+1)}}    
+    ]);
+cy.$('#'+localRequests[i]).css({
+        'width': 6,
+        'line-color': '#90C3D4',
+        'target-arrow-shape': 'triangle',
+        'target-arrow-color': '#90C3D4',
+        'curve-style': 'bezier'
+      });
+}
+}
+
+
+function addLocalPartnerships(){
+localPartnerships=$.cookie('localPartnerships');
+for(var i=0;i<localPartnerships.length;i++){
+//alert(hyper(i,1));
+cy.add([
+        { group: "edges", data: { id: localPartnerships[i], source: localPartnerships[i].substring(0, localPartnerships[i].indexOf("-")), target: localPartnerships[i].substring( localPartnerships[i].indexOf("-")+1)}}    
+    ]);
+cy.$('#'+localPartnerships[i]).css({
+                'width': 6,
+        'line-color': '#62CC50',
+        'curve-style': 'bezier'
+      });
+}
+
+}
+function loadAll(){
+//cy.elements().remove();
+//cy.layout();
+}
+</script>
+          
+
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+ 
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+ 
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
+
+
+
+
+   <div id="cy"></div>
+
+    <script>
+
+      var cy = cytoscape({
+        container: document.getElementById('cy'),
+boxSelectionEnabled: false,
+  autounselectify: true,
+layout: {
+						name: 'spread',
+						minDist: 40
+					},
+        elements: [
+          { data: { id: 'a' } },
+          { data: { id: 'b' } },
+          { data: { id: 'c' } },
+          { data: { id: 'd' } },
+          {
+            data: {
+              id: 'ab',
+              source: 'a',
+              target: 'b'
+            }
+          },
+{
+            data: {
+              id: 'ac',
+              source: 'a',
+              target: 'c'
+            }
+          },
+{
+            data: {
+              id: 'bc',
+              source: 'b',
+              target: 'c'
+            }
+          },
+{
+            data: {
+              id: 'dc',
+              source: 'd',
+              target: 'c'
+            }
+          }],
+        style:cytoscape.stylesheet()
+    .selector('node')
+      .css({
+        'height': 80,
+        'width': 80,
+        'background-fit': 'cover',
+        'border-color': '#000',
+        'border-width': 3,
+        'border-opacity': 0.5,
+        'cursor': 'pointer'
+      })
+ 
+    .selector('#ab,#ac,#bc,#dc')
+      .css({
+        'width': 6,
+        'target-arrow-shape': 'triangle',
+        'line-color': '#90C3D4',
+        'target-arrow-color': '#90C3D4',
+        'curve-style': 'bezier'
+      })
+    .selector('#a')
+      .css({
+        'background-image': 'arkdao.jpg'
+      })
+.selector('#b')
+      .css({
+        'background-image': 'medusa.jpg'
+      }) 
+.selector('#c')
+      .css({
+        'background-image': 'dioscuri.jpg'
+      }) 
+.selector('#d')
+      .css({
+        'background-image': 'owl.gif'
+      }) 
+ 
+      });
+cy.on('click', 'node', function(event) {
+    var node = event.cyTarget;
+ cy.$(".qtip").hide();
+    node.qtip({
+         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div>',
+position: {
+    my: 'bottom center',
+    at: 'top center'
+  },
+  style: {
+    classes: 'qtip-bootstrap',
+    tip: {
+      width: 26,
+      height: 8
+    }
+  },
+         show: {
+            event: event.type,
+            ready: true
+         },
+         hide: {
+           // event: 'mouseout unfocus'
+         },events: {
+            render: function(event, api) {
+                // Capture click events
+
+                $('#qtipbutton1', this).bind('click', function(event) {
+                $(".tableft").hide();
+
+                
+                    event.preventDefault();
+                    $("#hometableft").show();
+                });
+                $('#qtipbutton2', this).bind('click', function(event) {
+                  $(".tableft").hide(); $(".tabright").hide();
+                    event.preventDefault();
+                    $("#markettabbid").show();
+                    $("#markettabask").show();
+                });
+                $('#qtipbutton3', this).bind('click', function(event) {
+
+                $(".tab").hide();
+                $("#timeline").html("");
+                    twttr.widgets.createTimeline({
+                       sourceType: "profile",
+                       screenName: "twitterdev"
+                    },
+                    document.getElementById('timeline'),
+                    {
+                    width: '250',
+                    height: $("#sidebar-right").height()-4,
+                    related: 'twitterdev,twitterapi'
+                    }).then(function (el) {
+                    console.log("Embedded a timeline.")
+                    });
+                    event.preventDefault();
+                $(".tabright").hide();
+                $("#cointab").hide();
+                $("#twittertab").show();
+                $("#twittertab1").show();
+                });
+                $('#qtipbutton4', this).bind('click', function(event) {
+                    event.preventDefault();
+                 $(".qtip").hide();
+                 loadwalletETH();
+                    $("#wallet").show();
+                });
+            }
+        }
+    }, event);
+});
+
+
+
+    function loadwalletETH(){
+contracts["Flood_Standard_Ethereum_Coin"].contract.ethBalanceOf(selectedWallet,function(err,data){
+if(err)console.log("Error: "+err);
+tempu=""+data/1000000000000000000;
+$("#coinETHwalletbalance").text(tempu.substring(0,10)+" ETH");
+});
+web3.eth.getBalance(selectedWallet,function(err,data){
+tempu=""+(web3.fromWei(data, "ether"));
+if(err)console.log("Error: "+err);$("#ETHwalletbalance").text(tempu.substring(0,10)+" ETH");
+});
+    }          
+ 
+
+
+cy.$('#a').qtip({
+  content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div>',
+  position: {
+    my: 'bottom center',
+    at: 'top center'
+  },
+  style: {
+    classes: 'qtip-bootstrap',
+    tip: {
+      width: 26,
+      height: 8
+    }
+  },
+events: {
+            render: function(event, api) {
+                // Capture click events
+
+                $('#qtipbutton1', this).bind('click', function(event) {
+                $(".tableft").hide();
+
+                
+                    event.preventDefault();
+                    $("#hometableft").show();
+                });
+                $('#qtipbutton2', this).bind('click', function(event) {
+                  $(".tableft").hide(); $(".tabright").hide();
+                    event.preventDefault();
+                    $("#markettabbid").show();
+                    $("#markettabask").show();
+                });
+                $('#qtipbutton3', this).bind('click', function(event) {
+
+                $(".tab").hide();
+                $("#timeline").html("");
+                    twttr.widgets.createTimeline({
+                       sourceType: "profile",
+                       screenName: "twitterdev"
+                    },
+                    document.getElementById('timeline'),
+                    {
+                    width: '250',
+                    height: $("#sidebar-right").height()-4,
+                    related: 'twitterdev,twitterapi'
+                    }).then(function (el) {
+                    console.log("Embedded a timeline.")
+                    });
+                    event.preventDefault();
+                $(".tabright").hide();
+                $("#cointab").hide();
+                $("#twittertab").show();
+                $("#twittertab1").show();
+                });
+                $('#qtipbutton4', this).bind('click', function(event) {
+                    event.preventDefault();
+$(".qtip").hide();
+                    $("#wallet").show();
+                });
+            }
+        }
+
+});
+
+cy.on('tap', 'node', function(e){
+$(".offerpartnershipitem").show();
+$("#offerpartnershipitem"+this.id()).hide();
+$("#sidebar-left").show();
+$("#sidebar-right").show();
+$(".tabright").hide();
+$(".tableft").hide();
+//$("#weblink").attr("href" , "https://testnet.etherscan.io/address/"+this.id());
+createIcon("#hyperwallet-walletico7",this.id());
+connect("Flood_Standard_Ethereum_Coin",this.id());
+$("#icocontractaddress").text(this.id());
+createIcon("#hyperwallet-walletico3",this.id());
+if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
+selectedId=this.id();
+loadCoin(this.id());
+lastTap=this.id();
+//$("#coinName").text(this.id());
+
+cy.$("#"+this.id()).css({'border-color':'red' , 'border-width' : '10px'});
+if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color':lastColor,'target-arrow-color': lastColor});
+selectedEdgeId="";
+$("#cointab").show();
+$("#hometableft").show();
+//$("#twittertab1").show();
+fetchTheySay(0);
+lastnode=1;display=2});
+
+cy.on('tap', 'edge', function(e){
+if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color': lastColor,'target-arrow-color': lastColor});
+selectedEdgeId=this.id();
+lastColor=cy.$("#"+selectedEdgeId).css('line-color');
+cy.$("#"+this.id()).css({'line-color':'red','target-arrow-color': 'red'});
+if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
+selectedId="";
+$(".tableft").hide();$(".tabright").hide();});
+cy.on('tap', function(event){
+if( event.cyTarget === cy ){
+
+if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
+selectedId="";
+if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color': lastColor,'target-arrow-color': lastColor});
+selectedEdgeId="";
+temp=false;
+if((!temp)&&(display==2)){$("#sidebar-left").hide();$("#sidebar-right").hide();display=0;temp=true;}
+if((!temp)&&(display==1)){if(lastnode==0){$("#sidebar-left").hide();$("#sidebar-right").hide();display=0;}else{$(".tableft").hide();$(".tabright").hide();$("#cointab").show();$("#hometableft").show();display=2;}temp=true;}
+
+if((!temp)&&(display==0)){$("#twittertab1").hide();$(".tabright").hide();$(".tableft").hide();$("#hypertab").show();$("#cointab").hide();$("#hypercontroltab").show();$("#sidebar-left").show();$("#sidebar-right").show();display=1;temp=true;}
+} 
+});
+
+function addNode(){
+cy.add([
+        {group: "nodes", data: {id: "f" }},
+        { group: "edges", data: { id: "de", source: "d", target: "f"}} ,
+        { group: "edges", data: { id: "af", source: "a", target: "d"}}       
+    ])
+cy.$('#de').css({
+        'width': 6,
+        'line-color': '#62CC50',
+        'curve-style': 'bezier'
+      });
+cy.$('#af').css({
+        'width': 6,
+        'target-arrow-shape': 'triangle',
+        'line-color': '#EDB140',
+        'target-arrow-color': '#EDB140',
+        'curve-style': 'bezier'
+      });
+cy.$('#f').css({
+        'background-image': 'claudius.png'
+      })
+}
+
+function addRequest(a,b){
+cy.add([
+        { group: "edges", data: { id: a+"-"+b, source: a, target: b}}   
+    ]);
+cy.$('#'+a+"-"+b).css({
+        'width': 6,
+        'target-arrow-shape': 'triangle',
+        'line-color': '#90C3D4',
+        'target-arrow-color': '#90C3D4',
+        'curve-style': 'bezier'
+      });
+
+}
+
+function removeRequest(a,b){
+partnershipRequests=$.cookie('localRequests');
+var result = partnershipRequests.filter(function(elem){
+   return elem != a+"-"+b; 
+});
+$.cookie('localRequests',result);
+}
+
+function addEdge(a,b){
+cy.add([
+        { group: "edges", data: { id: a+"-"+b, source: a, target: b}}   
+    ]);
+cy.$('#'+a+"-"+b).css({
+        'width': 6,
+        'line-color': '#62CC50',
+        'curve-style': 'bezier'
+      });
+
+}
+
+function opensettings(){
+$("#coinsettings").show();
+tempcount=0;
+alert(selectedId);
+$("#coinsettingscontainer").html("");
+for(var i=0;i<10;i++){
+contracts['Dsocial'].contract.readInfo(selectedId,i,function(error,data1) {
+if(error)alert("Error: "+error);
+
+tempR=Math.floor((Math.random() * 10000) + 1);
+$("#coinsettingscontainer").append('<div class="settingsminitab"><div id="logolabel" class="tablabel" style="float: left; margin: 5px 0 0 0px;">'+data1[1]+'</div><button id="'+tempR+'" class="updatesettings" name="'+data1[1]+'" style="width: 100px; margin: 0px 0px 0 0px; float: right;">Update</button><div style="clear: both"></div><input type="text" id="setting'+tempR+'" class="settingsfield" style="width: 350px; color: gray;margin-left: 0px; margin-right: 0px;float: left;" value="'+data1[0]+'">');
+tempcount++;
+});
+}
+}
+
+function backtosettings(){$('.tabright').hide();showcontrolpanel();}
+
+function openPartnershipButtons(){
+$("#hometableft").hide();
+//loadPartnersStats();
+
+$(".tableft").hide();
+$("#partnershippanel").show();
+}
+
+function loadPartnersStats(){
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.totPartnerships(function(error, data) {
+if(error)alert("Error: "+error);
+$("#partnershipsamount1").text(data);
+//$("#partnershipsamount2").text(data);
+if(data==0){$("#partnershippanelbutton").hide();}else{$("#partnershippanelbutton").show();}
+$("#partnershipscontainer").html("");
+tempcc=0;
+for(var i=0;i<data;i++){
+contracts['Flood_Standard_Ethereum_Coin'].contract.partnerAddress(i,function(error2, data2) {
+if(error)alert("Error: "+error2);
+//alert(data2);
+tempcc++;
+
+
+if(addEdgeRequestToCookie(selectedId,data2)){cy.layout({ name: 'circle'});}
+tempclass="";
+if($("#ownerlink").attr("value")==selectedWallet)tempclass="removepartnershipminidisplay";
+$("#partnershipscontainer").append("<div id='remove"+data2+"' value='"+tempcc+"'><div style='float: left; margin:15px 10px 0 20px;'><img  class='"+tempclass+"' id='partlogo"+tempcc+"' src='' style='width: 24px; height: 24px;'></div><div class='"+tempclass+"' id='partname"+tempcc+"' style='float: left; margin:19px 0 0 0;'></div><div style='clear: both'></div></div>");
+getImage($("#partlogo"+tempcc),data2);
+getName($("#partname"+tempcc),data2);
+});
+}
+
+});
+}
+
+function getImage(ob,addr){
+socialLayer=$.cookie('socialLayer');
+social=socialLayer[addr];
+if(social!=undefined){ob.attr('src' , social[0]);}else{
+contracts['Dsocial'].contract.readInfo(addr,5,function(error,data1) {
+if(error)alert("Error: "+error);
+temp=data1[0];
+if(data1[0]==""){temp="http://flood.monkeyscage.org/coin.png";}
+ob.attr('src' , temp);
+});
+}
+
+}
+
+function displayHyperName(ob,addr){
+connect('Flood_Standard_Ethereum_Coin',addr);
+contracts['Flood_Standard_Ethereum_Coin'].contract.name(function(error,data){
+if(error)alert("Error: "+error);
+ob.text(data);
+});
+
+}
+
+function hyperaddr(t,v){
+return $.cookie('hyperLayer')[t][v];
+}
+function getName(ob,addr){
+if($.cookie('hyperLayer')[addr]==undefined){displayHyperName(ob,addr);}else{
+ob.text(hyperaddr(addr,1));}
+}
+
+function addEdgeRequestToCookie(a,b){
+partnershipRequests=$.cookie('localRequests');
+var tempbx=false;
+
+if(cy.$( "#"+b ).length==0){addCoin(b);tempbx=true;}
+
+if((partnerships.indexOf(b+"-"+a) === -1)&&(partnerships.indexOf(a+"-"+b) === -1)){ //se non esiste una partnership
+  
+
+  if(partnershipRequests.indexOf(b+"-"+a) >= 0 ){ //se trova l' amico
+
+      partnerships.push(a+"-"+b);$.cookie('localPartnerships',partnerships);
+   $("#showhypermarkets").text(partnerships.length);
+      //alert(cy.$( "#"+a+"-"+b ).length+" "+cy.$( "#"+b+"-"+a ).length);
+      removeRequest(b,a);
+      cy.remove("#"+b+"-"+a);
+      if((cy.$( "#"+a+"-"+b ).length==0)&&(cy.$( "#"+b+"-"+a ).length==0))addEdge(a,b);
+
+  }else{  //se non trova l' amico
+    //verifica se è un doppione
+    if(partnershipRequests.indexOf(a+"-"+b) === -1 ){partnershipRequests.push(a+"-"+b);$.cookie('localRequests',partnershipRequests);}
+    
+    if(cy.$( "#"+a+"-"+b ).length==0)addRequest(a,b);
+  }
+
+}else{
+      if((cy.$( "#"+a+"-"+b ).length==0)&&(cy.$( "#"+b+"-"+a ).length==0))addEdge(a,b);
+}
+
+if(0==1)
+if (partnershipRequests.indexOf(a+"-"+b) === -1){
+
+
+   if(partnershipRequests.indexOf(b+"-"+a) === -1) {
+   partnershipRequests.push(a+"-"+b);
+   $.cookie('localRequests',partnershipRequests);
+   addRequest(selectedId,b);
+   }else{
+   cy.remove("#"+b+"-"+a);
+   removeRequest(b,a);
+   partnerships=$.cookie('localPartnerships');
+   if(partnerships.indexOf(b+"-"+a) === -1)if(partnerships.indexOf(a+"-"+b) === -1)partnerships.push(a+"-"+b);
+   $.cookie('localPartnerships',partnerships);
+
+   addEdge(a,b);
+   }
+
+}else{
+  
+}
+
+return tempbx;
+}
+
+var tempCost;
+function loadICO(){
+tempCost=0;
+
+connect('Flood_Standard_Ethereum_Coin',selectedId);
+createIcon("#hyperwallet-walletico3",selectedId);
+$("#icocontractaddress").text(selectedId);
+contracts['Flood_Standard_Ethereum_Coin'].contract.name(function(err,data){
+if(err)console.log("Error: "+err);
+$('#mainicolabel').text(data+" ICO");
+});
+
+$('#icofrontend').show();
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.enabled(function(err,data){
+if(err)console.log("Error: "+err);
+if(data<5){$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data==5){$("#icostatus").html("OPEN");$("#icostatus").css("color" , "green");}
+if(data>5){$("#icostatus").html("CLOSED");$("#icostatus").css("color" , "red");}
+});
+contracts['Flood_Standard_Ethereum_Coin'].contract.cost(function(err,data){
+if(err)console.log("Error: "+err);tempCost=data;$("#ICOcost").text(web3.fromWei(data, "ether")+" ETH");
+
+$("#ICOamount2buy").attr('value',icoSpending(tempCost));});
+tempsupply=0;
+contracts['Flood_Standard_Ethereum_Coin'].contract.totalSupply(function(err,data){
+if(err)console.log("Error: "+err);$("#ICOtotalsupply").text(data/1000000000000000000);tempsupply=data;});
+
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.created(function(err,data){
+if(err)console.log("Error: "+err);$("#ICOstart").text(data);});
+
+web3.eth.getBlockNumber(function(err,block){
+if(err)console.log("Error: "+err);
+$("#ICOcurrentblock").text(block);
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.endbonus(function(err,data){
+if(err)console.log("Error: "+err);$("#ICOendbonus").text(data);
+
+if(block>data){
+$("#ICOendbonus").css('color' , 'red');
+$("#ICObonus").css('color' , 'red');
+}else{
+$("#ICOendbonus").css('color' , 'green');
+$("#ICObonus").css('color' , 'green');
+}
+});
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.endblock(function(err,data){
+if(err)console.log("Error: "+err);$("#ICOendblock").text(data);
+if(block>data){
+$("#ICOendblock").css('color' , 'red');
+}else{
+$("#ICOendblock").css('color' , 'green');
+}
+});
+});
+
+
+
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.bonus(function(err,data){
+if(err)console.log("Error: "+err);$("#ICObonus").text(data+"%");});
+
+
+
+
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.balanceOf(selectedWallet,function(err,data){
+if(err)console.log("Error: "+err);$("#ICOsent").text(data/1000000000000000000+" ETH");});
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.balanceOf(selectedWallet,function(err,data){
+if(err)console.log("Error: "+err);$("#ICObought").text(data/1000000000000000000);});
+
+tempowner="";
+contracts['Flood_Standard_Ethereum_Coin'].contract.owner(function(err,data1){
+if(err)console.log("Error: "+err);$("#ICOmanager").text(data1);tempowner=data1;
+if(0==1)contracts['Flood_Standard_Ethereum_Coin'].contract.ETHvolume(function(err,data2){
+if(err)console.log("Error: "+err);$("#ICOtotal").text(data2+" ETH");});
+contracts['Flood_Standard_Ethereum_Coin'].contract.ethBalanceOf(tempowner,function(err,data3){
+if(err)console.log("Error: "+err);$("#ICOtotal").text((data3/1000000000000000000)+" ETH");});
+
+
+$("#ICOsentlabel").hide();
+$("#ICOsent").hide();
+
+tempbalance=0;
+contracts['Flood_Standard_Ethereum_Coin'].contract.balanceOf(tempowner,function(err,data3){
+if(err)console.log("Error: "+err);tempbalance=data3;
+contracts['Flood_Standard_Ethereum_Coin'].contract.volume(function(err,data){
+if(err)console.log("Error: "+err);$("#ICOsold").text((tempsupply-tempbalance)/1000000000000000000);});
+});
+});
+
+
+
+
+contracts['Flood_Standard_Ethereum_Coin'].contract.totalSupply(function(err,data){
+if(err)console.log("Error: "+err);$("#ICObitcointalk").text(data);});
+contracts['Flood_Standard_Ethereum_Coin'].contract.symbol(function(err,data){
+if(err)console.log("Error: "+err);$("#icosymbol1").text(data);});
+
+alert(web3.eth.accounts[selectedWallet]+" "+selectedWallet);
+web3.eth.getBalance(selectedWallet,function(err,data){
+if(err)console.log("Error: "+err);$("#ICOwalletcoinbalance").text(web3.fromWei(data, "ether")+" ETH");
+
+});
+
+}
+
+function icoSpending(tempCost){
+return parseFloat($("#ICOamount2spend").val())*1000000000000000000/tempCost;
+}
+
+function icoBuying(tempCost){alert($("#ICOamount2buy").val()+" "+tempCost);
+return parseFloat($("#ICOamount2buy").val())/1000000000000000000*tempCost;
+}
+
+function currentblock(){
+web3.eth.getBlockNumber(function(err,data){
+if(err)console.log("Error: "+err);
+$("#currentblock").text("Current Block: "+data);
+});
+}
+
+function loadICOs(){
+action=0;
+currentblock();
+$("#ICOcontainer").html("");
+$("#totICOs").html("0");
+for(var i=1;i<=totCoins;i++){
+readICObyID(i);
+}
+}
+
+function readICObyID(u){
+contracts["Pretorian"].contract.coins_list(u,function(err,data){
+if(err)console.log("Error: "+err);
+
+connect('Flood_Standard_Ethereum_Coin'+u,data);
+contracts['Flood_Standard_Ethereum_Coin'+u].contract.enabled(function(err,data2){
+if(err)console.log("Error: "+err);
+if(data2==5){
+$("#totICOs").html(parseInt($("#totICOs").html())+1);
+$("#showicolistbutton").text(parseInt($("#totICOs").text()));
+$("#ICOcontainer").append('<div  style="margin-left: 25px; background: white; color: black; padding: 10px; border-radius: 3px; font-size: 16px; margin-bottom: 5px;"><div id="ICOname'+u+'-'+data+'" class="tablabel openico" name="'+data+'" value="'+data+'" style="cursor: pointer; margin-left: 0px; background: white; color: black; padding: 10px; border-radius: 3px; font-size: 16px; float: left;">?</div><div id="ICOaddress'+u+'" class="walleticon40" style="float: right; margin: 10px 20px 0 25px;"></div><div id="ICOendblock'+u+'" class="" style="float: right; padding: 10px; margin-top: 10px; font-family: arial;">End Block: ?</div><div style="clear: both"></div></div>');
+createIcon("#ICOaddress"+u,data);
+}
+});
+contracts['Flood_Standard_Ethereum_Coin'+u].contract.name(function(err,data3){
+if(err)console.log("Error: "+err);
+$("#ICOname"+u+"-"+data).text(data3);
+});
+contracts['Flood_Standard_Ethereum_Coin'+u].contract.endblock(function(err,data4){
+if(err)console.log("Error: "+err);
+$("#ICOendblock"+u).text("End Block: "+data4);
+});
+
+});
+
+
+}
+
+
+
+
+function openIcoList(){
+
+$('#icolist').show();
+loadICOs();
+
+}
+
+function offerPartenrshipPanel(){
+$("#hometableft").hide();
+$("#offerpartnershippanel").show();
+}
+
+function removePartenrshipPanel(){
+$("#hometableft").hide();
+$("#removepartnershippanel").show();
+}
+
+function closePartnershipPanel(){
+$(".tableft").hide();
+$("#hometableft").show();
+}
+
+function sendPartnership(from,to){
+console.log("Partnership Request: from "+from+" to "+to+" - "+selectedWallet);
+connect('Flood_Standard_Ethereum_Coin',from);
+contracts['Flood_Standard_Ethereum_Coin'].contract.manager(111,to,"",0,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+error);
+console.log("Partnership Request: from "+from+" to "+to+" - "+transactionHash);
+alert("Partnership Request Transaction Sent");
+//checkTransaction(data,"setPartner",1);
+});
+}
+
+
+
+function buyIco(){
+alert(parseFloat($("#ICOamount2spend").val()));
+connect('Flood_Standard_Ethereum_Coin',selectedId);
+console.log("buyICO: from "+$("#hyperwalletselect").val()+" "+selectedId);
+contracts['Flood_Standard_Ethereum_Coin'].contract.ico({from: $("#hyperwalletselect").val(),value: web3.toWei(parseFloat($("#ICOamount2spend").val()), "ether"), gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+error);
+console.log("buyICO sent: from "+$("#hyperwalletselect").val()+" "+selectedId+" - "+transactionHash);
+alert("buyICO transaction sent: "+transactionHash);
+//checkTransaction(data,"setPartner",1);
+});
+}
+
+
+function closeClaimPanel(){
+$(".tabright").hide();
+$("#cointab").show();
+}
+
+function openownerpanel(){
+$(".tabright").hide();
+$("#ownerpanel").show();
+}
+
+function openechxangepanel(){
+$(".tabright").hide();
+$("#echxangepanel").show();
+}
+
+
+function opencontractpanel(){
+$(".tabright").hide();
+$("#contractpanel").show();
+}
+
+
+function openmodulespanel(){
+$(".tabright").hide();
+$("#modulespanel").show();
+}
+
+function backtohometab(){
+$(".tableft").hide();
+$("#hometableft").show();
+}
+
+
+function opendappspanel(){
+$(".tabright").hide();
+$("#dappspanel").show();
+}
+
+function chooseETH(){
+$("#coinETHwalletbalance").css("border-bottom" , "0px white solid");
+$("#hyperwalletcoinbalance").css("border-bottom" , "0px white solid");
+$("#ETHwalletbalance").css("border-bottom" , "4px white solid");
+$("#coinhyperwalletsymbol").text("ETH");
+$("#coinhyperwalletsubmit").text("Transfer");
+$("#coinhyperwalletcontainer").show();
+$("#coinhyperwalletcontainer2").hide();
+$("#coinhyperwalletsubmit").attr("onclick" , "transfer()");
+}
+
+function chooseWithdrawETH(){
+$("#coinETHwalletbalance").css("border-bottom" , "4px white solid");
+$("#hyperwalletcoinbalance").css("border-bottom" , "0px white solid");
+$("#ETHwalletbalance").css("border-bottom" , "0px white solid");
+$("#coinhyperwalletsymbol").text("ETH");
+$("#coinhyperwalletsubmit").text("WITHDRAW");
+$("#coinhyperwalletcontainer").hide();
+$("#coinhyperwalletcontainer2").show();
+$("#coinhyperwalletsubmit").attr("onclick" , "withdraw()");
+}
+
+function withdraw(){
+contracts['Flood_Standard_Ethereum_Coin'].contract.withdraw(selectedWallet,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+err);
+});
+}
+
+function transfer(){
+contracts['Flood_Standard_Ethereum_Coin'].contract.transfer($("#coinhyperwallettarget").val(),parseFloat($("#coinhyperwalletamount").val())*1000000000000000000,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+err);
+});
+}
+
+function chooseCoin(){
+$("#coinETHwalletbalance").css("border-bottom" , "0px white solid");
+$("#hyperwalletcoinbalance").css("border-bottom" , "4px white solid");
+$("#ETHwalletbalance").css("border-bottom" , "0px white solid");
+$("#coinhyperwalletsymbol").text($("#coinhyperwalletsymbol").attr("value"));
+$("#coinhyperwalletsubmit").text("Transfer");
+$("#coinhyperwalletcontainer").show();
+$("#coinhyperwalletcontainer2").hide();
+$("#coinhyperwalletsubmit").attr("onclick" , "transfer()");
+}
+
+function setico(){
+$(".tabright").hide();
+contracts["Flood_Standard_Ethereum_Coin"].contract.enabled(function(err,data){
+if(err)console.log("Error: "+err);
+$(".icosubpan").hide();
+
+$("#icosubpanel"+data).show();
+$("#icopanel").show();
+});
+
+}
+
+function showMarkets(){
+temp=$.cookie("localPartnerships");
+tempcc=0;
+for(var i=0;i<temp.length;i++){
+tempcc++;
+$("#marketscontainer").append("<div style='margin: 20px; height: 50px; '><div id='mname1"+tempcc+"' style='text-align: right; width: 48%; padding-top: 15px;padding-bottom: 15px;float: left; font-family: arial;'></div><div id='mname2"+tempcc+"' style='text-align: left; width: 50%;  padding-top: 15px;padding-bottom: 15px;float: left; font-family: arial;'></div></div>");
+getName($("#mname1"+tempcc),temp[i].substring(0,temp[i].indexOf("-")));
+getName($("#mname2"+tempcc),temp[i].substring(temp[i].indexOf("-")+1));
+}
+$('#marketslist').show();
+}
+
+function setCost(){
+contracts['Flood_Standard_Ethereum_Coin'].contract.manager(46,0x0,"",parseFloat($("#coincost").val())*1000000000000000000,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+err);
+console.log("Set ICO Cost: "+(parseFloat($("#coincost").val())*1000000000000000000)+" ETH");
+//checkTransaction(data,"setCost",1);
+});
+}
+function setBonus(){
+contracts['Flood_Standard_Ethereum_Coin'].contract.manager(47,0x0,"",parseInt($("#icobonus").val()),true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+err);
+console.log("setBonus: "+$("#icobonus").val()+" %");
+//checkTransaction(data,"setBonus",1);
+});
+}
+function setEndBonus(){
+contracts['Flood_Standard_Ethereum_Coin'].contract.manager(48,0x0,"",parseInt($("#icoendbonus").val()),true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+err);
+console.log("Set ICO Cost: "+$("#icoendbonus").val()+" block");
+//checkTransaction(data,"setEndBonus",1);
+});
+}
+function setEndAndStart(){
+contracts['Flood_Standard_Ethereum_Coin'].contract.manager(49,0x0,"",parseInt($("#icoduration").val()),true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+err);
+console.log("Set ICO Cost: "+$("#icoduration").val()+" blocks");
+//checkTransaction(data,"setEndAndStart",1);
+});
+}
+
+function endIco(){
+contracts['Flood_Standard_Ethereum_Coin'].contract.manager(50,0x0,"",0,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+error);
+console.log("Set ICO end");
+//checkTransaction(data,"endIco",1);
+});
+}
+
+function coinlistcookie(){
+alert($.cookie('myCoinsList'));
+}
+    </script>
+<script>$("#qtipbutton").on( "click",function(e){console.log("!");});
+
+$(document).on("click",".openico",function(e){console.log($("#"+e.target.id).attr("name")); $('#icolist').hide();selectedId=$("#"+e.target.id).attr("name");connect("Flood_Standard_Ethereum_Coin",selectedId);loadICO();});
+
+$(document).on("click",".updatesettings",function(e){
+tempi=0;
+if($("#"+e.target.id).attr("name")=="WEB SITE"){tempi=0;}
+if($("#"+e.target.id).attr("name")=="Twitter"){tempi=1;}
+if($("#"+e.target.id).attr("name")=="Manager"){tempi=2;}
+if($("#"+e.target.id).attr("name")=="Email"){tempi=3;}
+if($("#"+e.target.id).attr("name")=="Logo 512*512"){tempi=4;}
+if($("#"+e.target.id).attr("name")=="Logo 256*256"){tempi=5;}
+if($("#"+e.target.id).attr("name")=="Logo 128*128"){tempi=6;}
+if($("#"+e.target.id).attr("name")=="Logo 64*64"){tempi=7;}
+if($("#"+e.target.id).attr("name")=="Logo 32*32"){tempi=8;}
+if($("#"+e.target.id).attr("name")=="Logo 16*16"){tempi=9;}
+
+contracts['Dsocial'].contract.addInfo(selectedId,tempi,$("#setting"+$("#"+e.target.id).attr("id")).val(),{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if(error)alert("Error: "+error);
+console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
+//checkTransaction(data,"endIco",1);
+});
+});
+
+
+
+
+</script>
+
+
+
+<div id="sidebar-left">
+
+<div id="hypertab" class="tableft">
+<div class="spacer"></div>
+<div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;"><img src="layers-transparent.png" style="width: 50px;"></div>
+<div class="spacer"></div>
+<div id="totcoinlabel" class="tablabel" style="float: left;">Tot Coins:</div>
+<div id="totcoin" class="tablabel" style="float: right; color: gray;"><button id="totcoinsbutton" style=" margin: -3px 10px 0px 0px;" onclick="showmycoins()">1</button></div>
+<div class="spacer"></div>
+<div id="tothypercaplabel" class="tablabel" style="width: 85px; float: left;">HyperCap:</div>
+<div id="tothypercap" class="tablabel2" style="float: right; color: gray; margin-top: 10px; margin-right: 10px;"><button id="showmycoinsbutton" style=" margin: -3px 10px 0px 0px;" onclick="showhypermarketcap()">? ETH</button></div>
+<div class="spacer"></div>
+<div id="tothypermarketslabel" class="tablabel" style="float: left;">Hypermarkets:</div>
+<div id="tothypermarkets" class="tablabel" style="float: right; color: gray;"><button id="showhypermarkets" style=" margin: -3px 10px 0px 0px;" onclick="showMarkets()">?</button></div>
+<div class="spacer"></div>
+<div id="toticolabel" class="tablabel" style="float: left;">Tot ICO:</div>
+<div id="totico" class="tablabel" style="float: right; color: gray;"><button id="showicolistbutton" style=" margin: -3px 10px 0px 0px;" onclick="openIcoList()">?</button></div>
+<div class="spacer"></div>
+<button id="showmycoinsbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showmycoins()">MY COINS</button>
+<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showfavorites()">&#9733 FAVORITES</button>
+<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showLocals()">LOAD LOCALS</button>
+<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showAll()">LOAD ALL</button>
+
+</div>
+<div id="hometableft" class="tab tableft" style="display: none; font-family: arial;">
+<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">COIN NAME</div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+<div class="spacer"></div>
+<button id="partnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="openPartnershipButtons()">PARTNERSHIPS</button>
+<button id="offerpartnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="offerPartenrshipPanel()">OFFER PARTNERSHIP</button>
+<button id="removepartnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; " onclick="removePartenrshipPanel()">REMOVE PARTNERSHIP</button>
+</div>
+
+<div id="offerpartnershippanel" class="tab tableft" style="display: none; font-family: arial;">
+<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">OFFER PARTNERSHIP</div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; padding: 20px; text-align: justify;">From:</div>
+<div class="spacer"></div>
+<div id="offerpartnershipscontainer"></div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px 0 0 20px; text-align: justify;">To: this coin</div>
+<div class="spacer"></div>
+<button id="offerpartnershippanelcancel" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="closePartnershipPanel()">CANCEL</button>
+
+
+</div>
+
+<div id="partnershippanel" class="tab tableft" style="font-family: arial; display: none;">
+<div id="partnershipslabel1" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px;">Partnerships:</div><div id="partnershipsamount1" style="float: left; margin-left: 20px;  margin-top: 20px; color: gray;"></div><div style="clear: both;"></div>
+<div id="partnershipscontainer"></div>
+
+<button id="backtohometab" style="width: calc(100% - 40px); margin: 40px 20px 0 20px;" onclick="backtohometab()">BACK</button>
+<div id="removeAlertLabel" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px; display: none; color: #777;"> Click to remove Partnership!</div>
+</div>
+
+<div id="removepartnershippanel" class="tab tableft" style="display: none; font-family: arial;">
+<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">REMOVE PARTNERSHIP</div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; padding: 20px; text-align: justify;">From:</div>
+<div class="spacer"></div>
+<select id="removepartnerlist" style="width: calc(100% - 40px); margin-left: 20px;">
+</select> 
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px 0 0 20px; text-align: justify;">To: this coin</div>
+<div class="spacer"></div>
+<button id="removepartnershippanelcancel" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="closePartnershipPanel()">CANCEL</button>
+<button id="removepartnershippanelremove" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="">REMOVE PARTNERSHIP</button>
+</div>
+
+<div id="markettabbid" class="tab tableft" style="display: none;">
+<div id="bidlabel" class="tablabel2" style="text-align: center; width: 100%; color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;">Offer BLU for ETH</div>
+<div class="spacer"></div>
+<button id="updatesettings" class="check" style="width: calc(100% - 10px); margin: 10px 0px 0 5px;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
+<div style="width: 238px; margin-left: 5px; border: solid 1px #ccc; height: 300px; margin-bottom: 0px;">
+<div class="offer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
+</div>
+<button id="updatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
+<div id="coinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="logolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
+<div id="hyperwallet-walletico4" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px;">Price:</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-right: 0px;">Amount:</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px;">Total:</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<button id="updatesettings" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>SET OFFER</button>
+</div>
+<div id="twittertab1" class="tableft tab" style="display: none;">
+<div id="attab" style="cursor: pointer; float: left; font-size: 20px;margin-left: 20px; margin-top: 10px; margin-bottom: 5px;">@</div><div id="hashtab" style="cursor: pointer; float: left; font-size: 20px; margin-left: 20px; color: gray; margin-top: 10px; margin-bottom: 5px; margin-top: 3px;">#</div><div class="spacer"></div>
+<div id="theysay"></div>
+</div>
+</div>
+
+<div id="sidebar-right">
+<div id="cointab" class="tabright" style="display: none;">
+<img id="coinlogo" src="arkdao.jpg" style="width: 120px; height: 120px; margin: auto; display: block; margin-top: 30px;">
+<div class="spacer"></div>
+<div id="web" class="tablabel" style=" color: gray; margin: auto;width: 30px; height: 30px;"><a id="ownerlink2" href="https://testnet.etherscan.io/address/0x6598583177F3a2F8bcd72384F00D76E6D052EC21" style="font-size: 9px;"><div id="hyperwallet-walletico7" class="walleticon30" style="float: right; margin: 10px 0px 0 0px;"></div></a></div>
+<div id="coinName" style="text-align: center; font-size: 24px; color: gray; font-family: arial;"></div>
+<div class="spacer"></div>
+<div id="symbollabel" class="tablabel" style="float: left;">Symbol:</div>
+<div id="symbol" class="tablabel" style="float: left; color: gray;">X</div>
+<div class="spacer"></div>
+<div id="totcoinlabel" class="tablabel" style="float: left;">Tot Coins:</div>
+<div id="totalsupply" class="tablabel" style="float: left; color: gray;">1000000</div>
+<div class="spacer"></div>
+<div id="mininglabel" class="tablabel" style="float: left;">Mining:</div>
+<button id="claimbutton" style=" margin: 7px 0 0 0; float: left;" onclick="claim(0)">1% YEAR</button>
+<div class="spacer"></div>
+<div id="cointypelabel" class="tablabel" style="float: left;">Coin Type:</div>
+<div id="cointype" class="tablabel" style="float: left; color: gray;">Basic</div>
+<div class="spacer"></div>
+<div id="icolabel" class="tablabel" style="float: left;">ICO:</div>
+<button id="ico" style=" margin: 7px 0 0 0; float: left;" onclick="loadICO(selectedId)">closed</button>
+<div class="spacer"></div>
+<div id="volumelabel" class="tablabel" style="float: left;">Volume:</div>
+<div id="volume" class="tablabel" style="float: left; color: gray;">1234</div>
+<div class="spacer"></div>
+<div id="costlabel" class="tablabel" style="float: left;">Cost:</div>
+<div id="cost" class="tablabel" style="float: left; color: gray;">0.001 ETH</div>
+<div class="spacer"></div>
+<div id="blancelabel" class="tablabel" style="float: left;">Balance:</div>
+<div id="balance" class="tablabel" style="float: left; color: gray;">300 x</div>
+<div class="spacer"></div>
+<div id="web" class="tablabel" style="float: left;">Link:</div><div class="tablabel" style="float: left; color: gray; margin-top: 4px;"><a id="weblink" href="http://www.arkdao.com" style="font-size: 16px; margin-left: 10px; margin-top: -2px;"><img src="http://flood.monkeyscage.org/world.png" style="width: 24px; height: 24px;"></a></div>
+<div class="spacer"></div>
+<div id="ownerlabel" class="tablabel" style="float: left;">Owner:</div>
+<div id="owner" class="tablabel" style="float: left; margin-left: 0px;"><a id="ownerlink" href="https://testnet.etherscan.io/address/0x6598583177F3a2F8bcd72384F00D76E6D052EC21" style="font-size: 9px;"><div id="hyperwallet-walletico6" class="walleticon20" style="float: right; margin: -5px 20px 0 15px;"></div></a></div>
+<div class="spacer"></div>
+<button id="controlpanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0px 20px;" onclick="showcontrolpanel()">CONTROL PANEL</button>
+<button id="addfavoritebutton" style="width: calc(100% - 40px); margin: 10px 20px 20px 20px;" onclick="addFavorite()">&#9734</button>
+</div>
+<div id="controlpanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 20px;">CONTROL PANEL</div>
+<button id="settingsbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opensettings()">SETTINGS</button>
+<button id="seticobutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setico()">SET ICO</button>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="openownerpanel()">CHANGE OWNER</button>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="openechxangepanel()">EXCHANGE PLATFORMS</button>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="openmodulespanel()">SMART MODULES</button>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opendappspanel()">FEATURED DAPPS</button>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opencontractpanel()">SHOW CONTRACT</button>
+</div>
+<div id="icopanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 20px;">ICO PANEL</div>
+<div id="icosubpanel1" class="icosubpan">
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Single Coin Cost (in ETH):</div>
+<input type="text" id="coincost" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="0.0001">
+<button id="" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setCost()">SET COST</button>
+<div class="spacer"></div></div>
+<div id="icosubpanel2" class="icosubpan">
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Bonus (%):</div>
+<input type="text" id="icobonus" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="10">
+<button id="" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setBonus()">SET BONUS</button>
+<div class="spacer"></div></div>
+<div id="icosubpanel3" class="icosubpan">
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Endbonus (after blocks):</div>
+<input type="text" id="icoendbonus" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="1000">
+<button id="" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setEndBonus()">SET END BONUS</button>
+<div class="spacer"></div></div>
+<div id="icosubpanel4" class="icosubpan">
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Duration (blocks):</div>
+<input type="text" id="icoduration" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="10000">
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setEndAndStart()">SET AND START ICO NOW</button>
+<div class="spacer"></div></div>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
+<div id="icosubpanel5" class="icosubpan">
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="endIco()">END ICO</button>
+</div></div>
+<div id="ownerpanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 20px;">SET OWNER PANEL</div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">New Owner Eth Address:</div>
+<input type="text" id="logo" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setnewowner()">SET NEW OWNER</button>
+</div>
+<div id="modulespanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 20px;">SMART MODULES</div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Add/Remove functionalities to your coin:</div>
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
+</div>
+<div id="dappspanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 20px;">FEATURED DAPPS</div>
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
+
+</div>
+<div id="echxangepanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 20px;">EXTERNAL EXCHANGES</div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Exchange Page Address:</div>
+<input type="text" id="logo" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setnewowner()">SET NEW EXCHANGE</button>
+</div>
+<div id="contractpanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 20px;">COIN CONTRACT</div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Type:</div>
+<div class="spacer"></div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">ABI:</div>
+<textarea id="abi" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" ></textarea>
+<div class="spacer"></div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Contract:</div>
+<textarea id="contract" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" ></textarea>
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">BACK</button>
+</div>
+<div id="claimpanel" class="tabright" style="display: none; font-family: arial">
+<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">CLAIM AUTO-POS</div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; padding: 20px; text-align: justify;">Wallet:</div>
+<div class="spacer"></div>
+<select style="width: calc(100% - 40px); margin-left: 20px;">
+ <option value="volvo">MyWallet 1</option>
+ <option value="saab">MyWallet 2</option>
+ <option value="mercedes">MyWallet 3</option>
+ <option value="audi">MyWallet 4</option>
+</select> 
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">You have: 20 GRB</div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Blocks Matured: 1231</div>
+<div class="spacer"></div>
+
+<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Claimable: 0.002 GRB</div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Value: 0.0002 ETH</div>
+<div class="spacer"></div>
+<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Gas cost: 0.00015 ETH</div>
+<div class="spacer"></div>
+<button id="claimpanelcancel" style="width: calc(100% - 40px); margin: 20px 20px 0 20px;" onclick="closeClaimPanel()">CANCEL</button>
+<button id="claimpanelclaim" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="closeClaimPanel()">CLAIM NOW</button>
+</div>
+<div id="hometab" class="tabright">
+</div>
+<div id="markettabask" class="tab tabright" style="display: none;">
+<div id="asklabel" class="tablabel2" style="text-align: center; width: 100%; color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;">BUY coinName with ETH</div>
+<div class="spacer"></div>
+<button id="updatesettings" class="check" style="width: calc(100% - 10px); margin: 10px 0px 0 5px;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
+<div style="width: 238px; margin-left: 5px; border: solid 1px #ccc; height: 300px; margin-bottom: 0px;">
+<div class="offer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
+</div>
+<button id="updatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
+<div id="coinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 ETH</div><div id="logolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div><div id="hyperwallet-walletico5" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
+<div id="coinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px; margin-top: 0px;">1.3452 ETH</div><div id="logolabel" class="tablabel" style="float: right; font-size: 14px; margin-top: 0px;">In contract:</div><div style="clear : both;"></div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-right: 0px;">Amount:</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px;">Total:</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<button id="updatesettings" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>BUY</button>
+</div>
+<div id="hypercontroltab" class="tab tabright" style="font-family:arial; color: gray;">
+<div id="settingslabel" class="tablabel2" style="text-align: center;
+width: 100%;
+color: gray;
+margin-top: 20px;
+margin-bottom: 20px;
+font-family: arial;">SETTINGS:</div>
+<div id="walletsChooser"></div><br>
+<input type="checkbox" class="check" name="html" value="html"/> Partnerships
+<br />
+<input type="checkbox" class="check" name="html" value="html"/> Part. Requests
+<br /> <br />
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanfavorites()">DELETE FAVORITES</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanlocals()">DELETE LOCALS</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="coinlistcookie();">COINS LIST COOKIE</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(JSON.stringify($.cookie('hyperLayer')));">HYPER COOKIE</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(hyperIndex);">HYPER INDEX</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(JSON.stringify($.cookie('localRequests')));">LOCAL REQUESTS</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(JSON.stringify($.cookie('localPartnerships')));">LOCAL PARTNERS</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert($.cookie('favorite'));">FAVORITE COOKIE</button>
+</div>
+<div id="twittertab" class="tabright">
+<div id="timeline"></div>
+</div>
+
+</div>
+<div id="wallet" style=" display: none; width: 100%; height: 100%; background-image: url(nebula.jpg); background-size: 100% 100%; z-index: 100; position: absolute; font-size: 24px; color: white;">
+
+<div style="width: 690px; margin: auto; margin-top: 50px;">
+<div id="hyperwalletmainlabel" class="tablabel" style="text-align: center; width: 100%; margin: 0 0 50px 0;">COINNAME HYPERWALLET</div>
+<div id="hyperwallet-walletico" class="walleticon40" style="float: left; margin: 0 20px 0 20px;"></div><select id="coinhyperwalletselect" style="padding: 5px; width: 570px; margin-left: 20px;font-size: 24px; float: left;">
+ 
+ 
+</select><div style="clear: both"></div>
+<div id="hyperwalletcoinbalancelabel" class="tablabel" style="margin: 20px 0 40px 25px; float: left;">You have:</div>
+<div id="coinETHwalletbalance" class="tablabel" style="font-size: 18px; margin: 20px 25px 40px 25px; float: right; padding-bottom: 5px; cursor: pointer; color: orange" onclick="chooseWithdrawETH()">100 ETH</div>
+<div id="ETHwalletbalance" class="tablabel" style="font-size: 18px;margin: 20px 25px 40px 25px; float: right; padding-bottom: 5px; cursor: pointer;" onclick="chooseETH()">100 ETH</div>
+<div id="hyperwalletcoinbalance" class="tablabel" style="font-size: 18px;margin: 20px 30px 40px 25px; float: right; border-bottom: solid 4px white; padding-bottom: 5px; cursor: pointer;" onclick="chooseCoin()">100 gbr</div>
+<div style="clear: both"></div>
+<div id="coinhyperwalletcontainer">
+<div id="walletcoinbalance" class="tablabel" style="margin-left: 25px;">Amount to Transfer:</div>
+<input type="text" id="coinhyperwalletamount" class="settingsfield" style="width: 540px; color: gray;margin-left: 20px;
+margin-right: 0px;font-size: 24px; float: left; padding: 5px;" value=""><div id="coinhyperwalletsymbol" style="float: right; margin-right: 20px; font-family: arial;">RGB</div><div style="clear: both"></div><br>
+<div id="walletcoinbalance" class="tablabel" style="margin-left: 25px;">Target Address:</div>
+<input type="text" id="coinhyperwallettarget" class="settingsfield" style="width: 540px; color: gray;margin-left: 20px;
+margin-right: 20px;font-size: 24px; padding: 5px; float: left;" value=""><div id="hyperwallet-walletico9" class="walleticon40" style="float: right; margin: 0 20px 0 20px;"></div><br>
+</div>
+<div id="coinhyperwalletcontainer2" style="display: none;">
+<div id="walletcoinbalance" class="tablabel" style="margin-left: 25px;">Withdraw all your funds from coin-contract.</div>
+</div>
+<button id="cancelsettings" class="check" style="width: 300px; margin: 30px 20px 0 20px;font-size: 24px;" onclick="$('#wallet').hide()"/>Cancel</button>
+<button id="coinhyperwalletsubmit" class="check" style="width: 300px; margin: 10px 20px 0 20px;font-size: 24px;"/>Transfer</button>
+</div>
+</div>
+
+
+<div id="icofrontend" style="width: 100%;  background-image: url(nebula.jpg); background-attachment: fixed; background-size: 100% 100%; z-index: 100; position: absolute; font-size: 24px; color: white; display: none; text-align: center;">
+<div id="mainicolabel" class="tablabel" style="margin: 25px 0 0px 0px;  font-size: 32px;"></div>
+<div style="width: 690px; margin: auto; margin-top: 50px;">
+<div id="icostatuslabel" class="tablabel" style="margin: 20px 0 0px 25px; float: left; font-size: 32px;">STATUS:</div>
+<div id="icostatus" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; font-size: 32px; color: green;">OPEN</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin-left: 25px; font-size: 16px;">ICO Address (send ETH to the following address):</div>
+<div style="margin: 5px 25px 0px 25px; background: white; color: black; padding: 10px; border-radius: 3px; font-size: 18px; width: clac(100% - 70px); height: 30px;">
+<div id="icocontractaddress" class="tablabel" style="float: left; margin: 6px 10px 10px 5px; background: white; color: black; border-radius: 3px; font-size: 18px;"></div>
+<div id="hyperwallet-walletico3" class="walleticon30" style="float: right; margin: 0 0px 0 20px;">
+</div>
+</div>
+
+
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Cost Per Coin:</div>
+<div id="ICOcost" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">0.1 ETH</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Max ICO coin supply:</div>
+<div id="ICOtotalsupply" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">10000000</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">ICO started at block:</div>
+<div id="ICOstart" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">1236 blocks</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Bonus ends at block:</div>
+<div id="ICOendbonus" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer; color: green;">1236 blocks</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Bonus:</div>
+<div id="ICObonus" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">10%</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">ICO ends at block:</div>
+<div id="ICOendblock" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">1236 blocks</div>
+<div style="clear: both"></div>
+<div id="icocurrentblocklabel" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Current block:</div>
+<div id="ICOcurrentblock" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">1236 blocks</div>
+<div style="clear: both"></div>
+<div id="ICOsentlabel" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">You Sent:</div>
+<div id="ICOsent" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">0 ETH</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">You Bought:</div>
+<div id="ICObought" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">0 RGB</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Total Funded So Far:</div>
+<div id="ICOtotal" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">100 ETH</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Total Coins Sold:</div>
+<div id="ICOsold" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">34566 RGB</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">Coin Manager:</div>
+<div id="ICOmanager" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">maxxflyer</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">email</div>
+<div id="ICOemail" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">maxxflyer@gmail.com</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 0px 25px; float: left;">ICO web page</div>
+<div id="ICObitcointalk" class="tablabel" style="margin: 20px 25px 0px 25px; float: right; padding-bottom: 5px; cursor: pointer;">http://bitcointalk</div>
+<div style="clear: both"></div>
+
+<div id="walletcoinbalance" class="tablabel" style="margin: 50px 0 10px 25px; font-size: 16px;">You can use your detected Wallet:</div>
+<div id="hyperwallet-walletico2" class="walleticon40" style="float: left; margin: 0 20px 0 25px;"></div><select id="hyperwalletselect" style="padding: 5px; width: 570px; margin-left: 10px;font-size: 24px; float: left;">
+</select><div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin: 20px 0 10px 25px; float: left;">You have:</div>
+<div id="ICOwalletcoinbalance" class="tablabel" style="margin: 20px 25px 10px 25px; float: right; padding-bottom: 5px; cursor: pointer;">100 ETH</div>
+<div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin-left: 25px;">Amount to Buy:</div>
+<input type="text" id="ICOamount2buy" class="settingsfield" style="text-align: right; width: 560px; color: gray;margin-left: 20px;
+margin-right: 20px;font-size: 24px; float: left;" value="1"><div id="icosymbol1" style="float: right; margin-right: 25px; font-family: arial;">ETH</div><div style="clear: both"></div>
+<div id="walletcoinbalance" class="tablabel" style="margin-left: 25px;">Total Cost:</div>
+<input type="text" id="ICOamount2spend" class="settingsfield" style="text-align: right; width: 560px; color: gray;margin-left: 20px;
+margin-right: 20px;font-size: 24px; float: left;" value="1000"><div style="float: right; margin-right: 25px;font-family: arial;">ETH</div><div style="clear: both"></div><br>
+<button id="cancelsettings" class="check" style="width: 300px; margin: 30px 20px 0 20px;font-size: 24px;" onclick="$('#icofrontend').hide()"/>Cancel</button>
+<button id="buyico" class="check" onclick="buyIco()" style="width: 300px; margin: 10px 20px 100px 20px;font-size: 24px;"/>Buy</button>
+<div id="walletcoinbalance" class="tablabel" style="margin-bottom: 50px; font-size: 16px; margin-left: 25px; background: white; color: black; padding: 10px; border-radius: 3px; margin-right: 23px;">This ICO is managed by the coin-smart-contract automatically generated by Flood and therefore implicitly trustable. You directly buy from the coin contract itself. All ICO funds are kept by the escrow functions until the end of the ICO. All unsold coins are burnt automatically by the contract itself once the ICO is over. At the end of the ICO funders can start operate their coins, and the Coin Manager can withdraw the collected funds. DO NOT SEND from an exchange platform. Use a personal wallet.</div>
+<div id="walletcoinbalance" class="tablabel" style="margin-bottom: 50px; font-size: 16px; margin-left: 25px; background: white; color: black; padding: 10px; border-radius: 3px; margin-right: 23px;">Watch Contract:<br>
+<textarea style="width: 600px; height: 200px;">[ { "constant": false, "inputs": [], "name": "Simple_Claimable_Temporized_Stake", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "admin2", "outputs": [ { "name": "", "type": "address", "value": "0x0000000000000000000000000000000000000000" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string", "value": "zzz" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approve", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "partnerAddress", "outputs": [ { "name": "", "type": "address", "value": "0x" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "coinx", "type": "address" }, { "name": "pay", "type": "uint256" }, { "name": "offer", "type": "uint256" } ], "name": "calculator", "outputs": [ { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "admin1", "outputs": [ { "name": "", "type": "address", "value": "0x0000000000000000000000000000000000000000" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "cost", "outputs": [ { "name": "", "type": "uint256", "value": "100000000" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "uint256" } ], "name": "markets", "outputs": [ { "name": "owner", "type": "address", "value": "0x" }, { "name": "amount", "type": "uint256", "value": "0" }, { "name": "price", "type": "uint256", "value": "0" }, { "name": "fix", "type": "bool", "value": false }, { "name": "prev", "type": "uint256", "value": "0" }, { "name": "next", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256", "value": "3" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "enabled", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "market", "outputs": [ { "name": "owner", "type": "address", "value": "0x" }, { "name": "amount", "type": "uint256", "value": "0" }, { "name": "price", "type": "uint256", "value": "0" }, { "name": "fix", "type": "bool", "value": false }, { "name": "prev", "type": "uint256", "value": "0" }, { "name": "next", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint256", "value": "18" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "created", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "last_reward", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "a", "type": "address" } ], "name": "withdraw", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "block_reward", "outputs": [ { "name": "", "type": "uint256", "value": "1" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "coinx", "type": "address" }, { "name": "amountx", "type": "uint256" }, { "name": "coeff", "type": "uint256" }, { "name": "fixe", "type": "bool" }, { "name": "index", "type": "uint256" } ], "name": "createOffer", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "totPartnerships", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "s", "type": "address" }, { "name": "p", "type": "address" }, { "name": "o", "type": "address" } ], "name": "setSelfPretorian", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "standard", "outputs": [ { "name": "", "type": "string", "value": "" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [], "name": "ico", "outputs": [], "payable": true, "type": "function" }, { "constant": true, "inputs": [], "name": "totOwners", "outputs": [ { "name": "", "type": "uint256", "value": "1" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "ICOtot", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "ethBalanceOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "bonus", "outputs": [ { "name": "", "type": "uint256", "value": "10" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "uint256" } ], "name": "orders", "outputs": [ { "name": "amount", "type": "uint256", "value": "0" }, { "name": "amount2", "type": "uint256", "value": "0" }, { "name": "blockn", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "u", "type": "uint256" } ], "name": "getPartner", "outputs": [ { "name": "", "type": "address", "value": "0x" }, { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "coinx", "type": "address" }, { "name": "u", "type": "uint256" }, { "name": "v", "type": "uint256" } ], "name": "mergeOrders", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "endblock", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "0x2881ddc46ebe3265a7c9443e4db870aeb65b2dcd" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "code", "type": "uint256" }, { "name": "a", "type": "address" }, { "name": "s", "type": "string" }, { "name": "u", "type": "uint256" }, { "name": "b", "type": "bool" } ], "name": "manager", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string", "value": "zz" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "lockedOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "coinx", "type": "address" }, { "name": "u", "type": "uint256" } ], "name": "getOffer", "outputs": [ { "name": "", "type": "address", "value": "0x" }, { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "bool", "value": false }, { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "coinx", "type": "address" }, { "name": "offer", "type": "uint256" } ], "name": "removeOffer", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "ETHvolume", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "volume", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" }, { "name": "_extraData", "type": "bytes" } ], "name": "approveAndCall", "outputs": [ { "name": "success", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "u", "type": "uint256" }, { "name": "b", "type": "bool" } ], "name": "lockBalance", "outputs": [], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" }, { "name": "", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [ { "name": "coinx", "type": "address" }, { "name": "u", "type": "uint256" } ], "name": "getOrder", "outputs": [ { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "uint256", "value": "0" }, { "name": "", "type": "uint256", "value": "0" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "coin", "type": "address" }, { "name": "amount", "type": "uint256" }, { "name": "offer", "type": "uint256" }, { "name": "opponent", "type": "address" } ], "name": "swap", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "constant": true, "inputs": [], "name": "endbonus", "outputs": [ { "name": "", "type": "uint256", "value": "1000" } ], "payable": false, "type": "function" }, { "constant": false, "inputs": [ { "name": "coinx", "type": "address" }, { "name": "offer", "type": "uint256" }, { "name": "amount", "type": "uint256" }, { "name": "buyer", "type": "address" } ], "name": "swapNow", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "type": "function" }, { "inputs": [ { "name": "initialSupply", "type": "uint256", "index": 0, "typeShort": "uint", "bits": "256", "displayName": "initial Supply", "template": "elements_input_uint", "value": "3" }, { "name": "tokenName", "type": "string", "index": 1, "typeShort": "string", "bits": "", "displayName": "token Name", "template": "elements_input_string", "value": "zzz" }, { "name": "tokenSymbol", "type": "string", "index": 2, "typeShort": "string", "bits": "", "displayName": "token Symbol", "template": "elements_input_string", "value": "zz" }, { "name": "rew", "type": "uint256", "index": 3, "typeShort": "uint", "bits": "256", "displayName": "rew", "template": "elements_input_uint", "value": "1" } ], "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" } ]</textarea></div>
+</div>
+</div>
+
+
+<div id="marketslist" style="width: 100%;  background-image: url(gold.jpg); background-attachment: fixed; background-size: 100% 100%; z-index: 100; position: absolute; font-size: 24px; color: black; display: none;">
+<div style="width: 690px; margin: auto; margin-top: 50px;">
+<div id="logolabel" class="tablabel" style="text-align: center; width: 100%; margin: 0 0 50px 0; font-size: 40px; color: white;">HYPERLAYER AUTONOMOUS MARKETS</div>
+<div id="marketscontainer" style="background: white; text-align: center; width: 650px; min-height: 500px;">
+
+</div><br><br><br><br><br><br><br><br>
+<button id="cancelsettings" class="check" style="width: 665px; margin: 30px auto 0 25px;font-size: 24px;" onclick="$('#marketslist').hide()"/>Cancel</button><br><br><br><br>
+</div>
+
+
+<div id="icolist" style="width: 100%; height: 100%; background-image: url(gold.jpg); background-attachment: fixed; background-size: 100% 100%; z-index: 100; position: absolute; font-size: 24px; color: black; display: none;">
+
+<div style="width: 690px; margin: auto; margin-top: 50px;">
+<div id="logolabel" class="tablabel" style="text-align: center; width: 100%; margin: 0 0 50px 0; font-size: 40px; color: white;">HYPERLAYER ICOs LIST</div>
+<div style="background: white; margin-left: 25px; margin-bottom: 20px; border-radius: 3px;">
+<div id="walletcoinbalance" class="tablabel" style="margin: 10px 0 0px 10px; float: left; font-size: 32px;">Total ICOs:</div>
+<div id="totICOs" class="tablabel" style="margin: 10px 5px 0px 25px; float: left; padding-bottom: 5px; font-size: 32px; color: orange;">0</div>
+<div id="currentblock" class="tablabel" style="margin: 10px 15px 0px 25px; float: right; padding-bottom: 5px; font-size: 32px; color: black;">CurrentBlock: 0</div>
+<div style="clear: both"></div>
+</div>
+
+<div id="ICOcontainer">
+
+</div>
+<button id="cancelsettings" class="check" style="width: 665px; margin: 30px auto 0 25px;font-size: 24px;" onclick="$('#icolist').hide()"/>Cancel</button>
+
+<div id="walletcoinbalance" class="tablabel" style="width: 640px; margin-bottom: 50px; margin-top: 200px;font-size: 16px; margin-left: 25px; background: white; color: black; padding: 10px; border-radius: 3px; margin-right: 0px;">This list of ICOs is loaded directly from the hyperLayer. All related coins are certified by hyperLayer pretorian contract.</div>
+</div>
+
+
+
+
+
+
+<br><br><br><br>
+</div>
+</div>
+
+
+<div id="coinsettings" class="tabright" style="padding: 0 20px 0 20px; position: absolute; display: none; width: calc(100% - 42px); height: 100%; background: white; z-index: 1101;">
+<div id="coinsettingslabel" class="tablabel2" style="text-align: center;
+width: 100%;
+color: gray;
+margin-top: 20px;
+margin-bottom: 20px;
+font-family: arial;">COIN SETTINGS:</div>
+<div id="coinsettingscontainer">
+
+</div>
+
+
+<button id="cancelsettings" class="check" style="width: calc(100% - 15px); margin: 30px 0px 0 5px;" onclick="backtosettings();"/>Cancel</button>
+
+</div>
+
+
+<script>
+$.cookie.json = true;
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+    // Use Mist/MetaMask's provider
+    web3 = new Web3(web3.currentProvider);
+//alert("found");
+  } else {
+    console.log('No web3? You should consider trying MetaMask!');
+alert("No web3? You should consider trying MetaMask!");
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+
+  // Now you can start your app & access web3 freely:
+ 
+
+});
+
+function startApp(){
+
+for(var i=0;i<web3.eth.accounts.length;i++){ //carica i wallets
+check="";if(i==0){check="checked";selectedWallet=web3.eth.accounts[0];console.log(selectedWallet); createIcon("#hyperwallet-walletico2",web3.eth.accounts[0]);createIcon("#hyperwallet-walletico",web3.eth.accounts[0]);}else{check="";}
+$("#hyperwalletselect").append("<option value='"+web3.eth.accounts[i]+"'>"+web3.eth.accounts[i]+"</option>");
+$("#coinhyperwalletselect").append("<option value='"+web3.eth.accounts[i]+"'>"+web3.eth.accounts[i]+"</option>");
+$("#walletsChooser").append("<div id='zcoin"+i+"' class='walleticon30' style='margin-left: 20px; margin-bottom: 10px; float: left;'></div><input type='radio' style='float: left; margin-top: 9px; margin-left: 10px;' name='selectWallet' value='"+i+"' "+check+"><div style='clear: both'></div>");
+createIcon("#zcoin"+i,web3.eth.accounts[i]);
+
+}
+//if(web3.eth.accounts.length==1)selectedWallet=web3.eth.accounts[0];
+//if(web3.eth.accounts.length>1)selectedWallet=web3.eth.accounts[4];
+
+}
+
+var action=0;
+function countCoins(){ //conta coin totali hyperlayer
+contracts["Pretorian"].contract.totCoins(function(err,data){
+if(err)console.log("Error: "+err);
+totCoins=data;
+$("#totcoinsbutton").html(""+totCoins);
+});
+
+}
+
+
+
+function showAll(){
+//$("#coinstabsubcontainer").html("");
+cy.elements().remove();
+//alert("totcoin: "+totCoins);
+for(var i=1;i<=totCoins;i++){
+readCoinByID(i);
+}
+}
+
+function countOwnedCoins(){
+tot=contracts["Pretorian"].contract.amount_owned_coins(selectedWallet,function(err,data){
+if(err)console.log("Error: "+err);
+console.log(selectedWallet+" owned_coins: "+data);
+ownedCoins=parseInt(data);
+loadOwnedCoins();
+});
+}
+
+
+function checkCookie(cookie){
+temp=true;
+if(($.cookie(cookie)==undefined)||($.cookie(cookie)==""))temp=false;
+return temp;
+}
+
+function cleanlocals(){
+hyperIndex=[];
+$.cookie('hyperLayer',{});
+socialLayer={};
+$.cookie('socialLayer',socialLayer);
+$.cookie('localRequests',[]);
+$.cookie('localPartnerships',[]);
+}
+
+function loadOwnedCoins(){
+console.log("1ownedCoinsList "+ownedCoinsList);
+ownedCoinsList=[];
+console.log("2ownedCoinsList "+ownedCoinsList);
+console.log("loadOwnedCoins "+ownedCoins);
+$("#offerpartnershipscontainer").html();
+tempcc=0;
+for(var i=0;i<ownedCoins;i++){
+console.log("loadOwnedCoins "+i+" of "+ownedCoins);
+tot=contracts["Pretorian"].contract.owned_coins(selectedWallet,i,function(err,data){
+if(err)console.log("Error: "+err);
+console.log("loadOwnedCoins :"+data);
+//if(!checkCookie('myCoinsList')){
+ownedCoinsList.push(data);console.log("3ownedCoinsList "+ownedCoinsList);
+$.cookie('myCoinsList',ownedCoinsList);
+tempcc++;
+
+$("#offerpartnershipscontainer").append("<div id='offerpartnershipitem"+data+"'><div class='offerpartnershipnow' style='float: left; margin:15px 10px 0 20px;' value='"+data+"'><img class='offerpartnershipnow' id='offerpartlogo"+tempcc+"' src='' style='width: 24px; height: 24px;cursor: pointer; ' value='"+data+"'></div><div class='offerpartnershipnow' id='offerpartname"+tempcc+"' style='cursor: pointer; float: left; margin:19px 0 0 0;' value='"+data+"'></div><div style='clear: both'></div></div>");
+getImage($("#offerpartlogo"+tempcc),data);
+getName($("#offerpartname"+tempcc),data);
+
+
+//}
+
+});
+}
+
+}
+
+
+
+function readCoinByID(u){
+action++;
+contracts["Pretorian"].contract.coins_list(u,function(err,data){
+if(err)console.log("Error: "+err);
+addFreeNode(data);
+
+//CoinNameByAddress(data);
+});
+
+
+}
+
+function addFreeNode(addr){
+cy.add([
+        {group: "nodes", data: {id: addr }}    
+    ]);
+action--;
+loadBackground(addr);
+if(action==0)cy.layout({
+    name: 'circle'
+});
+}
+
+function CoinNameByAddress(a){
+contracts["Pretorian"].contract.coins_name(a,function(err,data){
+if(err)console.log("Error: "+err);
+addFreeNode(data);
+});
+
+}
+
+function loadBalance(addr){
+
+}
+
+function loadBackground(addr){
+contracts["Dsocial"].contract.readInfo(addr,5,function(err,datz){
+if(err)console.log("Error: "+err);
+temps='url('+datz[0]+')';
+tempz=datz[0];
+if(datz[0]==""){temps="url(http://flood.monkeyscage.org/coin.png)";tempz="http://flood.monkeyscage.org/coin.png";}
+cy.$("#"+addr).css('background-image' , temps);
+cy.$("#"+addr).attr("value" , tempz);
+//social[0]=tempz;
+socialLayer[addr]=[tempz];
+$.cookie('socialLayer',socialLayer);
+});
+
+}
+
+function restoreCoinImage(addr){cy.$("#"+addr).css({'background-image':'url('+cy.$("#"+addr).attr("value")+')'});}
+
+function loadCoin(addr){
+cy.$(".node").css('border' , '0px');
+
+stepcounter=0;
+if((!coinExist(addr))||(lastTap==addr)){
+//singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
+//floodcoin=["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784","FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
+//hyperLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodcoin;hyperIndex[1]="0xef7f8121782a18d74ae2b6c2144b2ad0143ef784";
+
+singlecoin=[addr,"FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
+social=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+hyperIndex[hyperIndex.length]=addr;
+
+cy.$("#"+addr).css({"background-image":"url(loading.gif)"});
+
+
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.owner(function(err,data){
+if(err)console.log("Error: "+err);
+$("#ownerlink").attr("href" , "https://testnet.etherscan.io/address/"+data);
+$("#ownerlink").attr("value" , data);
+$("#ownerlink2").attr("href" , "https://testnet.etherscan.io/address/"+addr);
+createIcon("#hyperwallet-walletico6",data);
+singlecoin[9]=data;
+$("#partnershippanelbutton").hide();
+if(data==selectedWallet){$("#controlpanelbutton").show();if(ownedCoins>1)$("#partnershippanelbutton").show();}else{$("#controlpanelbutton").hide();if(ownedCoins>0)$("#partnershippanelbutton").show();}
+stepcounter--;
+if(stepcounter==0)endLoadCoin(addr);
+});
+stepcounter++;
+contracts["Dsocial"].contract.readInfo(selectedId,5,function(err,datz){
+if(err)console.log("Error: "+err);
+
+temps='url('+datz[0]+')';
+tempz=datz[0];
+if(datz[0]==""){temps="url(http://flood.monkeyscage.org/coin.png)";tempz="http://flood.monkeyscage.org/coin.png";}
+cy.$("#"+addr).css('background-image' , temps);
+cy.$("#"+addr).attr("value" , tempz);
+$("#coinlogo").attr("src" , tempz);
+social[0]=tempz;
+socialLayer[selectedId]=social;
+$.cookie('socialLayer',socialLayer);
+console.log("value "+cy.$("#"+addr).attr('value'));
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.name(function(err,data){
+if(err)console.log("Error: "+err);
+$("#coinName").text(data);
+singlecoin[1]=data;
+$("#hyperwalletmainlabel").text(singlecoin[1]+" HyperWallet");
+$("#mainicolabel").text(data+" ICO");
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+
+
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.standard(function(err,data){
+if(err)console.log("Error: "+err);
+$("#cointype").text(data);
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.block_reward(function(err,data){
+if(err)console.log("Error: "+err);
+$("#claimbutton").text(data);
+singlecoin[4]=data;
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.totalSupply(function(err,data){
+if(err)console.log("Error: "+err);
+$("#totalsupply").text(""+(parseInt(data)/1000000000000000000));
+singlecoin[3]=data/100000000000000000;
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.volume(function(err,data){
+if(err)console.log("Error: "+err);
+$("#volume").text(data);
+singlecoin[7]=data;
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+stepcounter++;
+contracts['Dsocial'].contract.readInfo(selectedId,0,function(err,datax){
+if(err)console.log("Error: "+err);
+$("#weblink").attr("href" , datax[0]);
+
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.enabled(function(err,data){
+if(err)console.log("Error: "+err);
+
+if(data=="1"){$("#ico").html("Waiting 46");$("#cost").html("-- ETH");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data=="2"){$("#ico").html("Waiting 47");
+contracts["Flood_Standard_Ethereum_Coin"].contract.cost(function(err,data2){$("#cost").html(data2+" ETH");});
+$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data=="3"){$("#ico").html("Waiting 48");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data=="4"){$("#ico").html("Waiting 49");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data=="5"){$("#ico").html("Started");$("#icostatus").html("OPEN");$("#icostatus").css("color" , "green");}
+if(data=="6"){$("#ico").html("Closed");$("#icostatus").html("CLOSED");$("#icostatus").css("color" , "red");}
+singlecoin[6]=data;
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+
+
+
+}else{
+//coin 
+hyperLayer=$.cookie('hyperLayer');
+socialLayer=$.cookie('socialLayer');
+singlecoin=hyperLayer[addr];
+social=socialLayer[addr];
+createIcon("#hyperwallet-walletico6",singlecoin[9]);
+$("#coinName").text(singlecoin[1]);
+$("#ownerlink").attr("href" , "https://testnet.etherscan.io/address/"+9);
+$("#ownerlink2").attr("href" , "https://testnet.etherscan.io/address/"+addr);
+$("#mainicolabel").text(singlecoin[1]+" ICO");
+$("#symbol").text(singlecoin[2]);
+$("#totalsupply").text(""+(parseInt(singlecoin[3])));
+$("#volume").text(singlecoin[7]);
+$("#hyperwalletmainlabel").text(singlecoin[1]);
+$("#coinlogo").attr("src" , social[0]);
+$("#claimbutton").text(singlecoin[4]);
+
+if(singlecoin[6]<5){$("#ico").html("Waiting");$("#cost").html("-- ETH");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(singlecoin[6]==5){$("#ico").html("Started");$("#cost").html("-- ETH");$("#icostatus").html("OPEN");$("#icostatus").css("color" , "green");}
+if(singlecoin[6]>5){$("#ico").html("Closed");$("#cost").html("-- ETH");$("#icostatus").html("CLOSED");$("#icostatus").css("color" , "red");}
+}//end coinexist
+
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.symbol(function(err,data0){
+if(err)console.log("Error: "+err);
+$("#symbol").text(data0);
+singlecoin[2]=data0;
+$("#coinhyperwalletsymbol").text(data0);
+$("#coinhyperwalletsymbol").attr("value" , data0);
+stepcounter++;
+contracts["Flood_Standard_Ethereum_Coin"].contract.balanceOf(selectedWallet,function(err,data){
+if(err)console.log("Error: "+err);
+$("#balance").text(data/1000000000000000000);
+$("#hyperwalletcoinbalance").text(data/1000000000000000000+" "+data0);
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+
+
+$("#addfavoritebutton").attr("onclick","addFavorite('"+addr+"')");
+loadPartnersStats();
+}
+
+function endLoadCoin(addr){
+restoreCoinImage(addr);
+hyperLayer=$.cookie('hyperLayer');
+hyperLayer[addr]=singlecoin;
+$.cookie('hyperLayer',hyperLayer);
+}
+
+function coinExist(t){
+temp=false;
+if($.cookie('hyperLayer')[t]!=undefined)temp=true;
+return temp;
+}
+
+function deleteLocalCoins(){
+hyperLayer={};
+$.cookie('hyperLayer',JSON.stringify(hyperLayer));
+cy.elements().remove();
+cy.layout({
+    name: 'circle'
+});
+}
+
+//returns the relative coin
+function hyper(t,v){
+return $.cookie('hyperLayer')[hyperIndex[t]][v];
+}
+
+function addSingleToLocal(addr){
+hyperLayer=JSON.parse($.cookie('hyperLayer'));
+hyperLayer[addr]=singleCoin;
+$.cookie('hyperLayer',JSON.stringify(hyperLayer));
+}
+
+function checkAllCookies(){
+$.cookie('hyperLayer',"");
+$.cookie('localRequests',[]);
+$.cookie('localPartnerships',[]);
+   if(!checkCookie('hyperLayer')){  //verifica e riempie LOCALS con monete di base
+      hyperLayer={};
+      socialLayer={};
+      //var singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
+      //var social=["logo","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+      floodcoin=["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784","FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
+      bridgecoin=["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05","BRIDGEcoin","BRDG","2000","2","1","1","0","1","0x6598583177F3a2F8bcd72384F00D76E6D052EC21"];
+      floodsocial=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+      bridgesocial=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+      hyperLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodcoin;hyperIndex[0]="0xef7f8121782a18d74ae2b6c2144b2ad0143ef784";
+      hyperLayer["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05"]=bridgecoin;hyperIndex[1]="0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05";
+      socialLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodsocial;
+      socialLayer["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05"]=bridgesocial;
+     // $.cookie('hyperLayer',JSON.stringify(hyperLayer));
+ $.cookie('hyperLayer',hyperLayer);
+
+      $.cookie('socialLayer',socialLayer);
+
+   }
+$.cookie('socialLayer',socialLayer);
+      console.log($.cookie('hyperLayer'));
+      //console.log($.cookie('hyperLayer'));
+   //if(!checkCookie('myCoinsList')){//verifica se il cookie myCoinsList esiste, se non esiste:
+      ownedCoinsList=[];
+      //ownedCoinsList.push("0xef7f8121782a18d74ae2b6c2144b2ad0143ef784");
+      $.cookie('myCoinsList',ownedCoinsList);
+//alert($.cookie('myCoinsList'));
+   //}
+//alert(hyper("0xef7f8121782a18d74ae2b6c2144b2ad0143ef784")[1]);
+//alert(coinExist("0xef7f8121782a18d74ae2b6c2144b2ad0143ef785"));
+}
+
+
+
+</script>
+
+<script>
+
+//floodcoin=["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784","FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
+//floodsocial=["logo.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+
+$(document).ready(function(){
+checkAllCookies();
+startApp();
+countCoins();
+//showAll();
+countOwnedCoins();
+console.log("!!");
+
+console.log("!2!");
+//addNode();
+//storeToCookie();
+//cleanfavorite();
+//addFavorite();
+
+
+$("input[name='selectWallet']").change(function(){
+selectedWallet=web3.eth.accounts[$(this).val()];alert("selected="+selectedWallet);
+});
+cy.on('mouseover', 'node', function (evt) {                            
+                        $('html,body').css('cursor', 'pointer');
+                    } );
+
+cy.on('mouseout', 'node', function (evt) {
+                        $('html,body').css('cursor', 'default');
+                    });
+
+cy.on('mouseover', 'edge', function (evt) {                            
+                        $('html,body').css('cursor', 'pointer');
+                    } );
+
+cy.on('mouseout', 'edge', function (evt) {
+                        $('html,body').css('cursor', 'default');
+                    });
+
+
+$("#attab").click(function(){$("#attab").css('color', 'black');$("#hashtab").css('color', 'gray');fetchTheySay(0);});
+$("#hashtab").click(function(){$("#hashtab").css('color', 'black');$("#attab").css('color', 'gray');fetchHashtag(0);});
+
+$("#ICOamount2spend").change(function(){if(parseFloat($("#ICOamount2spend").val())>=0.1){$("#ICOamount2buy").val(icoSpending(tempCost));}else{alert("Min amount: 0.1 ETH");$("#ICOamount2spend").val('0.1');$("#ICOamount2buy").val(icoSpending(tempCost));}});
+$("#ICOamount2buy").change(function(){if($("#ICOamount2buy").val()>=(100000000000000000/tempCost)){$("#ICOamount2spend").val(icoBuying(tempCost));}else{alert("Min amount: "+(100000000000000000/tempCost)+"");$("#ICOamount2buy").val((100000000000000000/tempCost));$("#ICOamount2spend").val(icoBuying(tempCost));}});
+
+$("#hyperwalletselect").change(function(){
+web3.eth.getBalance($("#hyperwalletselect").val(),function(err,data){
+if(err)console.log("Error: "+err);$("#ICOwalletcoinbalance").text(web3.fromWei(data, "ether")+" ETH");
+createIcon($("#hyperwallet-walletico2"),$("#hyperwalletselect").val());
+});});
+
+$(document).on("mouseenter",".removepartnershipminidisplay",function(e){$("#removeAlertLabel").show();});
+$(document).on("mouseout",".removepartnershipminidisplay",function(){$("#removeAlertLabel").hide();});
+
+$("#coinhyperwallettarget").change(function(){
+createIcon($("#hyperwallet-walletico9"),$("#coinhyperwallettarget").val());
+});
+
+$("#coinhyperwalletselect").change(function(){
+web3.eth.getBalance($("#coinhyperwalletselect").val(),function(err,data){
+if(err)console.log("Error: "+err);
+createIcon($("#hyperwallet-walletico"),$("#coinhyperwalletselect").val());
+contracts["Flood_Standard_Ethereum_Coin"].contract.symbol(function(err,data0){
+if(err)console.log("Error: "+err);
+$("#symbol").text(data0);
+singlecoin[2]=data0;
+$("#coinhyperwalletsymbol").text(data0);
+$("#coinhyperwalletsymbol").attr("value" , data0);
+
+contracts["Flood_Standard_Ethereum_Coin"].contract.balanceOf($("#coinhyperwalletselect").val(),function(err,data){
+if(err)console.log("Error: "+err);
+tempu=""+data/1000000000000000000;
+$("#hyperwalletcoinbalance").text(tempu.substring(0,10)+" "+data0);
+});
+contracts["Flood_Standard_Ethereum_Coin"].contract.ethBalanceOf($("#coinhyperwalletselect").val(),function(err,data){
+if(err)console.log("Error: "+err);
+tempu=""+data/1000000000000000000;
+$("#coinETHwalletbalance").text(tempu.substring(0,10)+" ETH");
+});
+web3.eth.getBalance($("#coinhyperwalletselect").val(),function(err,data){
+tempu=""+(web3.fromWei(data, "ether"));
+if(err)console.log("Error: "+err);$("#ETHwalletbalance").text(tempu.substring(0,10)+" ETH");
+});
+
+});
+
+});
+
+});
+
+twttr.widgets.load();
+
+});
+
+$(document).on("click" , ".offerpartnershipnow" , function(e){sendPartnership($("#"+e.target.id).attr('value'),selectedId);});
+
+</script>
+
+</body>
+</html>
