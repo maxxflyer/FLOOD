@@ -12,13 +12,15 @@ The smart contracts behind the HyperLayer are under test and will be published a
 
 Find directly online on testnet
 
+http://flood.monkeyscage.org/index.html
+
+use Mist or Metamask
+
 LayersMachine will transform Ethereum into a Social Network
 Are you building a project on Ethereum?
 LayersMachine will be a WEB2+WEB3 interface.
 This is not Facebook... I would like to integrate your project into LayersMachine and give you all my traffic.
 Contact me!
 
-http://flood.monkeyscage.org/index.html
 
-use Mist or Metamask
 I am working on the hyper-logic of the system, please stay tuned.
