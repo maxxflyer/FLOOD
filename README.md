@@ -10,6 +10,9 @@ It's time to turn upside down the geopolitics of Exchange-Platforms with the rev
 Everything is under construction, so please take the code as-is, and wait for some decent instructions.
 The smart contracts behind the HyperLayer are under test and will be published as soon as possible.
 
+About HyperCoins:
+https://www.reddit.com/r/ethereum/comments/5e0nl9/what_is_an_hypercoin_and_how_the_principle_can/
+
 Find directly online on testnet
 
 http://flood.monkeyscage.org/index.html
