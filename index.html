@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Tutorial 1: Getting Started</title>
+    <title>LAYERS:MACHINE</title>
     <script src="cytoscape.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
@@ -12,13 +12,13 @@
 <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-qtip/2.2.5/cytoscape-qtip.js"></script>
 <script src="https://platform.twitter.com/widgets.js"></script>
 <script src="http://arkdao.com/blockies-master/blockies.js"></script>
-<script src="http://flood.monkeyscage.org/twitter-fetcher.js"></script>
-<script type="text/javascript" src="http://flood.monkeyscage.org/deploymentpan.js"></script>
+<script src="twitter-fetcher.js"></script>
+<script type="text/javascript" src="deploymentpan.js"></script>
 <script type="text/javascript" src="http://arkdao.com/web3.js"></script>
 
 <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-spread/1.0.9/cytoscape-spread.js"></script>
 
-<script src="http://flood.monkeyscage.org/jquery.cookie.js"></script>
+<script src="jquery.cookie.js"></script>
 </head>
 
 <style>
@@ -493,38 +493,7 @@ layout: {
 						minDist: 40
 					},
         elements: [
-          { data: { id: 'a' } },
-          { data: { id: 'b' } },
-          { data: { id: 'c' } },
-          { data: { id: 'd' } },
-          {
-            data: {
-              id: 'ab',
-              source: 'a',
-              target: 'b'
-            }
-          },
-{
-            data: {
-              id: 'ac',
-              source: 'a',
-              target: 'c'
-            }
-          },
-{
-            data: {
-              id: 'bc',
-              source: 'b',
-              target: 'c'
-            }
-          },
-{
-            data: {
-              id: 'dc',
-              source: 'd',
-              target: 'c'
-            }
-          }],
+          ],
         style:cytoscape.stylesheet()
     .selector('node')
       .css({
@@ -537,32 +506,13 @@ layout: {
         'cursor': 'pointer'
       })
  
-    .selector('#ab,#ac,#bc,#dc')
-      .css({
-        'width': 6,
-        'target-arrow-shape': 'triangle',
-        'line-color': '#90C3D4',
-        'target-arrow-color': '#90C3D4',
-        'curve-style': 'bezier'
-      })
-    .selector('#a')
-      .css({
-        'background-image': 'arkdao.jpg'
-      })
-.selector('#b')
-      .css({
-        'background-image': 'medusa.jpg'
-      }) 
-.selector('#c')
-      .css({
-        'background-image': 'dioscuri.jpg'
-      }) 
-.selector('#d')
-      .css({
-        'background-image': 'owl.gif'
-      }) 
+    
+
  
-      });
+     
+         
+         
+ });
 cy.on('click', 'node', function(event) {
     var node = event.cyTarget;
  cy.$(".qtip").hide();
@@ -743,11 +693,18 @@ lastnode=1;display=2});
 cy.on('tap', 'edge', function(e){
 if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color': lastColor,'target-arrow-color': lastColor});
 selectedEdgeId=this.id();
+
 lastColor=cy.$("#"+selectedEdgeId).css('line-color');
 cy.$("#"+this.id()).css({'line-color':'red','target-arrow-color': 'red'});
 if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
 selectedId="";
-$(".tableft").hide();$(".tabright").hide();});
+$(".tableft").hide();$(".tabright").hide();
+tempss=this.id();
+tempss=tempss.substring(0,tempss.indexOf("-"));
+displayHyperName($("#hyperbidlabel"),tempss);
+if(isPartnership(this.id())){$("#hypermarkettabpartnershipalert").hide();$("#hypermarkettabask").show();}else{$("#hypermarkettabask").hide();$("#hypermarkettabpartnershipalert").show();}
+$("#hypermarkettabbid").show();
+});
 cy.on('tap', function(event){
 if( event.cyTarget === cy ){
 
@@ -1450,7 +1407,36 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div id="attab" style="cursor: pointer; float: left; font-size: 20px;margin-left: 20px; margin-top: 10px; margin-bottom: 5px;">@</div><div id="hashtab" style="cursor: pointer; float: left; font-size: 20px; margin-left: 20px; color: gray; margin-top: 10px; margin-bottom: 5px; margin-top: 3px;">#</div><div class="spacer"></div>
 <div id="theysay"></div>
 </div>
+
+
+<div id="hypermarkettabbid" class="tab tableft" style="display: none;">
+<div id="" class="tablabel2" style="text-align: center; color: gray; margin-top: 0px; margin-bottom: 10px; font-family: arial;"><div style="float: left; margin-top: 20px; margin-bottom: 20px; margin-left: 20px; margin-right: 10px;">Offer:</div><div id="hyperbidlabel" class="tablabel2" style="color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
+<div class="spacer"></div>
+<button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 10px 0px 0 5px;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
+<div style="width: 238px; margin-left: 5px; border: solid 1px #ccc; height: 300px; margin-bottom: 0px;">
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
 </div>
+<button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="hyperlogolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
+<div id="hyperhyperwallet-walletico4" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
+<div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px;">Price:</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px; margin-right: 0px;">Amount:</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px;">Total:</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<button id="hyperbidsetoffer" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>SET OFFER</button>
+</div>
+</div>
+
+
+
 
 <div id="sidebar-right">
 <div id="cointab" class="tabright" style="display: none;">
@@ -1623,6 +1609,38 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div class="spacer"></div>
 <button id="updatesettings" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>BUY</button>
 </div>
+
+<div id="hypermarkettabpartnershipalert" class="tab tabright" style="display: none; margin-left: 20px;">
+<div id="" class="tablabel2" style="color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;float: left;">PARTNERSHIP TO BE ACCEPTED</div>
+</div>
+
+
+<div id="hypermarkettabask" class="tab tabright" style="display: none;">
+<div id="" class="tablabel2" style="text-align: center; color: gray; margin-top: 0px; margin-bottom: 10px; font-family: arial;"><div style="float: left; margin-top: 20px; margin-bottom: 20px; margin-left: 20px; margin-right: 10px;">Offer:</div><div id="hyperasklabel" class="tablabel2" style="color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;float: left;">REDcoin</div></div>
+<div class="spacer"></div>
+<button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 10px 0px 0 5px;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
+<div style="width: 238px; margin-left: 5px; border: solid 1px #ccc; height: 300px; margin-bottom: 0px;">
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
+</div>
+<button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="hyperlogolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
+<div id="hyperhyperwallet-walletico4" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
+<div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px;">Price:</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px; margin-right: 0px;">Amount:</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px;">Total:</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
+margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer"></div>
+<button id="hyperbidsetoffer" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>SET OFFER</button>
+</div>
+
+
 <div id="hypercontroltab" class="tab tabright" style="font-family:arial; color: gray;">
 <div id="settingslabel" class="tablabel2" style="text-align: center;
 width: 100%;
@@ -1816,7 +1834,7 @@ font-family: arial;">COIN SETTINGS:</div>
 <script>
 $.cookie.json = true;
 window.addEventListener('load', function() {
-
+alert("For Morden Testnet - please use Mist or Metamask");
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
     // Use Mist/MetaMask's provider
@@ -1956,6 +1974,7 @@ addFreeNode(data);
 });
 
 }
+
 
 function loadBalance(addr){
 
@@ -2122,6 +2141,7 @@ stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.balanceOf(selectedWallet,function(err,data){
 if(err)console.log("Error: "+err);
 $("#balance").text(data/1000000000000000000);
+$("#hypercoinbalancelabel").text(data/1000000000000000000+" "+data0);
 $("#hyperwalletcoinbalance").text(data/1000000000000000000+" "+data0);
 stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 });
@@ -2165,6 +2185,14 @@ function addSingleToLocal(addr){
 hyperLayer=JSON.parse($.cookie('hyperLayer'));
 hyperLayer[addr]=singleCoin;
 $.cookie('hyperLayer',JSON.stringify(hyperLayer));
+}
+
+function isPartnership(tempss){
+temp=true;
+localPartnerships=$.cookie('localPartnerships');
+if(JSON.stringify(localPartnerships)!="[]"){
+if(JSON.stringify(localPartnerships).indexOf(tempss)<0)temp=false;}else{temp=false;}
+return temp;
 }
 
 function checkAllCookies(){
