@@ -327,8 +327,9 @@ alert($.cookie('name'));
 function addFavorite(tempa){
 temp=[];
 if(!checkCookie("favorite")){temp=[];}else{temp=JSON.parse($.cookie('favorite'));}
-if(temp.indexOf(tempa)<0)temp.push(tempa);
+if(temp.indexOf(tempa)<0){temp.push(tempa);}else{temp.splice(temp.indexOf(tempa), 1);}
 $.cookie('favorite', JSON.stringify(temp));
+if(isfavorite(tempa)){$("#addfavoritebutton").html("&#9733");}else{$("#addfavoritebutton").html("&#9734");}
 }
 
 function showfavorites(){
@@ -357,6 +358,13 @@ cy.layout({
 
 function cleanfavorites(){
 $.cookie('favorite', JSON.stringify([]));
+}
+
+function isfavorite(addr){
+tempr=false;
+temp=JSON.parse($.cookie('favorite'));
+if(temp.indexOf(addr)!=-1)tempr=true;
+return tempr;
 }
 
 function claim(a){
@@ -686,11 +694,16 @@ if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color':lastColor,'targ
 selectedEdgeId="";
 $("#cointab").show();
 $("#hometableft").show();
+if(isfavorite(this.id())){$("#addfavoritebutton").html("&#9733");}else{$("#addfavoritebutton").html("&#9734");}
 //$("#twittertab1").show();
 fetchTheySay(0);
-lastnode=1;display=2});
+lastnode=1;display=2;
+
+});
 
 cy.on('tap', 'edge', function(e){
+$("#sidebar-left").show();
+$("#sidebar-right").show();
 if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color': lastColor,'target-arrow-color': lastColor});
 selectedEdgeId=this.id();
 
@@ -1327,9 +1340,9 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <div id="toticolabel" class="tablabel" style="float: left;">Tot ICO:</div>
 <div id="totico" class="tablabel" style="float: right; color: gray;"><button id="showicolistbutton" style=" margin: -3px 10px 0px 0px;" onclick="openIcoList()">?</button></div>
 <div class="spacer"></div>
+<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showLocals()">LOAD LOCALS</button>
 <button id="showmycoinsbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showmycoins()">MY COINS</button>
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showfavorites()">&#9733 FAVORITES</button>
-<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showLocals()">LOAD LOCALS</button>
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showAll()">LOAD ALL</button>
 
 </div>
@@ -1834,7 +1847,7 @@ font-family: arial;">COIN SETTINGS:</div>
 <script>
 $.cookie.json = true;
 window.addEventListener('load', function() {
-alert("For Morden Testnet - please use Mist or Metamask");
+alert("For Morden Testnet - please use Mist. Metamask is now running Ropsten Testnet");
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
     // Use Mist/MetaMask's provider
@@ -1855,7 +1868,7 @@ alert("No web3? You should consider trying MetaMask!");
 function startApp(){
 
 for(var i=0;i<web3.eth.accounts.length;i++){ //carica i wallets
-check="";if(i==0){check="checked";selectedWallet=web3.eth.accounts[0];console.log(selectedWallet); createIcon("#hyperwallet-walletico2",web3.eth.accounts[0]);createIcon("#hyperwallet-walletico",web3.eth.accounts[0]);}else{check="";}
+check="";if(i==0){check="checked";selectedWallet=web3.eth.accounts[0];console.log(selectedWallet); createIcon("#hyperwallet-walletico2",web3.eth.accounts[0]);createIcon("#hyperwallet-walletico",web3.eth.accounts[0]);createIcon("#hyperhyperwallet-walletico4",web3.eth.accounts[0]);}else{check="";}
 $("#hyperwalletselect").append("<option value='"+web3.eth.accounts[i]+"'>"+web3.eth.accounts[i]+"</option>");
 $("#coinhyperwalletselect").append("<option value='"+web3.eth.accounts[i]+"'>"+web3.eth.accounts[i]+"</option>");
 $("#walletsChooser").append("<div id='zcoin"+i+"' class='walleticon30' style='margin-left: 20px; margin-bottom: 10px; float: left;'></div><input type='radio' style='float: left; margin-top: 9px; margin-left: 10px;' name='selectWallet' value='"+i+"' "+check+"><div style='clear: both'></div>");
@@ -2204,12 +2217,16 @@ $.cookie('localPartnerships',[]);
       socialLayer={};
       //var singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
       //var social=["logo","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+
+      zapcoin=["0xf2ce3942251a985268342ab6fac25edb6339e428","ZAPcoin","ZAP","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];    
       floodcoin=["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784","FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
       bridgecoin=["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05","BRIDGEcoin","BRDG","2000","2","1","1","0","1","0x6598583177F3a2F8bcd72384F00D76E6D052EC21"];
       floodsocial=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
       bridgesocial=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
-      hyperLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodcoin;hyperIndex[0]="0xef7f8121782a18d74ae2b6c2144b2ad0143ef784";
-      hyperLayer["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05"]=bridgecoin;hyperIndex[1]="0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05";
+      hyperLayer["0xf2ce3942251a985268342ab6fac25edb6339e428"]=zapcoin;hyperIndex[0]="0xf2ce3942251a985268342ab6fac25edb6339e428";
+      hyperLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodcoin;hyperIndex[1]="0xef7f8121782a18d74ae2b6c2144b2ad0143ef784";
+      hyperLayer["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05"]=bridgecoin;hyperIndex[2]="0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05";
+      socialLayer["xf2ce3942251a985268342ab6fac25edb6339e428"]=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
       socialLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodsocial;
       socialLayer["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05"]=bridgesocial;
      // $.cookie('hyperLayer',JSON.stringify(hyperLayer));
@@ -2253,10 +2270,11 @@ console.log("!2!");
 //storeToCookie();
 //cleanfavorite();
 //addFavorite();
-
+//showLocals();
 
 $("input[name='selectWallet']").change(function(){
 selectedWallet=web3.eth.accounts[$(this).val()];alert("selected="+selectedWallet);
+createIcon($("#hyperhyperwallet-walletico4"),selectedWallet);
 });
 cy.on('mouseover', 'node', function (evt) {                            
                         $('html,body').css('cursor', 'pointer');
