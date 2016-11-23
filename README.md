@@ -1,4 +1,6 @@
 # FLOOD
+
+[![Join the chat at https://gitter.im/FLOOD-PROJECT/Lobby](https://badges.gitter.im/FLOOD-PROJECT/Lobby.svg)](https://gitter.im/FLOOD-PROJECT/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 LayersMachine.js for Ethereum
 
 We all own a car consuming oil.
