@@ -564,18 +564,7 @@ position: {
 
                 $(".tab").hide();
                 $("#timeline").html("");
-                    twttr.widgets.createTimeline({
-                       sourceType: "profile",
-                       screenName: "twitterdev"
-                    },
-                    document.getElementById('timeline'),
-                    {
-                    width: '250',
-                    height: $("#sidebar-right").height()-4,
-                    related: 'twitterdev,twitterapi'
-                    }).then(function (el) {
-                    console.log("Embedded a timeline.")
-                    });
+                    embedTwitter("timeline");
                     event.preventDefault();
                 $(".tabright").hide();
                 $("#cointab").hide();
@@ -593,7 +582,24 @@ position: {
     }, event);
 });
 
+function embedTwitter(ob){
 
+//carica dal sociallayer il nome e l' id twitter
+
+twttr.widgets.createTimeline({
+                       sourceType: "profile",
+                       screenName: "twitterdev"
+                    },
+                    document.getElementById(ob),
+                    {
+                    width: '250',
+                    height: $("#sidebar-right").height()-4,
+                    related: 'twitterdev,twitterapi'
+                    }).then(function (el) {
+                    console.log("Embedded a timeline.");
+                    });
+
+}
 
     function loadwalletETH(){
 contracts["Flood_Standard_Ethereum_Coin"].contract.ethBalanceOf(selectedWallet,function(err,data){
