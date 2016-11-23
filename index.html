@@ -526,7 +526,7 @@ cy.on('click', 'node', function(event) {
     var node = event.cyTarget;
  cy.$(".qtip").hide();
     node.qtip({
-         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div>',
+         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbutton" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div><div class="qtipbuttonlast" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="ethereco.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div>',
 position: {
     my: 'bottom center',
     at: 'top center'
@@ -588,6 +588,13 @@ xxx="801253029852958720";
         }
     }, event);
 });
+
+function sendEtherEcoMessage(){
+
+alert('Send Message To Coin Manager 0x6598583177F3a2F8bcd72384F00D76E6D052EC21');
+window.open("https://testnet.etherecho.com/send.html?to=0x6598583177F3a2F8bcd72384F00D76E6D052EC21",'_blank');
+
+}
 
 function embedTwitter(ob){
 
@@ -1410,6 +1417,7 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 
 
 <div id="sidebar-right">
+<div id="socialpanel" style="width: 250px; border-bottom: solid 1px #ddd; height: 24px;"><img src="ethereco.png" style="cursor: pointer; width: 18px; height: 18px; margin: 3px 15px 0px 3px; float: right;" onclick="alert('Ether Eco Messenger')"></div>
 <div id="cointab" class="tabright" style="display: none;">
 <img id="coinlogo" src="arkdao.jpg" style="width: 120px; height: 120px; margin: auto; display: block; margin-top: 30px;">
 <div class="spacer"></div>
@@ -1805,7 +1813,7 @@ font-family: arial;">COIN SETTINGS:</div>
 <script>
 $.cookie.json = true;
 window.addEventListener('load', function() {
-alert("For Morden Testnet - please use Mist. Metamask is now running Ropsten Testnet");
+alert("For Morden Testnet - please use Mist or Metamask selecting Morden Testnet");
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
     // Use Mist/MetaMask's provider
