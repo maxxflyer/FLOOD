@@ -51,17 +51,17 @@ freeWallets[msg.sender]=false;
 }
 
 function addInfo(address coin,uint index,string info){
-if((msg.sender!=Pretorivs.coins_owner(coin))&&(msg.sender!=controller))throw;
+if((msg.sender!=Pretorivs.coins_owner(coin))&&(msg.sender!=controller)&&((freeWallets[coin])&&(msg.sender!=coin)))throw;
 socialInfo[coin][index]=info;
 }
 
 function addQuantity(address coin,uint index,uint quant){
-if((msg.sender!=Pretorivs.coins_owner(coin))&&(msg.sender!=controller))throw;
+if((msg.sender!=Pretorivs.coins_owner(coin))&&(msg.sender!=controller)&&((freeWallets[coin])&&(msg.sender!=coin)))throw;
 socialQuantity[coin][index]=quant;
 }
 
 function addCheck(address coin,uint index,bool check){
-if((msg.sender!=Pretorivs.coins_owner(coin))&&(msg.sender!=controller))throw;
+if((msg.sender!=Pretorivs.coins_owner(coin))&&(msg.sender!=controller)&&((freeWallets[coin])&&(msg.sender!=coin)))throw;
 socialCheck[coin][index]=check;
 }
 
