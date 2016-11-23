@@ -5,13 +5,13 @@ address owner;
 Pretorian Pretorivs;
 address controller;
 
+mapping(address => true)public freeWallets;
+
 mapping(address => mapping(uint => string))public socialInfo;
 mapping(uint => string)public infosLabels;
 
-
 mapping(address => mapping(uint => uint))public socialQuantity; 
 mapping(uint => string)public quantityLabels;
-
 
 mapping(address => mapping(uint => bool))public socialCheck;
 mapping(uint => string)public boolsLabels;
@@ -41,6 +41,14 @@ mapping(address => mapping(uint => string))public social8;
 mapping(uint => string)public social8Labels;
 
 function Dsocial(address p){owner=msg.sender;Pretorivs=Pretorian(p);}
+
+function addWallet(){
+freeWallets[msg.sender]=true;
+}
+
+function removeWallet(){
+freeWallets[msg.sender]=false;
+}
 
 function addInfo(address coin,uint index,string info){
 if((msg.sender!=Pretorivs.coins_owner(coin))&&(msg.sender!=controller))throw;
