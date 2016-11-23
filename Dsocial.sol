@@ -5,7 +5,7 @@ address owner;
 Pretorian Pretorivs;
 address controller;
 
-mapping(address => true)public freeWallets;
+mapping(address => bool)public freeWallets;
 
 mapping(address => mapping(uint => string))public socialInfo;
 mapping(uint => string)public infosLabels;
