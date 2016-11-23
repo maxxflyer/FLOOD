@@ -1,0 +1,520 @@
+<!doctype>
+<html>
+
+<head>
+<script type="text/javascript" src="http://arkdao.com/web3.js"></script>
+<!-- <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.3.1.js"></script>  -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://arkdao.com/blockies-master/blockies.js"></script>
+<script type="text/javascript" src="deploymentpan.js"></script>
+<link rel="stylesheet" type="text/css" href="stylepan.css">
+<script src="watercanvas.js"></script>
+
+<style>
+.display{margin: 20px;}
+</style>
+<script>
+
+
+//$(document).ready(function (){
+
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+    // Use Mist/MetaMask's provider
+    web3 = new Web3(web3.currentProvider);
+$("#problem").hide();
+  } else {
+    console.log('No web3? You should consider trying MetaMask!');
+alert("No web3? You should consider trying MetaMask!");
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+
+  // Now you can start your app & access web3 freely:
+ 
+
+});
+
+
+
+var pixel 		= create2DArray(createRadialCanvas(2,2));		
+			var raindrop 	= create2DArray(createRadialCanvas(4,4));
+			var finger 		= create2DArray(createRadialCanvas(14,14));
+var width = 255;
+var height = 130;
+
+var selectedwallet=0;
+
+function init(){
+	var waterModel = new WaterModel(width, height, {
+			resolution:2.0,
+			interpolate:false,
+			damping:0.985,
+			clipping:5,
+			evolveThreshold:0.05,
+			maxFps:30,
+			showStats:false
+		});
+
+var finger = [
+	[0.5, 1.0, 0.5],
+	[1.0, 1.0, 1.0],
+	[0.5, 1.0, 0.5]
+];
+
+waterModel.touchWater(100, 100, 1.5, finger);
+enableMouseInteraction(waterModel, "waterHolder");
+	var waterCanvas = new WaterCanvas(width, height,
+		"waterHolder", waterModel, {
+			backgroundImageUrl:"flood.png",
+			lightRefraction:9.0,
+			lightReflection:0.1,
+			maxFps:20,
+			showStats:false
+		});
+}
+
+
+</script>
+<script type='text/javascript'>
+
+ 
+     $(document).ready(function (){
+
+init();
+
+checkWallet();
+
+reloadWallet();
+
+
+
+   });
+
+ function  reloadWallet(){
+        selectedwallet=$("#wallets").val();web3.eth.defaultAccount = web3.eth.accounts[selectedwallet];checkWallet();//listMyCoins();
+        }
+
+
+function checkWallet(){
+		var accounts = web3.eth.accounts;
+
+		if(accounts.length>0){
+			
+                    
+                        if($("#wallets").html()==""){
+                          for(var i=0;i<accounts.length;i++)$("#wallets").append('<option value="'+i+'">'+accounts[i]+'</option>');
+                        }
+                       
+  selectedwallet=$("#wallets").val();
+  web3.eth.getBalance(web3.eth.accounts[selectedwallet],function(err,data){
+if(err)console.log("Error: "+err);
+var temp=""+web3.fromWei(data, "ether");
+ $("#balance").text("Wallet: "+temp.substring(0, 8)+" ETH");
+
+});
+                          //   var temp=""+web3.fromWei(web3.eth.getBalance(web3.eth.accounts[selectedwallet]), "ether");
+  
+                        //$("#balance").text("Wallet: "+temp.substring(0, 8)+" ETH");
+ 
+                        createIcon("#walletico",web3.eth.accounts[selectedwallet]);
+			//loadCoinsList();
+ 
+		}else{
+			
+			$("#noWalletAlert").show();
+                        $("#my-coins").hide();
+
+		}
+		
+}
+		
+
+function createIcon(divid,addr){
+
+
+        var icona = 'url(' + blockies.create({ seed:addr ,size: 8,scale: 16}).toDataURL()+')';
+        
+        $(divid).css('background-image' , icona);
+}
+
+
+function loadCoinsList(){
+
+
+
+}
+
+
+</script>
+
+
+<script>
+
+$(document).ready(function (){
+
+createIcon("#floodblocky","0xf51a693b8A53135De96E783A489133D7eA41A3c9");
+//listMyCoins();
+
+     $("#home").click(function(){
+        
+       $(".tab").hide();
+       $("#intro").show();
+          
+     });
+
+
+
+     $("#list").click(function(){
+        
+       $(".tab").hide();listCoins();
+       $("#coinstab").show();
+          
+     });
+
+
+
+     $("#faq").click(function(){
+        
+       $(".tab").hide();
+$( "#faqtab" ).load( "faq.html", function() {
+});
+       $("#faqtab").show();
+          
+     });
+
+
+      $("#ledger").click(function(){
+        
+       $(".tab").hide();
+       listLogs();
+       $("#ledgertab").show();
+          
+     });
+
+     $("#create").click(function(){
+        
+      create_Coin();
+          
+     });
+
+      $("#wallets").change(function(){reloadWallet();});
+
+      $("#msgclose").click(function(){$("#msg").hide();});
+});
+
+function gup( name, url ) {
+      if (!url) url = location.href;
+      name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+      var regexS = "[\\?&]"+name+"=([^&#]*)";
+      var regex = new RegExp( regexS );
+      var results = regex.exec( url );
+      return results == null ? null : results[1];
+    }
+    
+
+
+function create_Coin(){
+$(".tab").hide();
+setMsg("orange","Enter Password and wait please..","start");
+referral='0xdDB318491604F86FF226aC15EE2feD8663A0A326';
+//data=nam+"|"+sit+"|"+log+"|"+des+"|"+div+"|"+adr+"|"+akr+"|"+sym+"|"+qty+"*"+"!referral";
+
+
+
+console.log(web3.toWei(parseInt($("#supply").val()),'ether'));
+//var qty = new BigNumber(""+web3.toWei(parseInt($("#supply").val()),'ether'));
+var qty = web3.toWei(parseInt($("#supply").val(),'ether'));
+contracts['Flood_1_00'].contract.create_coin(qty,$("#name").val(),$("#symbol").val(),$("#mining").val(),referral,5,{from:web3.eth.accounts[selectedwallet],value: web3.toWei(0.001, "ether"), gas: 4699999},function(error, transactionHash) {
+if(error)alert("Error: "+err);
+//console.log(err);
+//console.log(web3.eth.getTransaction(data));
+//console.log(web3.eth.getTransactionReceipt(data));
+
+setMsg("orange","your transaction: <a href='http://testnet.etherscan.io/tx/"+transactionHash+"' target='_blank'>"+transactionHash+"</a>","start");
+//checkTransaction(data,"setCoin",1);
+
+});
+
+}
+
+function checkTransaction(hash,type,n){
+    var t=1;
+    for(var ii=0;ii<t;ii++){
+
+    
+    var obj=web3.eth.getTransaction(hash);
+    //console.log(n+" "+obj["blockHash"]);
+
+    if(obj["blockHash"]=="0x0000000000000000000000000000000000000000000000000000000000000000"){
+    //se transazione non minata
+    t++;
+    
+    sleep(2000);
+
+    }else{
+    //se transazione minata
+
+        obj=web3.eth.getTransactionReceipt(hash);
+
+        var gas=1000000;
+        
+        if(type=="setCoin")gas=4699999;
+        if(obj["gasUsed"]==gas){
+    //errore
+ 
+           $("#msgclose").show();
+           setMsg("red","some problem occured: <a href='http://testnet.etherscan.io/tx/"+hash+"' target='_blank'>"+hash+"</a>","stop");
+
+        }else{
+       
+checkWallet();
+reloadWallet();
+    //transazione minata con successo
+           $(".jump").hide();
+         
+           if(type=="setCoin"){readLastCoin();$("#coindisplay").show();}
+           setMsg("green","transaction: <a href='http://testnet.etherscan.io/tx/"+hash+"' target='_blank'>"+hash+"</a>","stop");
+        }
+    }
+if(t>=120)t=0;
+}
+}
+
+
+function setMsg(color,msg,action){
+
+                
+		if(color=="green"){$("#msg").css({"border":"solid 1px #afa","background":"#dfd"});$("#msgclose").css("color","#green");$("#msgclose").show();}
+		if(color=="red"){$("#msg").css({"border":"solid 1px #faa","background":"#fdd"});$("#msgclose").css("color","#red");$("#msgclose").show();}
+		if(color=="orange"){$("#msg").css({"border":"solid 1px #FFAE00","background":"#FFD16E"});$("#msgclose").css("color","#orange");$(".jump").hide();$("#msgclose").show();}
+		
+		$("#msgcnt").html(msg);
+		if(action=="start"){$("#loading").show();}
+	    if(action=="stop"){$("#loading").hide();}
+		$("#msg").show();
+		
+	}
+
+function last(){
+$(".tab").hide();
+readLastCoin();
+$("#coindisplay").show();
+}
+
+function createNow(){
+$(".tab").hide();
+$("#hometab").show();
+}
+
+
+function readLastCoin(){
+addr=contracts["Flood_1_00"].contract.readLastCoin(web3.eth.accounts[selectedWallet]);
+$("#coinAddress").html("<a href='http://testnet.etherscan.io/address/"+addr+"' target='_blank' style='color: black;'>"+addr+"</a>");
+createIcon("#coinIcon",addr);
+
+
+}
+
+
+function readCoin(id){
+addr=contracts["Flood_1_00"].contract.readCoin(id);
+$("#showcoinAddress").html("<a href='http://testnet.etherscan.io/address/"+addr+"' target='_blank' style='color: black;'>"+addr+"</a>");
+createIcon("#showcoinIcon",addr);
+
+}
+
+function listCoins(){
+tot=contracts["Flood_1_00"].contract.totCoins();
+
+$("#coinstabsubcontainer").html("");
+for(var i=tot;i>=0;i--){
+addr=contracts["Flood_1_00"].contract.readCoin(i);
+$("#coinstabsubcontainer").append("<div class='buttonSubmit' style='padding: 10px; margin: 10px; height: 32px;' onclick='jump("+i+")'><div id='zcoin"+i+"' class='coinIcon' style='float: left;'></div><div style='float: left; margin-left: 20px;'>"+addr+"</div></div>");
+createIcon("#zcoin"+i,addr);
+
+}
+}
+
+function listLogs(){
+tot=contracts["pretorian"].contract.totCoins();
+
+$("#ledgerLogs").html("");
+for(var i=tot;i>=1;i--){
+addr=contracts["pretorian"].contract.readCoin(i);
+$("#ledgerLogs").append("<div class='buttonSubmit' style='padding: 10px; margin: 10px; height: 32px;' onclick=''><div id='ledgercoin"+i+"' class='coinIcon' style='float: left;'></div><div style='float: left; margin-left: 20px;'>"+addr[1]+" : "+addr[3]+" : "+addr[4]+"</div></div>");
+createIcon("#ledgercoin"+i,addr[0]);
+
+}
+}
+
+
+
+
+function listMyCoins(){
+tot=contracts["Flood_1_00"].contract.readMyCoin(web3.eth.accounts[selectedwallet],0)[1];
+$("#ownedCoins").html("");
+for(var i=0;i<tot;i++){
+id=contracts["Flood_1_00"].contract.readMyCoin(web3.eth.accounts[selectedwallet],i)[0];
+addr=contracts["Flood_1_00"].contract.readCoin(id);
+$("#ownedCoins").append("<div class='buttonSubmit' style='padding: 10px; margin: 10px; width: 140px; float: left;' onclick='jump("+id+")'><div id='coin"+i+"' class='coinIcon' style='margin-right: 20px; float: left;'></div><div style='float: left;'></div>"+id+"</div>");
+createIcon("#coin"+i,addr);
+}
+}
+
+
+function jump(id){
+
+$(".tab").hide();
+readCoin(id);
+$("#showcoin").show();
+$("#coindata").show();
+addr=contracts["Flood_1_00"].contract.readCoin(id);
+connect(id,addr);
+temp=contracts[""+id].contract.getData();
+
+$("#dataname").text(temp[0]);
+var ttt=temp[1].toString(10).replace("000000000000000000", "");
+$("#dataqty").text(""+ttt);
+$("#datadec").text(""+temp[2]);
+$("#datasym").text(temp[3]);
+$("#datadesc").text(temp[4].split("|")[3]);
+$("#datarew").text(""+temp[5]);
+$("#dataown").text(contracts["Flood_1_00"].contract.owner());
+
+$("#datacost").text(""+(parseInt(contracts["Flood_1_00"].contract.cost())/1000000000));
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+</script>
+
+</head>
+<body bgcolor='#E1EEF2' style='	 onload=""  background-size: 600px 500px;background-image:urlt("http://s32.postimg.org/c2gw6yi91/Metal_galvanised_steel_tin_texture_ver2_4770x317.jpg"); height: 130px;'>
+
+<div style="position: absolute; width: 100%;"><div style="width: 255px; margin: auto;"><div id="waterHolder"></div></div></div>
+	
+
+    <div id="header" style="background: black;  height: 130px;">	
+	<div style="position: absolute; border: solid 0px red; width: 100%; top: 72px;">
+            <div id="home" class="menu" style="margin-left: 40px;"><center><img class="menuImage" src='http://s32.postimg.org/m5llcgjf5/home.png'><br>Home</center></div>
+            <div id="list" class="menu" style="margin-left: 60px; margin-top:2px;"><center><img class="menuImage" src='http://s32.postimg.org/6k4qbvoep/list.png'><br>Coins</center></div>
+            <div id="faq" class="menu" style="float:right;margin-right: 80px;  margin-top:1px;"><center><img class="menuImage" src='http://s32.postimg.org/w10mi545t/faq.png'><br>FAQ</center></div>
+<div id="ledger" class="menu" style="float:right;margin-right: 60px;  margin-top:1px;"><center><img class="menuImage" src='http://s32.postimg.org/w10mi545t/faq.png'><br>LEDGER</center></div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+
+<div style=" margin:auto; width: 28px;"><a href="http://testnet.etherscan.io/address/0xf51a693b8A53135De96E783A489133D7eA41A3c9" style="text-decoration: none;" target="_blank"><div id="floodblocky"></div></a></div>
+
+<div id="msg" class="display" style="display: none; padding: 20px;"><div id="loading" style="float: left; width: 40px; height: 40px;background-image:url('http://andrea.overgrid.com/loading.gif');background-size: 40px;"></div><div id="msgcnt" style="float: left;margin-left: 20px; margin-top: 8px;">Message</div><input id="msgclose" style="float: right;margin-right: 0px;margin-left: 20px;  margin-top: 8px;" type="submit" class="buttonSubmit" value="Hide"></input>
+<div style="clear:both"></div>
+</div>
+
+<div id="intro" class="tab" style="padding: 20px; margin-bottom: 50px;">
+
+<div style="width: 50%; float: left;">
+<input id="createnow" onclick="createNow()" type="submit" style="cursor: pointer; background: black; color: white; font-size: 35px; padding: 20px; border-radius:10px; float: right; margin: 20px;" value="CREATE NEW ALTCOIN">
+</div>
+<div style="width: calc(45% - 10px); float: left; padding-top: 15px; padding-left: 10px;">
+<div class="label3">Flood is a Coin Generator for non-developers.</div>
+<div class="label3">With Flood you can setup your very own coin in 1 click!</div>
+<div class="label3"></div>
+
+</div>
+<div style="clear: both;"></div>
+<br><br><br><br>
+<center><img src="logo.png" style="width: 100px; height: 100px;"></center>
+<center><div style="font-size: 16px; color: black;">Created<br>by<br>Monkeyscage</div></center>
+<br><br>
+</div>
+
+
+<div id="hometab" class="tab display" style="display: none;"><div class="subcontainer">
+<div class="label">Coin Name:</div>
+<input id="name" type="text" class="input">
+<div class="label">Initial Supply:</div>
+<input id="supply" type="text" class="input">
+<div class="label">Symbol:</div>
+<input id="symbol" type="text" class="input">
+<div class="label">Mining per Block:</div>
+<input id="mining" type="text" class="input">
+<input id="create" type="submit" class="buttonSubmit" style="margin-top: 30px;" value="SETUP NEW COIN">
+</div></div>
+
+<div id="coinstab" class="tab display" style="display: none;"><div id="coinstabsubcontainer">coins</div></div>
+
+<div id="faqtab" class="tab display" style="display: none;"><div class="subcontainer">faq</div></div>
+
+<div id="ledgertab" class="tab display" style="display: none;"><div class="subcontainer"><center>PRETORIVS</center><br><div id="ledgerLogs" style="">AAA</div><div style="clear:both"></div></div></div>
+
+<div id="coindisplay" class="tab display" style="display: none;"><div class="subcontainer">
+<div class="label" style="margin-left: 0px; margin-bottom: 20px; color: red;">New Coin Created at address:</div>
+<div id="coinIcon" style="float: left; "></div><div id="coinAddress"  style="float: left; margin-left: 10px; font-size: 30px;"></div><div style="clear:both"></div>
+<div class="label" style="margin-left: 0px; margin-bottom: 20px;">ABI - JSON interface:</div>
+<div id=""><textarea rows="4" cols="100">[ { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string", "value": "TEST2" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "a", "type": "address" } ], "name": "setOwner", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "cost", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "type": "function" }, { "constant": false, "inputs": [], "name": "reward_miner", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256", "value": "1000000000" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8", "value": "5" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "getData", "outputs": [ { "name": "", "type": "string", "value": "TEST2" }, { "name": "", "type": "uint256", "value": "1000000000" }, { "name": "", "type": "uint8", "value": "5" }, { "name": "", "type": "string", "value": "ggg" }, { "name": "", "type": "string", "value": "a|b" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "disclaimer", "outputs": [ { "name": "", "type": "string", "value": "" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "u", "type": "uint256" } ], "name": "setCost", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "s", "type": "string" } ], "name": "setData", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "a", "type": "address" } ], "name": "withdraw", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "standard", "outputs": [ { "name": "", "type": "string", "value": "Token 0.1" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "template", "outputs": [ { "name": "", "type": "uint8", "value": "0" } ], "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "data", "outputs": [ { "name": "", "type": "string", "value": "a|b" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "_amount", "type": "uint256" } ], "name": "buyCoin", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string", "value": "ggg" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "s", "type": "string" } ], "name": "setDisclaimer", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "type": "function" }, { "constant": false, "inputs": [ { "name": "u", "type": "uint8" } ], "name": "setTemplate", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "inputs": [ { "name": "own", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "own", "template": "elements_input_address", "value": "" }, { "name": "initialSupply", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "initial Supply", "template": "elements_input_uint", "value": "" }, { "name": "tokenName", "type": "string", "index": 2, "typeShort": "string", "bits": "", "displayName": "token Name", "template": "elements_input_string", "value": "TEST2" }, { "name": "decimalUnits", "type": "uint8", "index": 3, "typeShort": "uint", "bits": "8", "displayName": "decimal Units", "template": "elements_input_uint", "value": "5" }, { "name": "tokenSymbol", "type": "string", "index": 4, "typeShort": "string", "bits": "", "displayName": "token Symbol", "template": "elements_input_string", "value": "ggg" }, { "name": "dat", "type": "string", "index": 5, "typeShort": "string", "bits": "", "displayName": "dat", "template": "elements_input_string", "value": "a|b" }, { "name": "rew", "type": "uint256", "index": 6, "typeShort": "uint", "bits": "256", "displayName": "rew", "template": "elements_input_uint", "value": "100" } ], "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" } ]</textarea></div>
+</div></div>
+
+<div id="showcoin" class="tab display" style="display: none;"><div class="subcontainer">
+<div class="label" style="margin-left: 0px; margin-bottom: 20px;">Coin address:</div>
+<div id="showcoinIcon" style="float: left; "></div><div id="showcoinAddress"  style="float: left; margin-left: 10px; font-size: 30px;"></div><div style="clear:both"></div>
+<div class="label" style="margin-left: 0px; margin-bottom: 20px;">ABI - JSON interface:</div>
+<div id=""><textarea rows="4" cols="100">[ { "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string", "value": "TEST2" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "a", "type": "address" } ], "name": "setOwner", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "cost", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "type": "function" }, { "constant": false, "inputs": [], "name": "reward_miner", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256", "value": "1000000000" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint8", "value": "5" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "getData", "outputs": [ { "name": "", "type": "string", "value": "TEST2" }, { "name": "", "type": "uint256", "value": "1000000000" }, { "name": "", "type": "uint8", "value": "5" }, { "name": "", "type": "string", "value": "ggg" }, { "name": "", "type": "string", "value": "a|b" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "disclaimer", "outputs": [ { "name": "", "type": "string", "value": "" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "u", "type": "uint256" } ], "name": "setCost", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "s", "type": "string" } ], "name": "setData", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "a", "type": "address" } ], "name": "withdraw", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "standard", "outputs": [ { "name": "", "type": "string", "value": "Token 0.1" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "template", "outputs": [ { "name": "", "type": "uint8", "value": "0" } ], "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "", "type": "uint256", "value": "0" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "data", "outputs": [ { "name": "", "type": "string", "value": "a|b" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "_amount", "type": "uint256" } ], "name": "buyCoin", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address", "value": "" } ], "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string", "value": "ggg" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "s", "type": "string" } ], "name": "setDisclaimer", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [], "type": "function" }, { "constant": false, "inputs": [ { "name": "u", "type": "uint8" } ], "name": "setTemplate", "outputs": [ { "name": "", "type": "bool" } ], "type": "function" }, { "inputs": [ { "name": "own", "type": "address", "index": 0, "typeShort": "address", "bits": "", "displayName": "own", "template": "elements_input_address", "value": "" }, { "name": "initialSupply", "type": "uint256", "index": 1, "typeShort": "uint", "bits": "256", "displayName": "initial Supply", "template": "elements_input_uint", "value": "" }, { "name": "tokenName", "type": "string", "index": 2, "typeShort": "string", "bits": "", "displayName": "token Name", "template": "elements_input_string", "value": "TEST2" }, { "name": "decimalUnits", "type": "uint8", "index": 3, "typeShort": "uint", "bits": "8", "displayName": "decimal Units", "template": "elements_input_uint", "value": "5" }, { "name": "tokenSymbol", "type": "string", "index": 4, "typeShort": "string", "bits": "", "displayName": "token Symbol", "template": "elements_input_string", "value": "ggg" }, { "name": "dat", "type": "string", "index": 5, "typeShort": "string", "bits": "", "displayName": "dat", "template": "elements_input_string", "value": "a|b" }, { "name": "rew", "type": "uint256", "index": 6, "typeShort": "uint", "bits": "256", "displayName": "rew", "template": "elements_input_uint", "value": "100" } ], "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" } ]</textarea></div>
+</div></div>
+
+<div id="coindata" class="tab display" style="display: none;"><div class="subcontainer">
+<div class="label">Coin Name:</div>
+<div id="dataname" class="label2">a</div>
+<div class="label">Coin Initial Supply:</div>
+<div id="dataqty" class="label2"></div>
+<div class="label">Coin Decimals:</div>
+<div id="datadec" class="label2"></div>
+<div class="label">Coin Symbol:</div>
+<div id="datasym" class="label2"></div>
+<div class="label">Coin Description:</div>
+<div id="datadesc" class="label2"></div>
+<div class="label">Coin Owner:</div>
+<div id="dataown" class="label2"></div>
+<div class="label">Coin Block Reward:</div>
+<div id="datarew" class="label2"></div>
+<div class="label">Coin Start Cost:</div>
+<div id="datacost" class="label2"></div>
+</div></div>
+
+
+<!--   start wallet  -->
+
+<div id="my-coins" class='display' style='margin: 20px 20px 20px 20px; margin-left: 20px;float:left; width: calc(100% - 40px);padding-bottom: 20px;'>	
+<div style="padding: 20px;">
+			<div id="noWalletAlert" style="color: red; display: none;float: left;">No Wallet Connected</div>
+
+                        <div style="float: left; width: 100%;">
+		           <div id="walletico" class="walleticon" style="float: left;  margin-right: 10px; margin-top: 2px;"></div><select id="wallets" name="wallets" style="float: left; margin-left: 10px; font-size: 28px; padding: 5px; "></select>
+
+
+<button onclick='reloadWallet()'  title='REFRESH WALLET' class='inb2' style='padding:5px;  float: right; margin-right: 0px; margin-left: 10px;'><img src="reload.png" style="width: 33px; "></button><div style="clear: both;"></div>
+<div style="color: grey; font-size: 28px; margin-top: 30px;; margin-left: 10px; float: left;">Your Coins:</div>
+<div id="balance" style="color: grey; font-size: 28px; margin-top: 30px; margin-left: 10px; float: right;">Balance:</div>
+
+                            <div id="ownedCoins" style="color: orange; margin-top: 10px; margin-bottom: 0px; border-radius: 5px; margin-left: 0px; padding-top: 0px; height: auto; background: white none repeat scroll 0% 0%; box-shadow: 0px 1px 6px rgb(153, 153, 153) inset; width: 100%;
+-webkit-box-shadow: inset 0px 1px 6px #999;
+-moz-box-shadow: inset 0px 1px 6px #999;
+-o-box-shadow: inset 0px 1px 6px #999;
+float: left;"></div>
+                        </div> </div>
+			
+		        <div style="clear: both;"></div>
+		</div><div style="clear: both;"></div>
+<div id="problem" class="display" style="padding: 0px; margin: 20px; width: calc(100% - 40px); margin-bottom: 40px;"><div style="color: red; padding: 20px;">YOU HAVE SOME PROBLEMS &#9760; THIS IS A DECENTRALIZED APPLICATION BUILT UPON ETHEREUM. YOU NEED THE BLOCKCHAIN!</div></div>
+</body>
+</html>
