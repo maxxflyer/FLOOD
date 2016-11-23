@@ -260,12 +260,13 @@ var selectedEdgeId="";
 var selectedWallet="";
 function fetchTheySay(id){
 var config = {
-  "id": '347099293930377217',
+  "id": '801253029852958720',
   "domId": 'theysay',
-  "maxTweets": 3,
+  "maxTweets": 5,
   "enableLinks": true, 
   "showUser": true,
   "showTime": true,
+  "showImages": true,
   "lang": 'en'
 };
 twitterFetcher.fetch(config);
@@ -564,7 +565,13 @@ position: {
 
                 $(".tab").hide();
                 $("#timeline").html("");
+//embedTwitter("theysay2");
+xxx="801252941134962688";
+$("#twittertab3").html('<a class="twitter-timeline"  href="" data-widget-id="801252941134962688">Tweets about to:taylorswift13</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</scr'+'ipt>');
+$("#twittertab3").show();
+xxx="801253029852958720";
                     embedTwitter("timeline");
+ 
                     event.preventDefault();
                 $(".tabright").hide();
                 $("#cointab").hide();
@@ -613,69 +620,6 @@ if(err)console.log("Error: "+err);$("#ETHwalletbalance").text(tempu.substring(0,
 });
     }          
  
-
-
-cy.$('#a').qtip({
-  content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div>',
-  position: {
-    my: 'bottom center',
-    at: 'top center'
-  },
-  style: {
-    classes: 'qtip-bootstrap',
-    tip: {
-      width: 26,
-      height: 8
-    }
-  },
-events: {
-            render: function(event, api) {
-                // Capture click events
-
-                $('#qtipbutton1', this).bind('click', function(event) {
-                $(".tableft").hide();
-
-                
-                    event.preventDefault();
-                    $("#hometableft").show();
-                });
-                $('#qtipbutton2', this).bind('click', function(event) {
-                  $(".tableft").hide(); $(".tabright").hide();
-                    event.preventDefault();
-                    $("#markettabbid").show();
-                    $("#markettabask").show();
-                });
-                $('#qtipbutton3', this).bind('click', function(event) {
-
-                $(".tab").hide();
-                $("#timeline").html("");
-                    twttr.widgets.createTimeline({
-                       sourceType: "profile",
-                       screenName: "twitterdev"
-                    },
-                    document.getElementById('timeline'),
-                    {
-                    width: '250',
-                    height: $("#sidebar-right").height()-4,
-                    related: 'twitterdev,twitterapi'
-                    }).then(function (el) {
-                    console.log("Embedded a timeline.")
-                    });
-                    event.preventDefault();
-                $(".tabright").hide();
-                $("#cointab").hide();
-                $("#twittertab").show();
-                $("#twittertab1").show();
-                });
-                $('#qtipbutton4', this).bind('click', function(event) {
-                    event.preventDefault();
-$(".qtip").hide();
-                    $("#wallet").show();
-                });
-            }
-        }
-
-});
 
 cy.on('tap', 'node', function(e){
 $(".offerpartnershipitem").show();
@@ -1422,9 +1366,17 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div class="spacer"></div>
 <button id="updatesettings" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>SET OFFER</button>
 </div>
+
+
 <div id="twittertab1" class="tableft tab" style="display: none;">
-<div id="attab" style="cursor: pointer; float: left; font-size: 20px;margin-left: 20px; margin-top: 10px; margin-bottom: 5px;">@</div><div id="hashtab" style="cursor: pointer; float: left; font-size: 20px; margin-left: 20px; color: gray; margin-top: 10px; margin-bottom: 5px; margin-top: 3px;">#</div><div class="spacer"></div>
+<div id="attab" style="cursor: pointer; float: left; font-size: 20px;margin-left: 20px; margin-top: 10px; margin-bottom: 5px;">@</div><div id="hashtab" style="cursor: pointer; float: left; font-size: 20px; margin-left: 20px; color: gray; margin-top: 10px; margin-bottom: 5px; margin-top: 10px;">#</div><div class="spacer"></div>
 <div id="theysay"></div>
+</div>
+
+
+<div id="twittertab3" class="tableft tab" style="display: none;">
+<div id="theysay2">
+          </div>
 </div>
 
 
