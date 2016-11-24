@@ -106,6 +106,8 @@ border-radius: 3px;
     }
 .tab{height: calc(100% - 5);}
 .tablabel{margin: 10px 10px 10px 20px; font-family: arial;}
+.tablabel3{margin: 10px 10px 10px 10px; font-family: arial;}
+.tablabel4{margin: 10px 10px 10px 10px; font-family: arial;}
 .spacer{height: 0px;   clear: both;}
 
 body{margin: 0px;}
@@ -883,7 +885,7 @@ if((partnerships.indexOf(b+"-"+a) === -1)&&(partnerships.indexOf(a+"-"+b) === -1
   if(partnershipRequests.indexOf(b+"-"+a) >= 0 ){ //se trova l' amico
 
       partnerships.push(a+"-"+b);$.cookie('localPartnerships',partnerships);
-   $("#showhypermarkets").text(partnerships.length);
+   $("#tothypermarkets").text(partnerships.length);
       //alert(cy.$( "#"+a+"-"+b ).length+" "+cy.$( "#"+b+"-"+a ).length);
       removeRequest(b,a);
       cy.remove("#"+b+"-"+a);
@@ -1069,7 +1071,7 @@ contracts['Flood_Standard_Ethereum_Coin'+u].contract.enabled(function(err,data2)
 if(err)console.log("Error: "+err);
 if(data2==5){
 $("#totICOs").html(parseInt($("#totICOs").html())+1);
-$("#showicolistbutton").text(parseInt($("#totICOs").text()));
+$("#totico").text(parseInt($("#totICOs").text()));
 $("#ICOcontainer").append('<div  style="margin-left: 25px; background: white; color: black; padding: 10px; border-radius: 3px; font-size: 16px; margin-bottom: 5px;"><div id="ICOname'+u+'-'+data+'" class="tablabel openico" name="'+data+'" value="'+data+'" style="cursor: pointer; margin-left: 0px; background: white; color: black; padding: 10px; border-radius: 3px; font-size: 16px; float: left;">?</div><div id="ICOaddress'+u+'" class="walleticon40" style="float: right; margin: 10px 20px 0 25px;"></div><div id="ICOendblock'+u+'" class="" style="float: right; padding: 10px; margin-top: 10px; font-family: arial;">End Block: ?</div><div style="clear: both"></div></div>');
 createIcon("#ICOaddress"+u,data);
 }
@@ -1319,39 +1321,42 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 
 <div id="sidebar-left" style="">
 <div id="socialpanelleft" style="width: 250px; border-bottom: solid 1px #ddd; height: 34px;">
-<img src="fit.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 5px; float: left;" onclick="cy.layout()">
-<img src="explode.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="cy.layout()">
+<img src="circle.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="cy.layout()">
+<img src="fit.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 5px; float: left;" onclick="cy.fit()">
 <img src="listvisible.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="listVisible()">
 <img src="trash.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="trashCoin()">
 <img src="search.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 5px 0px 0px; float: right;" onclick="cy.fit()">
 </div>
 <div id="hypertab" class="tableft">
 <div class="spacer"></div>
-<div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;"><img src="layers-transparent.png" style="width: 50px;"></div>
-<div class="spacer"></div>
-<div id="totcoinlabel" class="tablabel" style="float: left;">Tot Coins:</div>
-<div id="totcoin" class="tablabel" style="float: right; color: gray;"><button id="totcoinsbutton" style=" margin: -3px 10px 0px 0px;" onclick="showmycoins()">1</button></div>
-<div class="spacer"></div>
-<div id="tothypercaplabel" class="tablabel" style="width: 85px; float: left;">HyperCap:</div>
-<div id="tothypercap" class="tablabel2" style="float: right; color: gray; margin-top: 10px; margin-right: 10px;"><button id="showmycoinsbutton" style=" margin: -3px 10px 0px 0px;" onclick="showhypermarketcap()">? ETH</button></div>
-<div class="spacer"></div>
-<div id="tothypermarketslabel" class="tablabel" style="float: left;">Hypermarkets:</div>
-<div id="tothypermarkets" class="tablabel" style="float: right; color: gray;"><button id="showhypermarkets" style=" margin: -3px 10px 0px 0px;" onclick="showMarkets()">?</button></div>
-<div class="spacer"></div>
-<div id="toticolabel" class="tablabel" style="float: left;">Tot ICO:</div>
-<div id="totico" class="tablabel" style="float: right; color: gray;"><button id="showicolistbutton" style=" margin: -3px 10px 0px 0px;" onclick="openIcoList()">?</button></div>
-<div class="spacer"></div>
-<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showLocals()">LOAD LOCALS</button>
-<button id="showmycoinsbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showmycoins()">MY COINS</button>
-<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showfavorites()">&#9733 FAVORITES</button>
-<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showNew()">NEW COINS</button>
-<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showAll()">LOAD ALL</button>
-<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 30px 20px 0 20px;" onclick="">MINT CUSTOM COIN</button>
+<div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; height: 250px; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial;"><img src="layersbanner.png" style=""></div>
+<button style="width: 100%; border-top: solid 1px #ddd; background: white; cursor: pointer; border: 0px;" onclick="showmycoins()">
+<div id="totcoinlabel" class="tablabel3" style="float: left;">Tot Coins:</div>
+<div id="totcoin" class="tablabel4" style="float: right; color: gray;">?</div>
+</button>
+<button style="width: 100%; border-top: solid 1px #ddd; background: white; cursor: pointer; border: 0px;" onclick="showhypermarketcap()">
+<div id="tothypercaplabel" class="tablabel3" style="float: left;">HyperCap:</div>
+<div id="tothypercap" class="tablabel4" style="float: right; color: gray; margin-top: 10px; margin-right: 10px;">?</div>
+</button>
+<button style="width: 100%; border-top: solid 1px #ddd; background: white; cursor: pointer; border: 0px;" onclick="showMarkets()">
+<div id="tothypermarketslabel" class="tablabel3" style="float: left;">Hypermarkets:</div>
+<div id="tothypermarkets" class="tablabel4" style="float: right; color: gray;">?</div>
+</button>
+<button style="width: 100%; border-top: solid 1px #ddd; background: white; cursor: pointer; border: 0px;" onclick="openIcoList()">
+<div id="toticolabel" class="tablabel3" style="float: left;">Tot ICO:</div>
+<div id="totico" class="tablabel4" style="float: right; color: gray;">?</div>
+</button>
+<button id="showfavoritesbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer;" onclick="showLocals()">LOAD LOCALS</button>
+<button id="showmycoinsbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer;"  onclick="showmycoins()">MY COINS</button>
+<button id="showfavoritesbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer;"  onclick="showfavorites()">&#9733 FAVORITES</button>
+<button id="showfavoritesbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer;"  onclick="showNew()">NEW COINS</button>
+<button id="showfavoritesbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer;"  onclick="showAll()">LOAD ALL</button>
+<button id="showfavoritesbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer;"   onclick="">MINT CUSTOM COIN</button>
 
 </div>
 <div id="hometableft" class="tab tableft" style="display: none; font-family: arial;">
 <img id="coinbanner" style="width: 250px; height: 250px;" src="coinbanner.png">
-<button id="addfavoritebutton" style="float: right; width: 35px; margin: 0px 0px 0px 0px; position: relative; background: white; top: -4px; font-size: 20px; border-radius: 3px;" onclick="addFavorite()">&#9734</button>
+<button id="addfavoritebutton" style="float: right; width: 35px; margin: 0px 0px 0px 0px; position: relative; background: white; top: -4px; font-size: 20px;" onclick="addFavorite()">&#9734</button>
 <button id="partnershippanelbutton" style="width: 215px; margin: 0px 0px 0 0px; position: relative; background: white; top: -4px; text-align: left; " onclick="openPartnershipButtons()"><img src="partnerships.png" style="width: 18px; height: 18px; padding-top: 3px;"></button>
 <div class="spacer"></div>
 <div id="socialdisclaimer" style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify; margin-top: 0px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
@@ -1890,7 +1895,7 @@ function countCoins(){ //conta coin totali hyperlayer
 contracts["Pretorian"].contract.totCoins(function(err,data){
 if(err)console.log("Error: "+err);
 totCoins=data;
-$("#totcoinsbutton").html(""+totCoins);
+$("#totcoin").html(""+totCoins);
 });
 
 }
