@@ -674,7 +674,14 @@ tempss=tempss.substring(0,tempss.indexOf("-"));
 displayHyperName($("#hyperbidlabel"),tempss);
 if(isPartnership(this.id())){$("#hypermarkettabpartnershipalert").hide();$("#hypermarkettabask").show();}else{$("#hypermarkettabask").hide();$("#hypermarkettabpartnershipalert").show();}
 $("#hypermarkettabbid").show();
+tempss=this.id();
+tempss=tempss.substring(tempss.indexOf("-")+1);
+displayHyperName($("#hyperasklabel"),tempss);
+displayHyperAmountSymbol($("#hypercoinbalancelabel2"),tempss);
+createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
+
 });
+
 cy.on('tap', function(event){
 if( event.cyTarget === cy ){
 
@@ -822,6 +829,24 @@ if(error)alert("Error: "+error);
 ob.text(data);
 });
 
+}
+
+function displayHyperSymbol(ob,addr){
+connect('Flood_Standard_Ethereum_Coin',addr);
+contracts['Flood_Standard_Ethereum_Coin'].contract.symbol(function(error,data){
+if(error)alert("Error: "+error);
+ob.text(data);
+});
+}
+
+function displayHyperAmountSymbol(ob,addr){
+connect('Flood_Standard_Ethereum_Coin',addr);
+contracts['Flood_Standard_Ethereum_Coin'].contract.balanceOf(selectedWallet,function(error,data0){
+if(error)alert("Error: "+error);
+contracts['Flood_Standard_Ethereum_Coin'].contract.symbol(function(error,data1){
+if(error)alert("Error: "+error);
+ob.text(data0+" "+data1);
+});});
 }
 
 function hyperaddr(t,v){
@@ -1279,8 +1304,8 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 
 
 
-<div id="sidebar-left">
-
+<div id="sidebar-left" style="">
+<div id="socialpanelleft" style="width: 250px; border-bottom: solid 1px #ddd; height: 34px;"><img src="abc.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 15px 0px 15px; float: left;" onclick=""></div>
 <div id="hypertab" class="tableft">
 <div class="spacer"></div>
 <div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;"><img src="layers-transparent.png" style="width: 50px;"></div>
@@ -1304,7 +1329,7 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 
 </div>
 <div id="hometableft" class="tab tableft" style="display: none; font-family: arial;">
-<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">COIN NAME</div>
+<div id="coinNameleft" style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">COIN NAME</div>
 <div class="spacer"></div>
 <div style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
 <div class="spacer"></div>
@@ -1396,7 +1421,7 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 </div>
 <button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
 <div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="hyperlogolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
-<div id="hyperhyperwallet-walletico4" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
+<div id="hyperhyperwallet-walletico41" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
 <div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px;">Price:</div>
 <input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
 margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
@@ -1416,8 +1441,8 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 
 
 
-<div id="sidebar-right">
-<div id="socialpanel" style="width: 250px; border-bottom: solid 1px #ddd; height: 24px;"><img src="ethereco.png" style="cursor: pointer; width: 18px; height: 18px; margin: 3px 15px 0px 3px; float: right;" onclick="alert('Ether Eco Messenger')"></div>
+<div id="sidebar-right" style="">
+<div id="socialpanel" style="width: 250px; border-bottom: solid 1px #ddd; height: 34px;"><img src="ethereconotify.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 15px 0px 5px; float: right;" onclick="alert('Ether Eco Messenger')"></div>
 <div id="cointab" class="tabright" style="display: none;">
 <img id="coinlogo" src="arkdao.jpg" style="width: 120px; height: 120px; margin: auto; display: block; margin-top: 30px;">
 <div class="spacer"></div>
@@ -1602,7 +1627,7 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
 </div>
 <button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
-<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="hyperlogolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
+<div id="hypercoinbalancelabel2" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="hyperlogolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
 <div id="hyperhyperwallet-walletico4" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
 <div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px;">Price:</div>
 <input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
@@ -1808,6 +1833,8 @@ font-family: arial;">COIN SETTINGS:</div>
 <button id="cancelsettings" class="check" style="width: calc(100% - 15px); margin: 30px 0px 0 5px;" onclick="backtosettings();"/>Cancel</button>
 
 </div>
+
+<div style="width: 555px; margin: auto; margin-top: 0px; display: none"><img src="floodbanner.png"></div>
 
 
 <script>
@@ -2025,6 +2052,7 @@ stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.name(function(err,data){
 if(err)console.log("Error: "+err);
 $("#coinName").text(data);
+$("#coinNameleft").text(data);
 singlecoin[1]=data;
 $("#hyperwalletmainlabel").text(singlecoin[1]+" HyperWallet");
 $("#mainicolabel").text(data+" ICO");
@@ -2094,6 +2122,7 @@ singlecoin=hyperLayer[addr];
 social=socialLayer[addr];
 createIcon("#hyperwallet-walletico6",singlecoin[9]);
 $("#coinName").text(singlecoin[1]);
+$("#coinNameleft").text(singlecoin[1]);
 $("#ownerlink").attr("href" , "https://testnet.etherscan.io/address/"+9);
 $("#ownerlink2").attr("href" , "https://testnet.etherscan.io/address/"+addr);
 $("#mainicolabel").text(singlecoin[1]+" ICO");
@@ -2236,8 +2265,10 @@ console.log("!2!");
 //storeToCookie();
 //cleanfavorite();
 //addFavorite();
-//showLocals();
+showLocals();
 
+//$("#sidebar-left").hide();
+//$("#sidebar-right").hide();
 $("input[name='selectWallet']").change(function(){
 selectedWallet=web3.eth.accounts[$(this).val()];alert("selected="+selectedWallet);
 createIcon($("#hyperhyperwallet-walletico4"),selectedWallet);
