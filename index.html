@@ -242,7 +242,7 @@ var hyperIndex = [];
 var socialLayer = {};
 
 var singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
-var social=["coin.png","web","No Social Disclaimer Available","twitter1","twitter2","twitter3","facebook","email"];
+var social=["coin.png","web","","twitter1","twitter2","twitter3","facebook","email"];
 //hyperLayer["k1"] = "abc";
 //alert(hyperLayer["k2"]);
 
@@ -791,7 +791,7 @@ contracts['Flood_Standard_Ethereum_Coin'].contract.totPartnerships(function(erro
 if(error)alert("Error: "+error);
 $("#partnershipsamount1").text(data);
 //$("#partnershipsamount2").text(data);
-if(data==0){$("#partnershippanelbutton").hide();}else{$("#partnershippanelbutton").show();}
+//if(data==0){$("#partnershippanelbutton").hide();}else{$("#partnershippanelbutton").show();}
 $("#partnershipscontainer").html("");
 tempcc=0;
 for(var i=0;i<data;i++){
@@ -1099,7 +1099,7 @@ loadICOs();
 }
 
 function offerPartenrshipPanel(){
-$("#hometableft").hide();
+$(".tableft").hide();
 $("#offerpartnershippanel").show();
 }
 
@@ -1319,7 +1319,7 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 
 <div id="sidebar-left" style="">
 <div id="socialpanelleft" style="width: 250px; border-bottom: solid 1px #ddd; height: 34px;">
-<img src="fit.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 5px; float: left;" onclick="cy.fit()">
+<img src="fit.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 5px; float: left;" onclick="cy.layout()">
 <img src="explode.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="cy.layout()">
 <img src="listvisible.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="listVisible()">
 <img src="trash.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="trashCoin()">
@@ -1344,17 +1344,20 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showLocals()">LOAD LOCALS</button>
 <button id="showmycoinsbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showmycoins()">MY COINS</button>
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showfavorites()">&#9733 FAVORITES</button>
+<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showNew()">NEW COINS</button>
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showAll()">LOAD ALL</button>
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 30px 20px 0 20px;" onclick="">MINT CUSTOM COIN</button>
 
 </div>
 <div id="hometableft" class="tab tableft" style="display: none; font-family: arial;">
-<div id="coinNameleft" style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">COIN NAME</div>
+<img id="coinbanner" style="width: 250px; height: 250px;" src="coinbanner.png">
+<button id="addfavoritebutton" style="float: right; width: 35px; margin: 0px 0px 0px 0px; position: relative; background: white; top: -4px; font-size: 20px; border-radius: 3px;" onclick="addFavorite()">&#9734</button>
+<button id="partnershippanelbutton" style="width: 215px; margin: 0px 0px 0 0px; position: relative; background: white; top: -4px; text-align: left; " onclick="openPartnershipButtons()"><img src="partnerships.png" style="width: 18px; height: 18px; padding-top: 3px;"></button>
 <div class="spacer"></div>
-<div id="socialdisclaimer" style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+<div id="socialdisclaimer" style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify; margin-top: 0px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
 <div class="spacer"></div>
-<button id="partnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="openPartnershipButtons()">PARTNERSHIPS</button>
-<button id="offerpartnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="offerPartenrshipPanel()">OFFER PARTNERSHIP</button>
+
+
 </div>
 
 <div id="offerpartnershippanel" class="tab tableft" style="display: none; font-family: arial;">
@@ -1374,8 +1377,8 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <div id="partnershippanel" class="tab tableft" style="font-family: arial; display: none;">
 <div id="partnershipslabel1" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px;">Partnerships:</div><div id="partnershipsamount1" style="float: left; margin-left: 20px;  margin-top: 20px; color: gray;"></div><div style="clear: both;"></div>
 <div id="partnershipscontainer"></div>
-
-<button id="backtohometab" style="width: calc(100% - 40px); margin: 40px 20px 0 20px;" onclick="backtohometab()">BACK</button>
+<button id="offerpartnershippanelbutton" style="width: calc(100% - 40px); margin: 20px 20px 0 20px;" onclick="offerPartenrshipPanel()">OFFER PARTNERSHIP</button>
+<button id="backtohometab" style="width: calc(100% - 40px); margin: 20px 20px 0 20px;" onclick="backtohometab()">BACK</button>
 <div id="removeAlertLabel" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px; display: none; color: #777;"> Click to remove Partnership!</div>
 </div>
 
@@ -1484,7 +1487,7 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div id="owner" class="tablabel" style="float: left; margin-left: 0px;"><a id="ownerlink" href="https://testnet.etherscan.io/address/0x6598583177F3a2F8bcd72384F00D76E6D052EC21" style="font-size: 9px;"><div id="hyperwallet-walletico6" class="walleticon20" style="float: right; margin: -5px 20px 0 15px;"></div></a></div>
 <div class="spacer"></div>
 <button id="controlpanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0px 20px;" onclick="showcontrolpanel()">CONTROL PANEL</button>
-<button id="addfavoritebutton" style="width: calc(100% - 40px); margin: 10px 20px 20px 20px;" onclick="addFavorite()">&#9734</button>
+
 </div>
 <div id="controlpanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
 <div style="text-align: center; color: gray; margin-bottom: 20px;">CONTROL PANEL</div>
@@ -1668,12 +1671,12 @@ font-family: arial;">SETTINGS:</div>
 <br /> <br />
 <button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanfavorites()">DELETE FAVORITES</button>
 <button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanlocals()">DELETE LOCALS</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="coinlistcookie();">COINS LIST COOKIE</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(JSON.stringify($.cookie('hyperLayer')));">HYPER COOKIE</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(hyperIndex);">HYPER INDEX</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(JSON.stringify($.cookie('localRequests')));">LOCAL REQUESTS</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert(JSON.stringify($.cookie('localPartnerships')));">LOCAL PARTNERS</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="alert($.cookie('favorite'));">FAVORITE COOKIE</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="coinlistcookie();">COINS LIST COOKIE</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(JSON.stringify($.cookie('hyperLayer')));">HYPER COOKIE</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(hyperIndex);">HYPER INDEX</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(JSON.stringify($.cookie('localRequests')));">LOCAL REQUESTS</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(JSON.stringify($.cookie('localPartnerships')));">LOCAL PARTNERS</button>
+<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert($.cookie('favorite'));">FAVORITE COOKIE</button>
 </div>
 <div id="twittertab" class="tabright">
 <div id="timeline"></div>
@@ -1903,6 +1906,15 @@ readCoinByID(i);
 }
 }
 
+function showNew(){
+//$("#coinstabsubcontainer").html("");
+cy.elements().remove();
+//alert("totcoin: "+totCoins);
+for(var i=totCoins;i>totCoins-10;i--){
+readCoinByID(i);
+}
+}
+
 function countOwnedCoins(){
 tot=contracts["Pretorian"].contract.amount_owned_coins(selectedWallet,function(err,data){
 if(err)console.log("Error: "+err);
@@ -2022,7 +2034,7 @@ if((!coinExist(addr))||(lastTap==addr)){
 //hyperLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodcoin;hyperIndex[1]="0xef7f8121782a18d74ae2b6c2144b2ad0143ef784";
 
 singlecoin=[addr,"FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
-social=["coin.png","web","No Social Disclaimer Available","twitter1","twitter2","twitter3","facebook","email"];
+social=["coin.png","web","","twitter1","twitter2","twitter3","facebook","email"];
 hyperIndex[hyperIndex.length]=addr;
 
 cy.$("#"+addr).css({"background-image":"url(loading.gif)"});
@@ -2061,7 +2073,7 @@ stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.name(function(err,data){
 if(err)console.log("Error: "+err);
 $("#coinName").text(data);
-$("#coinNameleft").text(data);
+
 singlecoin[1]=data;
 $("#hyperwalletmainlabel").text(singlecoin[1]+" HyperWallet");
 $("#mainicolabel").text(data+" ICO");
@@ -2108,9 +2120,12 @@ stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 stepcounter++;
 contracts['Dsocial'].contract.readInfo(selectedId,10,function(err,datax){
 if(err)console.log("Error: "+err);
-tempSo="No Social Disclaimer Available";
-if(datax[0]!="")tempSo=datax[0];
-$("#socialdisclaimer").text(tempSo);
+
+if(datax[0]!=""){
+$("#socialdisclaimer").text(datax[0]);$("#socialdisclaimer").show();
+}else{
+$("#socialdisclaimer").hide();
+}
 
 stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 });
@@ -2141,7 +2156,7 @@ singlecoin=hyperLayer[addr];
 social=socialLayer[addr];
 createIcon("#hyperwallet-walletico6",singlecoin[9]);
 $("#coinName").text(singlecoin[1]);
-$("#coinNameleft").text(singlecoin[1]);
+
 $("#socialdisclaimer").text(social[2]);
 $("#ownerlink").attr("href" , "https://testnet.etherscan.io/address/"+9);
 $("#ownerlink2").attr("href" , "https://testnet.etherscan.io/address/"+addr);
