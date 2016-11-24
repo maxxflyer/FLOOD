@@ -242,7 +242,7 @@ var hyperIndex = [];
 var socialLayer = {};
 
 var singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
-var social=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+var social=["coin.png","web","No Social Disclaimer Available","twitter1","twitter2","twitter3","facebook","email"];
 //hyperLayer["k1"] = "abc";
 //alert(hyperLayer["k2"]);
 
@@ -658,6 +658,8 @@ if(isfavorite(this.id())){$("#addfavoritebutton").html("&#9733");}else{$("#addfa
 //$("#twittertab1").show();
 fetchTheySay(0);
 lastnode=1;display=2;
+//cy.animate({zoom: 3,center: {eles: cy.$("#"+this.id())}}, {duration: 500});
+//cy.animate({center: {eles: cy.$(".node")}}, {duration: 500});
 
 });
 
@@ -852,6 +854,15 @@ ob.text(data0+" "+data1);
 });});
 }
 
+function listVisible(){
+$(".tableft").hide();
+}
+
+
+function trashCoin(){
+cy.remove("#"+selectedId);
+
+}
 function hyperaddr(t,v){
 return $.cookie('hyperLayer')[t][v];
 }
@@ -1307,7 +1318,13 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 
 
 <div id="sidebar-left" style="">
-<div id="socialpanelleft" style="width: 250px; border-bottom: solid 1px #ddd; height: 34px;"><img src="abc.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 15px 0px 15px; float: left;" onclick=""></div>
+<div id="socialpanelleft" style="width: 250px; border-bottom: solid 1px #ddd; height: 34px;">
+<img src="fit.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 5px; float: left;" onclick="cy.fit()">
+<img src="explode.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="cy.layout()">
+<img src="listvisible.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="listVisible()">
+<img src="trash.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 0px 0px 10px; float: left;" onclick="trashCoin()">
+<img src="search.png" style="cursor: pointer; width: 24px; height: 24px; margin: 5px 5px 0px 0px; float: right;" onclick="cy.fit()">
+</div>
 <div id="hypertab" class="tableft">
 <div class="spacer"></div>
 <div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;"><img src="layers-transparent.png" style="width: 50px;"></div>
@@ -1328,6 +1345,7 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <button id="showmycoinsbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showmycoins()">MY COINS</button>
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showfavorites()">&#9733 FAVORITES</button>
 <button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="showAll()">LOAD ALL</button>
+<button id="showfavoritesbutton" style="width: calc(100% - 40px); margin: 30px 20px 0 20px;" onclick="">MINT CUSTOM COIN</button>
 
 </div>
 <div id="hometableft" class="tab tableft" style="display: none; font-family: arial;">
@@ -1642,9 +1660,11 @@ margin-top: 20px;
 margin-bottom: 20px;
 font-family: arial;">SETTINGS:</div>
 <div id="walletsChooser"></div><br>
-<input type="checkbox" class="check" name="html" value="html"/> Partnerships
+<input type="checkbox" class="check" name="html" value="html" checked/> Circle Layout
 <br />
-<input type="checkbox" class="check" name="html" value="html"/> Part. Requests
+<input type="checkbox" class="check" name="html" value="html" checked/> Partnerships
+<br />
+<input type="checkbox" class="check" name="html" value="html" checked/> Part. Requests
 <br /> <br />
 <button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanfavorites()">DELETE FAVORITES</button>
 <button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanlocals()">DELETE LOCALS</button>
@@ -2002,7 +2022,7 @@ if((!coinExist(addr))||(lastTap==addr)){
 //hyperLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodcoin;hyperIndex[1]="0xef7f8121782a18d74ae2b6c2144b2ad0143ef784";
 
 singlecoin=[addr,"FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
-social=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
+social=["coin.png","web","No Social Disclaimer Available","twitter1","twitter2","twitter3","facebook","email"];
 hyperIndex[hyperIndex.length]=addr;
 
 cy.$("#"+addr).css({"background-image":"url(loading.gif)"});
