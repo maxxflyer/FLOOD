@@ -113,6 +113,9 @@ body{margin: 0px;}
 h2 {
   clear:both;
 }
+.icosubpan{
+padding: 20px;
+}
 
 .user img{width: 33px;}
 
@@ -526,7 +529,7 @@ cy.on('click', 'node', function(event) {
     var node = event.cyTarget;
  cy.$(".qtip").hide();
     node.qtip({
-         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbutton" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div><div class="qtipbuttonlast" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="ethereco.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div>',
+         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbutton" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div><div class="qtipbuttonlast" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="ethereco.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div>',
 position: {
     my: 'bottom center',
     at: 'top center'
@@ -1089,10 +1092,7 @@ $("#hometableft").hide();
 $("#offerpartnershippanel").show();
 }
 
-function removePartenrshipPanel(){
-$("#hometableft").hide();
-$("#removepartnershippanel").show();
-}
+
 
 function closePartnershipPanel(){
 $(".tableft").hide();
@@ -1215,6 +1215,8 @@ if(err)console.log("Error: "+err);
 $(".icosubpan").hide();
 
 $("#icosubpanel"+data).show();
+if(data<=5){$("#icosteplabel").text("Step "+data+" of 5");}else{$("#icosteplabel").text("ICO over!");}
+
 $("#icopanel").show();
 });
 
@@ -1331,11 +1333,10 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <div id="hometableft" class="tab tableft" style="display: none; font-family: arial;">
 <div id="coinNameleft" style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">COIN NAME</div>
 <div class="spacer"></div>
-<div style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+<div id="socialdisclaimer" style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
 <div class="spacer"></div>
 <button id="partnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="openPartnershipButtons()">PARTNERSHIPS</button>
 <button id="offerpartnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="offerPartenrshipPanel()">OFFER PARTNERSHIP</button>
-<button id="removepartnershippanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; " onclick="removePartenrshipPanel()">REMOVE PARTNERSHIP</button>
 </div>
 
 <div id="offerpartnershippanel" class="tab tableft" style="display: none; font-family: arial;">
@@ -1358,20 +1359,6 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 
 <button id="backtohometab" style="width: calc(100% - 40px); margin: 40px 20px 0 20px;" onclick="backtohometab()">BACK</button>
 <div id="removeAlertLabel" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px; display: none; color: #777;"> Click to remove Partnership!</div>
-</div>
-
-<div id="removepartnershippanel" class="tab tableft" style="display: none; font-family: arial;">
-<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">REMOVE PARTNERSHIP</div>
-<div class="spacer"></div>
-<div style="text-align: center; color: gray; padding: 20px; text-align: justify;">From:</div>
-<div class="spacer"></div>
-<select id="removepartnerlist" style="width: calc(100% - 40px); margin-left: 20px;">
-</select> 
-<div class="spacer"></div>
-<div style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px 0 0 20px; text-align: justify;">To: this coin</div>
-<div class="spacer"></div>
-<button id="removepartnershippanelcancel" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="closePartnershipPanel()">CANCEL</button>
-<button id="removepartnershippanelremove" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="">REMOVE PARTNERSHIP</button>
 </div>
 
 <div id="markettabbid" class="tab tableft" style="display: none;">
@@ -1491,8 +1478,10 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opendappspanel()">FEATURED DAPPS</button>
 <button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opencontractpanel()">SHOW CONTRACT</button>
 </div>
-<div id="icopanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 20px;">ICO PANEL</div>
+<div id="icopanel" class="tabright" style="display: none; margin: 0px; font-family: arial;">
+<div style="text-align: center; color: gray; margin-bottom: 20px; margin-top: 20px;">ICO PANEL</div>
+<div id="icosteplabel" class="tablabel" style="width: 70px; font-size: 14px; margin: 25px auto 10px auto;">Step 1 of 4</div>
+<div style="border-bottom: solid 1px #ddd; width: 250px; height: 10px;"></div>
 <div id="icosubpanel1" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Single Coin Cost (in ETH):</div>
 <input type="text" id="coincost" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
@@ -1517,7 +1506,7 @@ margin-right: 0px; margin-top: 5px; text-align: right;" value="1000">
 margin-right: 0px; margin-top: 5px; text-align: right;" value="10000">
 <button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setEndAndStart()">SET AND START ICO NOW</button>
 <div class="spacer"></div></div>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
+<button id="bactToSettings" style="width: calc(100% - 40px); margin: 30px 0 0 20px;" onclick="backtosettings()">CANCEL</button>
 <div id="icosubpanel5" class="icosubpan">
 <button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="endIco()">END ICO</button>
 </div></div>
@@ -2077,7 +2066,7 @@ stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.totalSupply(function(err,data){
 if(err)console.log("Error: "+err);
 $("#totalsupply").text(""+(parseInt(data)/1000000000000000000));
-singlecoin[3]=data/100000000000000000;
+singlecoin[3]=data;
 stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 });
 
@@ -2097,15 +2086,25 @@ stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 });
 
 stepcounter++;
+contracts['Dsocial'].contract.readInfo(selectedId,10,function(err,datax){
+if(err)console.log("Error: "+err);
+tempSo="No Social Disclaimer Available";
+if(datax[0]!="")tempSo=datax[0];
+$("#socialdisclaimer").text(tempSo);
+
+stepcounter--;if(stepcounter==0)endLoadCoin(addr);
+});
+
+stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.enabled(function(err,data){
 if(err)console.log("Error: "+err);
 
-if(data=="1"){$("#ico").html("Waiting 46");$("#cost").html("-- ETH");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
-if(data=="2"){$("#ico").html("Waiting 47");
+if(data=="1"){$("#ico").html("Waiting");$("#cost").html("-- ETH");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data=="2"){$("#ico").html("Waiting");
 contracts["Flood_Standard_Ethereum_Coin"].contract.cost(function(err,data2){$("#cost").html(data2+" ETH");});
 $("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
-if(data=="3"){$("#ico").html("Waiting 48");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
-if(data=="4"){$("#ico").html("Waiting 49");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data=="3"){$("#ico").html("Waiting");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
+if(data=="4"){$("#ico").html("Waiting");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
 if(data=="5"){$("#ico").html("Started");$("#icostatus").html("OPEN");$("#icostatus").css("color" , "green");}
 if(data=="6"){$("#ico").html("Closed");$("#icostatus").html("CLOSED");$("#icostatus").css("color" , "red");}
 singlecoin[6]=data;
@@ -2123,11 +2122,12 @@ social=socialLayer[addr];
 createIcon("#hyperwallet-walletico6",singlecoin[9]);
 $("#coinName").text(singlecoin[1]);
 $("#coinNameleft").text(singlecoin[1]);
+$("#socialdisclaimer").text(social[2]);
 $("#ownerlink").attr("href" , "https://testnet.etherscan.io/address/"+9);
 $("#ownerlink2").attr("href" , "https://testnet.etherscan.io/address/"+addr);
 $("#mainicolabel").text(singlecoin[1]+" ICO");
 $("#symbol").text(singlecoin[2]);
-$("#totalsupply").text(""+(parseInt(singlecoin[3])));
+$("#totalsupply").text(""+(parseInt(singlecoin[3])/1000000000000000000));
 $("#volume").text(singlecoin[7]);
 $("#hyperwalletmainlabel").text(singlecoin[1]);
 $("#coinlogo").attr("src" , social[0]);
