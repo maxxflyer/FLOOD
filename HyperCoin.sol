@@ -222,6 +222,20 @@ enabled=5;created=block.number;}}             //start startsale
 
 
 
+    /* CREATE OFFER */
+    function createOffer(address coinx,uint amountx,uint coeff,bool fixe,uint index)returns (bool){
+    if((balanceOf[msg.sender]-lockedOf[msg.sender]<amountx)||(coeff==0)||(index<1)||(enabled==7)||(amountx==0))throw;
+    swappable order=markets[coinx][index];  
+    swappable prev=markets[coinx][order.prev];   
+    if((order.price<coeff)||(prev.price>coeff))throw;
+    markets[coinx].push(swappable({owner : msg.sender,amount : amountx,price : coeff,fix : fixe,prev : order.prev,next : index}));
+    order.prev=markets[coinx].length;
+    prev.next=markets[coinx].length;
+    lockedOf[msg.sender]+=amountx;
+    balanceOf[msg.sender]-=amountx;
+    return true;
+    }
+
 
 
 
