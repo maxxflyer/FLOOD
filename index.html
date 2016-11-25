@@ -119,6 +119,17 @@ background: #fff;
 .tablabel4{margin: 10px 10px 10px 10px; font-family: arial;}
 .spacer{height: 0px; width: 100%; border-bottom: solid 1px #ddd;  clear: both;}
 
+
+.partneritem{
+border-bottom: solid 1px #ddd;
+background: white;
+cursor: pointer;
+}
+
+.partneritem:hover{
+
+background: #eee;
+}
 body{margin: 0px;}
 
 h2 {
@@ -540,7 +551,7 @@ cy.on('click', 'node', function(event) {
     var node = event.cyTarget;
  cy.$(".qtip").hide();
     node.qtip({
-         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbutton" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div><div class="qtipbuttonlast" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="ethereco.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div>',
+         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbutton" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbuttonlast" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="ethereco.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div>',
 position: {
     my: 'bottom center',
     at: 'top center'
@@ -598,6 +609,15 @@ xxx="801253029852958720";
                  loadwalletETH();
                     $("#wallet").show();
                 });
+
+                $('#qtipbutton6', this).bind('click', function(event) {
+                    event.preventDefault();
+                 $(".qtip").hide();
+                 $(".tabright").hide();
+$("#walletsChooser").hide();
+$("#avatar").attr("src" , "punisher.jpg");
+ $("#hypercontroltab").show();
+                });
             }
         }
     }, event);
@@ -643,6 +663,8 @@ if(err)console.log("Error: "+err);$("#ETHwalletbalance").text(tempu.substring(0,
  
 
 cy.on('tap', 'node', function(e){
+$("#avatar").attr("src" , "avatar.jpg");
+$("#walletsChooser").show();
 $(".offerpartnershipitem").show();
 $("#offerpartnershipitem"+this.id()).hide();
 $("#sidebar-left").show();
@@ -675,6 +697,8 @@ lastnode=1;display=2;
 });
 
 cy.on('tap', 'edge', function(e){
+$("#avatar").attr("src" , "avatar.jpg");
+$("#walletsChooser").show();
 $("#sidebar-left").show();
 $("#sidebar-right").show();
 if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color': lastColor,'target-arrow-color': lastColor});
@@ -699,6 +723,8 @@ createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
 });
 
 cy.on('tap', function(event){
+$("#avatar").attr("src" , "avatar.jpg");
+$("#walletsChooser").show();
 if( event.cyTarget === cy ){
 
 if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
@@ -827,7 +853,7 @@ tempcc++;
 if(addEdgeRequestToCookie(selectedId,data2)){cy.layout({ name: 'circle'});}
 tempclass="";
 if($("#ownerlink").attr("value")==selectedWallet)tempclass="removepartnershipminidisplay";
-$("#partnershipscontainer").append("<div id='remove"+data2+"' value='"+tempcc+"'><div style='float: left; margin:15px 10px 0 20px;'><img  class='"+tempclass+"' id='partlogo"+tempcc+"' src='' style='width: 24px; height: 24px;'></div><div class='"+tempclass+"' id='partname"+tempcc+"' style='float: left; margin:19px 0 0 0;'></div><div style='clear: both'></div></div>");
+$("#partnershipscontainer").append("<div id='remove"+data2+"' value='"+tempcc+"' class='partneritem'><div style='float: left; margin:9px 10px 5px 20px;'><img  class='"+tempclass+"' id='partlogo"+tempcc+"' src='' style='width: 24px; height: 24px;'></div><div class='"+tempclass+"' id='partname"+tempcc+"' style='float: left; margin:13px 0 9px 0;'></div><div style='clear: both'></div></div>");
 getImage($("#partlogo"+tempcc),data2);
 getName($("#partname"+tempcc),data2);
 });
@@ -1393,24 +1419,25 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 </div>
 
 <div id="offerpartnershippanel" class="tab tableft" style="display: none; font-family: arial;">
-<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">OFFER PARTNERSHIP</div>
+<div style="text-align: center; color: white; background: black; margin: 0px; height: 30px; padding-top: 12px;">OFFER PARTNERSHIP</div>
 <div class="spacer"></div>
-<div style="text-align: center; color: gray; padding: 20px; text-align: justify;">From:</div>
+<div style=" color: black; padding: 15px 0 15px 0;  background: #ddd; width: 100%;"><div style="margin-left: 20px;">From:</div></div>
 <div class="spacer"></div>
 <div id="offerpartnershipscontainer"></div>
 <div class="spacer"></div>
-<div style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px 0 0 20px; text-align: justify;">To: this coin</div>
+<div style=" color: black; padding: 15px 0 15px 0px;  background: #ddd; width: 100%;"><div style="margin-left: 20px;">To: this coin</div></div>
 <div class="spacer"></div>
-<button id="offerpartnershippanelcancel" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="closePartnershipPanel()">CANCEL</button>
+<button id="offerpartnershippanelcancel" class="mainbutton" style="width: 100%; border: 0px; border-bottom: solid 1px #ddd; height: 40px;" onclick="closePartnershipPanel()">CANCEL</button>
 
 
 </div>
 
 <div id="partnershippanel" class="tab tableft" style="font-family: arial; display: none;">
-<div id="partnershipslabel1" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px;">Partnerships:</div><div id="partnershipsamount1" style="float: left; margin-left: 20px;  margin-top: 20px; color: gray;"></div><div style="clear: both;"></div>
+<div style="width: 100%; margin: 0; background: black; color: white; height: 40px;">
+<div id="partnershipslabel1" style="float: left; margin-left: 20px; margin-top: 12px; margin-bottom: 10px;">Partnerships:</div><div id="partnershipsamount1" style="float: left; margin-right: 20px;  margin-top: 12px; color: gray; float: right;"></div><div style="clear: both;"></div></div>
 <div id="partnershipscontainer"></div>
-<button id="offerpartnershippanelbutton" style="width: calc(100% - 40px); margin: 20px 20px 0 20px;" onclick="offerPartenrshipPanel()">OFFER PARTNERSHIP</button>
-<button id="backtohometab" style="width: calc(100% - 40px); margin: 20px 20px 0 20px;" onclick="backtohometab()">BACK</button>
+<button id="offerpartnershippanelbutton" class="mainbutton" style="width: 100%; border: 0; height: 40px; border-bottom: solid 1px #ddd;" onclick="offerPartenrshipPanel()">OFFER PARTNERSHIP</button>
+<button id="backtohometab" class="mainbutton" style="width: 100%;border: 0; height: 40px; border-bottom: solid 1px #ddd;" onclick="backtohometab()">BACK</button>
 <div id="removeAlertLabel" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px; display: none; color: #777;"> Click to remove Partnership!</div>
 </div>
 
@@ -1509,23 +1536,23 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div id="blancelabel" class="tablabel" style="float: left;">Balance:</div>
 <div id="balance" class="tablabel" style="float: right; color: gray; margin-right: 20px;">300 x</div>
 <div class="spacer"></div>
-<div id="web" class="tablabel" style="float: left;">Link:</div><div class="tablabel" style="float: left; color: gray; margin-top: 4px;"><a id="weblink" href="http://www.arkdao.com" style="font-size: 16px; margin-left: 10px; margin-top: -2px;"><img src="http://flood.monkeyscage.org/world.png" style="width: 24px; height: 24px;"></a></div>
+<div id="web"  class="tablabel" style="float: left;">Link:</div><div  style="float: right; color: gray; margin-top: 7px; margin-right: 9px;"><a id="weblink" href="" style="font-size: 16px; margin-left: 10px; margin-right: 9px; margin-top: 1px; float: right;"><img src="http://flood.monkeyscage.org/world.png" style="width: 24px; height: 24px;"></a></div>
 <div class="spacer"></div>
 <div id="ownerlabel" class="tablabel" style="float: left;">Owner:</div>
-<div id="owner" class="tablabel" style="float: right; margin-left: 0px; margin-right: 20px;"><a id="ownerlink" href="https://testnet.etherscan.io/address/0x6598583177F3a2F8bcd72384F00D76E6D052EC21" style="font-size: 9px;"><div id="hyperwallet-walletico6" class="walleticon20" style="float: right; margin: -5px 20px 0 15px;"></div></a></div>
+<div id="owner" class="tablabel" style="float: right; margin-left: 0px; margin-right: 20px;"><a id="ownerlink" href="https://testnet.etherscan.io/address/0x6598583177F3a2F8bcd72384F00D76E6D052EC21" style="font-size: 9px;"><div id="hyperwallet-walletico6" class="walleticon20" style="float: right;"></div></a></div>
 <div class="spacer"></div>
-<button id="controlpanelbutton" style="width: calc(100% - 40px); margin: 10px 20px 0px 20px;" onclick="showcontrolpanel()">CONTROL PANEL</button>
+<button id="controlpanelbutton" class="mainbutton" style="width: 100%; border: 0px; border-bottom: solid 1px #ddd;height: 40px;" onclick="showcontrolpanel()">CONTROL PANEL</button>
 
 </div>
-<div id="controlpanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 20px;">CONTROL PANEL</div>
-<button id="settingsbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opensettings()">SETTINGS</button>
-<button id="seticobutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setico()">SET ICO</button>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="openownerpanel()">CHANGE OWNER</button>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="openechxangepanel()">EXCHANGE PLATFORMS</button>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="openmodulespanel()">SMART MODULES</button>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opendappspanel()">FEATURED DAPPS</button>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="opencontractpanel()">SHOW CONTRACT</button>
+<div id="controlpanel" class="tabright" style="display: none; margin: 0px; font-family: arial">
+<div style="text-align: center; color: white; margin 0; width: 100%;background: black; height: 26px; padding-top: 10px;">CONTROL PANEL</div>
+<button id="settingsbutton" class="mainbutton" style="width: 100%; border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="opensettings()">SETTINGS</button>
+<button id="seticobutton" class="mainbutton" style="width: calc(100%); border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="setico()">SET ICO</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: calc(100%); border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="openownerpanel()">CHANGE OWNER</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: calc(100%); border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="openechxangepanel()">EXCHANGE PLATFORMS</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: calc(100%); border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="openmodulespanel()">SMART MODULES</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: calc(100%); border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="opendappspanel()">FEATURED DAPPS</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: calc(100%); border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="opencontractpanel()">SHOW CONTRACT</button>
 </div>
 <div id="icopanel" class="tabright" style="display: none; margin: 0px; font-family: arial;">
 <div style="text-align: center; color: gray; margin-bottom: 20px; margin-top: 20px;">ICO PANEL</div>
@@ -1603,31 +1630,30 @@ margin-right: 0px; margin-top: 5px; text-align: right;" ></textarea>
 <div class="spacer"></div>
 <button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">BACK</button>
 </div>
-<div id="claimpanel" class="tabright" style="display: none; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 5px; margin-top: 20px;">CLAIM AUTO-POS</div>
-<div class="spacer"></div>
+<div id="claimpanel" class="tabright" style="display: none; font-family: arial;">
+<div style="text-align: center; color: gray; background: black; width: 100%; color: white; padding-top: 10px; height: 26px;">CLAIM AUTO-POS</div>
+
 <div style="text-align: center; color: gray; padding: 20px; text-align: justify;">Wallet:</div>
-<div class="spacer"></div>
 <select style="width: calc(100% - 40px); margin-left: 20px;">
  <option value="volvo">MyWallet 1</option>
  <option value="saab">MyWallet 2</option>
  <option value="mercedes">MyWallet 3</option>
  <option value="audi">MyWallet 4</option>
 </select> 
+
+<div style="text-align: center; color: gray; padding: 10px 0 10px 20px; text-align: justify; border-top: solid 1px #ddd; margin-top: 20px;">You have: 20 GRB</div>
 <div class="spacer"></div>
-<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">You have: 20 GRB</div>
-<div class="spacer"></div>
-<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Blocks Matured: 1231</div>
+<div style="text-align: center; color: gray; padding: 10px 0 10px 20px; text-align: justify;">Blocks Matured: 1231</div>
 <div class="spacer"></div>
 
-<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Claimable: 0.002 GRB</div>
+<div style="text-align: center; color: gray; padding: 10px 0 10px 20px; text-align: justify;">Claimable: 0.002 GRB</div>
 <div class="spacer"></div>
-<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Value: 0.0002 ETH</div>
+<div style="text-align: center; color: gray; padding: 10px 0 10px 20px; text-align: justify;">Value: 0.0002 ETH</div>
 <div class="spacer"></div>
-<div style="text-align: center; color: gray; padding: 20px 0 0 20px; text-align: justify;">Gas cost: 0.00015 ETH</div>
+<div style="text-align: center; color: gray; padding: 10px 0 10px 20px; text-align: justify;">Gas cost: 0.00015 ETH</div>
 <div class="spacer"></div>
-<button id="claimpanelcancel" style="width: calc(100% - 40px); margin: 20px 20px 0 20px;" onclick="closeClaimPanel()">CANCEL</button>
-<button id="claimpanelclaim" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="closeClaimPanel()">CLAIM NOW</button>
+<button id="claimpanelcancel" class="mainbutton" style="width: 100%; border: 0; border-bottom: solid 1px #ddd; height: 40px;" onclick="closeClaimPanel()">CANCEL</button>
+<button id="claimpanelclaim" class="mainbutton" style="width: 100%; border: 0; border-bottom: solid 1px #ddd; height: 40px;" onclick="closeClaimPanel()">CLAIM NOW</button>
 </div>
 <div id="hometab" class="tabright">
 </div>
@@ -1685,25 +1711,26 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div id="settingstab" class="tab tabright" style="font-family:arial; color: gray; display: none;">
 <div id="settingslabel" class="tablabel2" style="text-align: center;
 width: 100%;
-color: gray;
-margin-top: 20px;
+background: black;
+padding: 10px 0 10px 0;
 margin-bottom: 20px;
-font-family: arial;">SETTINGS:</div>
+font-family: arial; color: white;">SETTINGS:</div>
 <input type="checkbox" class="check" name="html" value="html" checked/> Circle Layout
 <br />
 <input type="checkbox" class="check" name="html" value="html" checked/> Partnerships
 <br />
 <input type="checkbox" class="check" name="html" value="html" checked/> Part. Requests
 <br /> <br />
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanfavorites()">DELETE FAVORITES</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="cleanlocals()">DELETE LOCALS</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px;" onclick="backToAvatar()">BACK</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="coinlistcookie();">COINS LIST COOKIE</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(JSON.stringify($.cookie('hyperLayer')));">HYPER COOKIE</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(hyperIndex);">HYPER INDEX</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(JSON.stringify($.cookie('localRequests')));">LOCAL REQUESTS</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert(JSON.stringify($.cookie('localPartnerships')));">LOCAL PARTNERS</button>
-<button id="cleanfavoritesbutton" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; display: none;" onclick="alert($.cookie('favorite'));">FAVORITE COOKIE</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd; border-top: solid 1px #ddd;" onclick="cleanfavorites()">DELETE FAVORITES</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="cleanlocals()">DELETE LOCALS</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="backToAvatar()">BACK</button>
+<div style="background: #ddd; width: 100%; height: 10px;"></div>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="coinlistcookie();">COINS LIST COOKIE</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="alert(JSON.stringify($.cookie('hyperLayer')));">HYPER COOKIE</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="alert(hyperIndex);">HYPER INDEX</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="alert(JSON.stringify($.cookie('localRequests')));">LOCAL REQUESTS</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="alert(JSON.stringify($.cookie('localPartnerships')));">LOCAL PARTNERS</button>
+<button id="cleanfavoritesbutton" class="mainbutton" style="height: 40px; width: 100%; border: 0; border-bottom: solid 1px #ddd;" onclick="alert($.cookie('favorite'));">FAVORITE COOKIE</button>
 </div>
 
 <div id="hypercontroltab" class="tab tabright" style="font-family:arial; color: gray;">
@@ -1995,7 +2022,7 @@ ownedCoinsList.push(data);console.log("3ownedCoinsList "+ownedCoinsList);
 $.cookie('myCoinsList',ownedCoinsList);
 tempcc++;
 
-$("#offerpartnershipscontainer").append("<div id='offerpartnershipitem"+data+"'><div class='offerpartnershipnow' style='float: left; margin:15px 10px 0 20px;' value='"+data+"'><img class='offerpartnershipnow' id='offerpartlogo"+tempcc+"' src='' style='width: 24px; height: 24px;cursor: pointer; ' value='"+data+"'></div><div class='offerpartnershipnow' id='offerpartname"+tempcc+"' style='cursor: pointer; float: left; margin:19px 0 0 0;' value='"+data+"'></div><div style='clear: both'></div></div>");
+$("#offerpartnershipscontainer").append("<div id='offerpartnershipitem"+data+"' class='partneritem' style='width: 100%; margin: 0;'><div class='offerpartnershipnow' style='float: left; margin:10px 10px 6px 20px;' value='"+data+"'><img class='offerpartnershipnow' id='offerpartlogo"+tempcc+"' src='' style='width: 24px; height: 24px;cursor: pointer; ' value='"+data+"'></div><div class='offerpartnershipnow' id='offerpartname"+tempcc+"' style='cursor: pointer; float: left; margin:14px 0 0 0;' value='"+data+"'></div><div style='clear: both'></div></div>");
 getImage($("#offerpartlogo"+tempcc),data);
 getName($("#offerpartname"+tempcc),data);
 
