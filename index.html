@@ -551,7 +551,7 @@ cy.on('click', 'node', function(event) {
     var node = event.cyTarget;
  cy.$(".qtip").hide();
     node.qtip({
-         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbutton" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbuttonlast" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="ethereco.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div>',
+         content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.ico"></div><div class="qtipbutton" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-icon.png"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton7" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="chat.png" style="width: 24px; height: 24px;"></div><div class="qtipbuttonlast" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="ethereco.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div>',
 position: {
     my: 'bottom center',
     at: 'top center'
@@ -615,8 +615,16 @@ xxx="801253029852958720";
                  $(".qtip").hide();
                  $(".tabright").hide();
 $("#walletsChooser").hide();
+$("#avatarecho").show();
 $("#avatar").attr("src" , "punisher.jpg");
  $("#hypercontroltab").show();
+                });
+
+                $('#qtipbutton7', this).bind('click', function(event) {
+                 event.preventDefault();
+                 $(".qtip").hide();
+                 $( "#openchat" ).trigger( "click" );
+
                 });
             }
         }
@@ -663,6 +671,7 @@ if(err)console.log("Error: "+err);$("#ETHwalletbalance").text(tempu.substring(0,
  
 
 cy.on('tap', 'node', function(e){
+$("#avatarecho").hide();
 $("#avatar").attr("src" , "avatar.jpg");
 $("#walletsChooser").show();
 $(".offerpartnershipitem").show();
@@ -697,6 +706,7 @@ lastnode=1;display=2;
 });
 
 cy.on('tap', 'edge', function(e){
+$("#avatarecho").hide();
 $("#avatar").attr("src" , "avatar.jpg");
 $("#walletsChooser").show();
 $("#sidebar-left").show();
@@ -724,6 +734,7 @@ createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
 
 cy.on('tap', function(event){
 $("#avatar").attr("src" , "avatar.jpg");
+$("#avatarecho").hide();
 $("#walletsChooser").show();
 if( event.cyTarget === cy ){
 
@@ -1136,7 +1147,36 @@ $("#ICOendblock"+u).text("End Block: "+data4);
 
 
 }
+var chat;
+var chatcount=1;
+function setChat(){
+if(chat)chat.destroy();
+//$("#gitter-chat").show();
+if(chatcount==0){
+//window.gitter.Chat.destroy();
+//$("#gitter-chat").html("");
+$("#gitter-chat").attr("data-room" , "FLOOD-PROJECT/Lobby");
+chat = new window.gitter.Chat({
+    room: 'FLOOD-PROJECT/Lobby',
+    activationElement: '#openchat'
+  });}
 
+if(chatcount==1){
+//$("#gitter-chat").html("");
+$("#gitter-chat").attr("data-room" , "gitterHQ/sidecar");
+chat= new window.gitter.Chat({
+    room: 'gitterHQ/sidecar',
+    activationElement: '#openchat'
+  });}
+//if(chatcount==0)
+//if(chatcount==1)
+//chatcount++;
+if(chatcount==2)chatcount=0;
+}
+
+function openChat(){
+
+}
 
 
 
@@ -1337,6 +1377,8 @@ alert($.cookie('myCoinsList'));
     </script>
 <script>$("#qtipbutton").on( "click",function(e){console.log("!");});
 
+$(document).on("click", ".gitter-chat-embed-action-bar-item gitter-chat-embed-action-bar-item-collapse-chat", function(){$(".gitter-open-chat-button").hide();});
+
 $(document).on("click",".openico",function(e){console.log($("#"+e.target.id).attr("name")); $('#icolist').hide();selectedId=$("#"+e.target.id).attr("name");connect("Flood_Standard_Ethereum_Coin",selectedId);loadICO();});
 
 $(document).on("click",".updatesettings",function(e){
@@ -1375,7 +1417,7 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <img src="search2.png" style="cursor: pointer; width: 20px; height: 20px; margin: 7px 7px 0px 0px; float: right;" onclick="cy.fit()">
 </div>
 <div id="hypertab" class="tableft">
-<div class="spacer"></div>
+
 <div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; height: 250px; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial;"><img src="layersbanner.png" style=""></div>
 <button class="mainbutton" style="width: 100%; border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showmycoins()">
 <div id="totcoinlabel" class="tablabel3" style="float: left;">Tot Coins:</div>
@@ -1399,14 +1441,15 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; "  onclick="showNew()">NEW COINS</button>
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; "  onclick="showAll()">LOAD ALL</button>
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="">MINT CUSTOM COIN</button>
-
+<button id="openchat" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; display: none;" onclick="openChat()">FLOOD CHAT</button>
+<button id="openchat2" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;" onclick="openChat()">FLOOD CHAT</button>
 </div>
 <div id="hometableft" class="tab tableft" style="display: none; font-family: arial;">
 
 <img id="coinlogo" style="width: 250px; height: 250px; border-bottom: solid 1px #ddd;" src="coinbanner.png">
-<div id="web" style=" color: gray;width: 100%; height: 36px;left: 0; margin-top: -4px; background: black;
+<div id="web" style=" color: gray;width: 100%; height: 38px;left: 0; margin-top: -4px; background: black;
   "><a id="ownerlink2" href="https://testnet.etherscan.io/address/0x6598583177F3a2F8bcd72384F00D76E6D052EC21" style="font-size: 9px; margin-right: 10px; opacity: 1; filter: alpha(opacity=100);"><div id="hyperwallet-walletico7" class="walleticon20" style="opacity: 1; filter: alpha(opacity=100);float: right; margin: 8px 8px 0 0px;"></div></a>
-<div id="coinName" style=" font-size: 24px; color: white; font-family: arial; "></div></div>
+<div id="coinName" style=" font-size: 18px; color: white; font-family: arial; padding-top: 4px; padding-bottom: 6px"></div></div>
 
 <button id="addfavoritebutton" class="mainbutton" style="float: right; width: 35px; margin: 0px 0px 0px 0px; position: relative;  top: 0px; font-size: 20px; border: 0; border-bottom: solid 1px #ddd;height: 36px;" onclick="addFavorite()">&#9734</button>
 <button id="partnershippanelbutton" class="mainbutton" style=" border: 0; border-bottom: solid 1px #ddd; width: 215px; margin: 0px 0px 0 0px; position: relative; top: 0px; text-align: left; height: 36px;" onclick="openPartnershipButtons()"><img src="partnerships.png" style="width: 18px; height: 18px; padding-top: 3px;"></button>
@@ -1518,15 +1561,23 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <div id="totcoinlabel" class="tablabel" style="float: left;">Tot Coins:</div>
 <div id="totalsupply" class="tablabel" style="float: right; color: gray; margin-right: 20px;">1000000</div>
 <div class="spacer"></div>
-<div id="mininglabel" class="tablabel" style="float: left;">Mining:</div>
-<button id="claimbutton" style=" margin: 7px 0 0 0; float: right; margin-right: 20px;" onclick="claim(0)">1% YEAR</button>
-<div class="spacer"></div>
+
+<button id="claimbutton"  class="mainbutton" style="width: 100%; height: 38px; border: 0; border-bottom: solid 1px #ddd;" onclick="claim(0)">
+<div style="float: left; margin-left: 15px;">Mining:</div>
+<div id="miningperc" style="float: right; margin-right: 15px;"> 1%</div>
+</button>
+
 <div id="cointypelabel" class="tablabel" style="float: left;">Coin Type:</div>
 <div id="cointype" class="tablabel" style="float: right; color: gray; margin-right: 20px;">Basic</div>
 <div class="spacer"></div>
-<div id="icolabel" class="tablabel" style="float: left;">ICO:</div>
-<button id="ico" style=" margin: 7px 0 0 0; float: right; margin-right: 20px;" onclick="loadICO(selectedId)">closed</button>
-<div class="spacer"></div>
+
+<button id="icolabel" class="mainbutton"  style="width: 100%; height: 38px; border: 0; border-bottom: solid 1px #ddd;" onclick="loadICO(selectedId)">
+<div id="icolabel" style=" margin: 0px 0 0 15px; float: left;">ICO:</div>
+<div id="ico" style="float: right; margin-right: 15px;"></div>
+</button>
+
+
+
 <div id="volumelabel" class="tablabel" style="float: left;">Volume:</div>
 <div id="volume" class="tablabel" style="float: right; color: gray; margin-right: 20px;">1234</div>
 <div class="spacer"></div>
@@ -1737,10 +1788,10 @@ font-family: arial; color: white;">SETTINGS:</div>
 <img id="avatar" src="avatar.jpg" style="width: 250px; height: 250px; border-bottom: solid 1px #ddd; margin-bottom: 5px; z-index: 99;">
 <div style=" margin: 0; margin-top: -50px; width: 100%; z-index: 100; position: relative; ">
 <div id='avatarwallet' class='walleticon30' style='margin-left: 10px; margin-bottom: 10px; margin-right: 10px; float: left; cursor: pointer;'></div>
-<img src="ethereco.png" style="width: 21px; height: 24px; float: right; margin-right: 10px; margin-top: 4px; cursor: pointer;" onclick="alert('Send Message to: 0x000000000000')">
+<img id="avatarecho" src="ethereco.png" style="width: 21px; height: 24px; float: right; margin-right: 10px; margin-top: 4px; cursor: pointer;" onclick="alert('Send Message to: 0x000000000000')">
 </div>
-
-<div id="walletsChooser" style="border-bottom: solid 1px #ddd; margin-top: 50px;"></div><br>
+<div id="avatarname" style="width: 100%; background: black; color: white; padding: 10px 0 10px 10px; margin-top: 41px;">NAME</div>
+<div id="walletsChooser" style="border-bottom: solid 1px #ddd; margin-top: 10px;"></div><br>
 
 </div>
 <div id="twittertab" class="tabright">
@@ -1912,6 +1963,8 @@ font-family: arial;">COIN SETTINGS:</div>
 </div>
 
 <div style="width: 555px; margin: auto; margin-top: 0px; display: none"><img src="floodbanner.png"></div>
+
+<div id="gitter-chat" style="width: 600px; height: 600px; display: none; z-index: 2000;"></div>
 
 
 <script>
@@ -2091,7 +2144,7 @@ function restoreCoinImage(addr){cy.$("#"+addr).css({'background-image':'url('+cy
 
 function loadCoin(addr){
 cy.$(".node").css('border' , '0px');
-
+setChat();
 stepcounter=0;
 if((!coinExist(addr))||(lastTap==addr)){
 //singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
@@ -2112,6 +2165,8 @@ $("#ownerlink").attr("href" , "https://testnet.etherscan.io/address/"+data);
 $("#ownerlink").attr("value" , data);
 $("#ownerlink2").attr("href" , "https://testnet.etherscan.io/address/"+addr);
 createIcon("#hyperwallet-walletico6",data);
+createIcon("#avatarwallet",data);
+$("#avatarecho").attr("onclick" , "alert('Send Message to: "+data+"')");
 singlecoin[9]=data;
 $("#partnershippanelbutton").hide();
 if(data==selectedWallet){$("#controlpanelbutton").show();if(ownedCoins>1)$("#partnershippanelbutton").show();}else{$("#controlpanelbutton").hide();if(ownedCoins>0)$("#partnershippanelbutton").show();}
@@ -2155,7 +2210,7 @@ stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.block_reward(function(err,data){
 if(err)console.log("Error: "+err);
-$("#claimbutton").text(data);
+$("#miningperc").text(data);
 singlecoin[4]=data;
 stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 });
@@ -2231,7 +2286,7 @@ $("#totalsupply").text(""+(parseInt(singlecoin[3])/1000000000000000000));
 $("#volume").text(singlecoin[7]);
 $("#hyperwalletmainlabel").text(singlecoin[1]);
 $("#coinlogo").attr("src" , social[0]);
-$("#claimbutton").text(singlecoin[4]);
+$("#miningperc").text(singlecoin[4]);
 
 if(singlecoin[6]<5){$("#ico").html("Waiting");$("#cost").html("-- ETH");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
 if(singlecoin[6]==5){$("#ico").html("Started");$("#cost").html("-- ETH");$("#icostatus").html("OPEN");$("#icostatus").css("color" , "green");}
@@ -2367,6 +2422,8 @@ console.log("!2!");
 //addFavorite();
 showLocals();
 
+$(".gitter-open-chat-button").hide();
+
 //$("#sidebar-left").hide();
 //$("#sidebar-right").hide();
 $("input[name='selectWallet']").change(function(){
@@ -2447,6 +2504,19 @@ twttr.widgets.load();
 
 $(document).on("click" , ".offerpartnershipnow" , function(e){sendPartnership($("#"+e.target.id).attr('value'),selectedId);});
 
+((window.gitter = {}).chat = {}).options = {
+    room: 'FLOOD-PROJECT/Lobby',
+    activationElement: '#openchat2'
+  };
+
+
+
+
+  
+
+</script>
+<div id="openchat2"></div>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 </script>
 
 </body>
