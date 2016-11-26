@@ -45,5 +45,13 @@ if(msg.sender!=a)throw;
 start++;
 }
 
+function censorAndCover(address a,uint u,string default){
+//effettua chiamata esterna
+//individua owner
+//se non è owner throw
+address a;
+if(msg.sender!=a)throw;
+advs[address][u]=default;
+}
 
 }
