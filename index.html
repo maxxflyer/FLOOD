@@ -1631,69 +1631,73 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <button id="setdisclaimerbutton" class="mainbutton" style="width: calc(100%); border: 0; border-bottom: solid 1px #ddd; height: 36px;" onclick="opencontractpanel()">SHOW CONTRACT</button>
 </div>
 <div id="icopanel" class="tabright" style="display: none; margin: 0px; font-family: arial;">
-<div style="text-align: center; color: gray; margin-bottom: 20px; margin-top: 20px;">ICO PANEL</div>
-<div id="icosteplabel" class="tablabel" style="width: 70px; font-size: 14px; margin: 25px auto 10px auto;">Step 1 of 4</div>
-<div style="border-bottom: solid 1px #ddd; width: 250px; height: 10px;"></div>
+<div style="text-align: center; color: gray; padding-bottom: 20px; padding-top: 20px; color: white; background: black;">ICO PANEL</div>
+<div id="icosteplabel" class="tablabel2" style="width: 100%; font-size: 14px; padding: 15px 0 25px 0; color: white; background: black; text-align: center;">Step 1 of 4</div>
+<div style="border-bottom: solid 1px #ddd; width: 250px; height: 0px;"></div>
 <div id="icosubpanel1" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Single Coin Cost (in ETH):</div>
-<input type="text" id="coincost" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+<input type="text" id="coincost" class="settingsfield" style=" width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="0.0001">
-<button id="" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setCost()">SET COST</button>
+<button id="" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setCost()">SET COST</button>
 <div class="spacer"></div></div>
 <div id="icosubpanel2" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Bonus (%):</div>
-<input type="text" id="icobonus" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+<input type="text" id="icobonus" class="settingsfield" style="  width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="10">
-<button id="" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setBonus()">SET BONUS</button>
+<button id="" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setBonus()">SET BONUS</button>
 <div class="spacer"></div></div>
 <div id="icosubpanel3" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Endbonus (after blocks):</div>
-<input type="text" id="icoendbonus" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+<input type="text" id="icoendbonus" class="settingsfield" style="  width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="1000">
-<button id="" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setEndBonus()">SET END BONUS</button>
+<button id="" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setEndBonus()">SET END BONUS</button>
 <div class="spacer"></div></div>
 <div id="icosubpanel4" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Duration (blocks):</div>
-<input type="text" id="icoduration" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
+<input type="text" id="icoduration" class="settingsfield" style="  width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="10000">
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setEndAndStart()">SET AND START ICO NOW</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setEndAndStart()">SET AND START ICO NOW</button>
 <div class="spacer"></div></div>
-<button id="bactToSettings" style="width: calc(100% - 40px); margin: 30px 0 0 20px;" onclick="backtosettings()">CANCEL</button>
+<button id="bactToSettings" class="mainbutton" style="width: 100%; margin: 0; border: 0; padding: 10px 0 10px 0;" onclick="backtosettings()">CANCEL</button>
 <div id="icosubpanel5" class="icosubpan">
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="endIco()">END ICO</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="endIco()">END ICO</button>
 </div></div>
-<div id="ownerpanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 20px;">SET OWNER PANEL</div>
-<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">New Owner Eth Address:</div>
-<input type="text" id="logo" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
-margin-right: 0px; margin-top: 5px; text-align: right;" value="0.0001">
-<div class="spacer"></div>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setnewowner()">SET NEW OWNER</button>
-</div>
-<div id="modulespanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 20px;">SMART MODULES</div>
-<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Add/Remove functionalities to your coin:</div>
-<div class="spacer"></div>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
-</div>
-<div id="dappspanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 20px;">FEATURED DAPPS</div>
-<div class="spacer"></div>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
 
-</div>
-<div id="echxangepanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 20px;">EXTERNAL EXCHANGES</div>
-<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Exchange Page Address:</div>
-<input type="text" id="logo" class="settingsfield" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
-margin-right: 0px; margin-top: 5px; text-align: right;" value="0.0001">
+<div id="ownerpanel" class="tabright" style="display: none; margin: 0px; font-family: arial">
+<div style="text-align: center; color: white; margin: 0px; width: 100%; background: black; padding: 10px 0 10px 0;">SET OWNER PANEL</div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 20px;">New Owner Eth Address:</div>
+<a id="ownerlink7" href="" style="font-size: 9px; margin-right: 10px; float: right;"><div id="hyperwallet-walletico11" class="walleticon20" style="opacity: 1; float: right; margin: 8px 8px 0px 0px;"></div></a>
+<input type="text" id="logo" class="settingsfield" style="  width: calc(100% - 40px); color: gray;margin-left: 20px;
+margin-right: 0px; margin-top: 5px; margin-bottom: 20px; text-align: right;" value="0x123">
 <div class="spacer"></div>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">CANCEL</button>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 10px 0 0 0;" onclick="setnewowner()">SET NEW EXCHANGE</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; border: 0; margin: 0; height: 38px;" onclick="setnewowner()">SET NEW OWNER</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; border: 0; margin: 0; height: 38px;" onclick="backtosettings()">CANCEL</button>
 </div>
-<div id="contractpanel" class="tabright" style="display: none; margin: 20px; font-family: arial">
-<div style="text-align: center; color: gray; margin-bottom: 20px;">COIN CONTRACT</div>
+
+<div id="modulespanel" class="tabright" style="display: none; margin: 0px; font-family: arial">
+<div style="text-align: center; color: white; margin: 0px; width: 100%; background: black; padding: 10px 0 10px 0;">SMART MODULES</div>
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; border: 0; margin: 0; height: 38px;" onclick="backtosettings()">CANCEL</button>
+</div>
+
+<div id="dappspanel" class="tabright" style="display: none; margin: 0px; font-family: arial">
+<div style="text-align: center; color: white; margin: 0px; width: 100%; background: black; padding: 10px 0 10px 0;">FEATURED DAPPS</div>
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; border: 0; margin: 0; height: 38px;" onclick="backtosettings()">CANCEL</button>
+</div>
+
+<div id="echxangepanel" class="tabright" style="display: none; margin: 0px; font-family: arial">
+<div style="text-align: center; color: white; margin: 0px; width: 100%; background: black; padding: 10px 0 10px 0;">EXTERNAL EXCHANGES</div>
+<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 20px;">Exchange Page Address:</div>
+<input type="text" id="logo" class="settingsfield" style="  width: calc(100% - 40px); color: gray;margin-left: 20px;
+margin-right: 0px; margin-top: 5px; margin-bottom: 20px; text-align: right;" value="0x123">
+<div class="spacer"></div>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; border: 0; margin: 0; height: 38px;" onclick="setnewowner()">ADD EXCHANGE</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; border: 0; margin: 0; height: 38px;" onclick="backtosettings()">CANCEL</button>
+</div>
+<div id="contractpanel" class="tabright" style="display: none; margin: 0px; font-family: arial">
+<div style="text-align: center; color: white; margin: 0px; width: 100%; background: black; padding: 10px 0 10px 0;">COIN CONTRACT</div>
+<div style="margin:20px;">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Type:</div>
 <div class="spacer"></div>
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">ABI:</div>
@@ -1703,8 +1707,9 @@ margin-right: 0px; margin-top: 5px; text-align: right;" ></textarea>
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px;">Contract:</div>
 <textarea id="contract" style=" width: calc(100% - 10px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" ></textarea>
+</div>
 <div class="spacer"></div>
-<button id="setdisclaimerbutton" style="width: calc(100%); margin: 30px 0 0 0;" onclick="backtosettings()">BACK</button>
+<button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; border: 0; margin: 0; height: 38px;" onclick="backtosettings()">BACK</button>
 </div>
 <div id="claimpanel" class="tabright" style="display: none; font-family: arial;">
 <div style="text-align: center; color: gray; background: black; width: 100%; color: white; padding-top: 10px; height: 26px;">CLAIM AUTO-POS</div>
@@ -1817,8 +1822,10 @@ font-family: arial; color: white;">SETTINGS:</div>
 </div>
 <div id="avatarnamepanel" style="height: 17px; width: calc(100% - 10px); background: black; color: white; padding: 10px 0 10px 10px; margin-top: 41px;"><div id="avatarname" style="float: left;">NAME</div><img id="avatarsettings" src="settingsw.png" style="float: right; margin-right: 10px; width: 18px; height: 18px; cursor: pointer;" onclick="opensettings(selectedPerson)"></div>
 <div id="walletsChooser" style="border-bottom: solid 1px #ddd; margin-top: 10px;"></div><br>
-
+<div id="avatardisclaimer" style="width: calc(100% - 40px); margin: 10px 20px 0 20px; text-align: justify;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
 </div>
+
+
 <div id="twittertab" class="tabright">
 <div id="timeline"></div>
 </div>
