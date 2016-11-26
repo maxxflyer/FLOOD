@@ -10,7 +10,7 @@ uint end;
 string addr;
 }
 
-function Zika(){}
+function ADV(){}
 
 function addAdv(address a,string s) returns (bool){
 adv Tadv=advs[a][0];
