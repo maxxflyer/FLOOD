@@ -614,11 +614,7 @@ xxx="801253029852958720";
                 $('#qtipbutton6', this).bind('click', function(event) {
                     event.preventDefault();
                  $(".qtip").hide();
-                 $(".tabright").hide();
-$("#walletsChooser").hide();
-$("#avatarecho").show();
-$("#avatar").attr("src" , "punisher.jpg");
- $("#hypercontroltab").show();
+                 seeOwner();
                 });
 
                 $('#qtipbutton7', this).bind('click', function(event) {
@@ -631,6 +627,18 @@ $("#avatar").attr("src" , "punisher.jpg");
         }
     }, event);
 });
+
+function seeOwner(){
+$(".tabright").hide();
+$("#walletsChooser").hide();
+$("#avatarecho").show();
+$("#avatar").attr("src" , "punisher.jpg");
+ $("#hypercontroltab").show();
+}
+
+function openCoinChat(){
+$( "#openchat" ).trigger( "click" );
+}
 
 function sendEtherEcoMessage(){
 
@@ -1495,29 +1503,34 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <div id="removeAlertLabel" style="float: left; margin-left: 20px; margin-top: 20px; margin-bottom: 10px; display: none; color: #777;"> Click to remove Partnership!</div>
 </div>
 
+
+
 <div id="markettabbid" class="tab tableft" style="display: none;">
-<div id="bidlabel" class="tablabel2" style="text-align: center; width: 100%; color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;">Offer BLU for ETH</div>
+<div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="bidlabel" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
 <div class="spacer"></div>
-<button id="updatesettings" class="check" style="width: calc(100% - 10px); margin: 10px 0px 0 5px;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
-<div style="width: 238px; margin-left: 5px; border: solid 1px #ccc; height: 300px; margin-bottom: 0px;">
-<div class="offer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
+<button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
+<div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
 </div>
-<button id="updatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
-<div id="coinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="logolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
-<div id="hyperwallet-walletico4" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
-<div id="logolabel" class="tablabel" style="float: left; font-size: 14px;">Price:</div>
-<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
-margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div>
+<div id="hyperhyperwallet-walletico4" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
+<div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Price:</div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer" style="border:0px;"></div>
+<div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px;  margin-left: 10px; margin-right: 0; font-size: 12px;">Amount:</div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ZAP</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer" style="border:0px;"></div>
+<div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Total:</div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="0.0001">
 <div class="spacer"></div>
-<div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-right: 0px;">Amount:</div>
-<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
-margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
-<div class="spacer"></div>
-<div id="logolabel" class="tablabel" style="float: left; font-size: 14px;">Total:</div>
-<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
-margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
-<div class="spacer"></div>
-<button id="updatesettings" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>SET OFFER</button>
+<button id="hyperbidsetoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;"/>SET OFFER</button>
 </div>
 
 
@@ -1534,29 +1547,37 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 
 
 <div id="hypermarkettabbid" class="tab tableft" style="display: none;">
-<div id="" class="tablabel2" style="text-align: center; color: gray; margin-top: 0px; margin-bottom: 10px; font-family: arial;"><div style="float: left; margin-top: 20px; margin-bottom: 20px; margin-left: 20px; margin-right: 10px;">Offer:</div><div id="hyperbidlabel" class="tablabel2" style="color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
+<div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="hyperbidlabel" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
 <div class="spacer"></div>
-<button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 10px 0px 0 5px;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
-<div style="width: 238px; margin-left: 5px; border: solid 1px #ccc; height: 300px; margin-bottom: 0px;">
+<button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
+<div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
 <div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
 </div>
-<button id="hyperupdatesettings" class="check" style="width: calc(100% - 10px); margin: 0px 0px 20px 5px;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
-<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 20px;margin-left: 0px;">30 BLU</div><div id="hyperlogolabel" class="tablabel" style="float: right; font-size: 14px; margin-left: 5px;">You have:</div>
-<div id="hyperhyperwallet-walletico41" class="walleticon16" style="float: right; margin: 10px 5px 0 25px;"></div><div style="clear : both;"></div>
-<div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px;">Price:</div>
-<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
-margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
+<button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
+<div style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">SELL</div>
+<div style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">BUY</div>
+<div class="spacer" style=""></div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div>
+<div id="hyperhyperwallet-walletico41" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
+<div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Price:</div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer" style="border:0px;"></div>
+<div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px;  margin-left: 10px; margin-right: 0; font-size: 12px;">Amount:</div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ZAP</div>
+<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<div class="spacer" style="border:0px;"></div>
+<div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Total:</div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
+<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="0.0001">
 <div class="spacer"></div>
-<div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px; margin-right: 0px;">Amount:</div>
-<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
-margin-right: 20px; margin-top: 5px; text-align: right;" value="0.0001">
-<div class="spacer"></div>
-<div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px;">Total:</div>
-<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 110px); color: gray;margin-left: 0px;
-margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
-<div class="spacer"></div>
-<button id="hyperbidsetoffer" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>SET OFFER</button>
+<button id="hyperbidsetoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;"/>SET OFFER</button>
 </div>
+
+
 </div>
 
 
@@ -1759,8 +1780,10 @@ margin-right: 20px;margin-top: 5px; text-align: right;" value="0.0001">
 <button id="updatesettings" class="check" style="width: calc(100% - 100px); margin: 10px 20px 0 20px; float: right;"/>BUY</button>
 </div>
 
-<div id="hypermarkettabpartnershipalert" class="tab tabright" style="display: none; margin-left: 20px;">
-<div id="" class="tablabel2" style="color: gray; margin-top: 20px; margin-bottom: 20px; font-family: arial;float: left;">PARTNERSHIP TO BE ACCEPTED</div>
+<div id="hypermarkettabpartnershipalert" class="tab tabright" style="display: none; margin-left: 0px;">
+<div id="" class="tablabel2" style="background: black; color: white; padding-top: 20px; text-align: center; padding-bottom: 20px; margin: 0; font-family: arial; font-size: 14px;">PARTNERSHIP TO BE ACCEPTED</div>
+<button id="hyperbidsetoffer" class="mainbutton" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="seeOwner()">SEE OWNER</button>
+<button id="hyperbidsetoffer" class="mainbutton" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="openCoinChat()">COIN CHAT</button>
 </div>
 
 
@@ -2023,13 +2046,16 @@ alert("No web3? You should consider trying MetaMask!");
 function startApp(){
 
 for(var i=0;i<web3.eth.accounts.length;i++){ //carica i wallets
-check="";if(i==0){check="checked";selectedWallet=web3.eth.accounts[0];console.log(selectedWallet); createIcon("#hyperwallet-walletico2",web3.eth.accounts[0]);createIcon("#hyperwallet-walletico",web3.eth.accounts[0]);createIcon("#hyperhyperwallet-walletico4",web3.eth.accounts[0]);}else{check="";}
+check="";
+if(i==0){check="checked";selectedWallet=web3.eth.accounts[0];console.log(selectedWallet); createIcon("#hyperwallet-walletico2",web3.eth.accounts[0]);createIcon("#hyperwallet-walletico",web3.eth.accounts[0]);createIcon("#hyperhyperwallet-walletico4",web3.eth.accounts[0]);}else{check="";}
+
 $("#hyperwalletselect").append("<option value='"+web3.eth.accounts[i]+"'>"+web3.eth.accounts[i]+"</option>");
 $("#coinhyperwalletselect").append("<option value='"+web3.eth.accounts[i]+"'>"+web3.eth.accounts[i]+"</option>");
-$("#walletsChooser").append("<div id='zcoin"+i+"' class='walleticon30' style='margin-left: 10px; margin-bottom: 10px; margin-right: 10px; float: left;'></div><input type='radio' style='float: left; margin-top: 9px; margin-left: 0px;' name='selectWallet' value='"+i+"' "+check+"><div style='clear: both'></div>");
+$("#walletsChooser").append("<div style='float: left; margin-left: 20px; width: 20px;'><div id='zcoin"+i+"' class='walleticon20' style='margin-left: 0px; margin-bottom: 0px; margin-right: 10px; '></div><input type='radio' style=' margin-top: 4px; margin-left: 4px; margin-bottom: 10px;' name='selectWallet' value='"+i+"' "+check+"><div style='clear: both'></div></div>");
 createIcon("#zcoin"+i,web3.eth.accounts[i]);
 
 }
+$("#walletsChooser").append("<div style='clear: both'></div>");
 //if(web3.eth.accounts.length==1)selectedWallet=web3.eth.accounts[0];
 //if(web3.eth.accounts.length>1)selectedWallet=web3.eth.accounts[4];
 
