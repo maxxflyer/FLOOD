@@ -249,7 +249,9 @@ ul{padding: 0px; margin-top: 5px;}
 
 .offer{width: 100%; background: white;}
 
-.suboffer{float: left; background: white; font-size: 10px; font-family: arial; margin: 3px 0px 3px 0px; width: 56px; padding-left: 3px;}
+.suboffer{cursor: pointer; float: left; background: white; font-size: 12px; font-family: arial; margin: 0px 0px 0px 0px; padding-top: 3px; padding-bottom: 3px; width: calc(33% - 3px); padding-left: 3px;}
+.suboffer1{cursor: pointer; float: left; background: #96beff; font-size: 12px; font-family: arial; margin: 0px 0px 0px 0px; padding-top: 3px; padding-bottom: 3px; width: calc(34% - 3px); padding-left: 3px;}
+.suboffer2{cursor: pointer; float: left; background: #ffd396; font-size: 12px; font-family: arial; margin: 0px 0px 0px 0px; padding-top: 3px; padding-bottom: 3px; width: calc(34% - 3px); padding-left: 3px;}
 </style>
 
 <body>
@@ -738,7 +740,7 @@ tempss=tempss.substring(tempss.indexOf("-")+1);
 displayHyperName($("#hyperasklabel"),tempss);
 displayHyperAmountSymbol($("#hypercoinbalancelabel2"),tempss);
 createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
-
+createIcon($("#hyperhyperwallet-walletico42"),selectedWallet);
 });
 
 cy.on('tap', function(event){
@@ -1421,7 +1423,45 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 });
 });
 
+function markettabbidsell(){
+$("#markettabbidbuy").css({"background" : "white" , "color" : "black"});
+$("#markettabbidsell").css({"background" : "black" , "color" : "white"});
+}
 
+function markettabbidbuy(){
+$("#markettabbidsell").css({"background" : "white" , "color" : "black"});
+$("#markettabbidbuy").css({"background" : "black" , "color" : "white"});
+}
+
+function markettabasksell(){
+$("#markettabaskbuy").css({"background" : "white" , "color" : "black"});
+$("#markettabasksell").css({"background" : "black" , "color" : "white"});
+}
+
+function markettabaskbuy(){
+$("#markettabasksell").css({"background" : "white" , "color" : "black"});
+$("#markettabaskbuy").css({"background" : "black" , "color" : "white"});
+}
+
+function hypermarkettabbidsell(){
+$("#hypermarkettabbidbuy").css({"background" : "white" , "color" : "black"});
+$("#hypermarkettabbidsell").css({"background" : "black" , "color" : "white"});
+}
+
+function hypermarkettabbidbuy(){
+$("#hypermarkettabbidsell").css({"background" : "white" , "color" : "black"});
+$("#hypermarkettabbidbuy").css({"background" : "black" , "color" : "white"});
+}
+
+function hypermarkettabasksell(){
+$("#hypermarkettabaskbuy").css({"background" : "white" , "color" : "black"});
+$("#hypermarkettabasksell").css({"background" : "black" , "color" : "white"});
+}
+
+function hypermarkettabaskbuy(){
+$("#hypermarkettabasksell").css({"background" : "white" , "color" : "black"});
+$("#hypermarkettabaskbuy").css({"background" : "black" , "color" : "white"});
+}
 
 
 </script>
@@ -1510,11 +1550,16 @@ console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 <div class="spacer"></div>
 <button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
 <div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
-<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
 </div>
 <button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
-<div style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">SELL</div>
-<div style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">BUY</div>
+<div id="markettabbidsell" style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="markettabbidsell()">SELL</div>
+<div id="markettabbidbuy" style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="markettabbidbuy()">BUY</div>
 <div class="spacer"></div>
 <div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div>
 <div id="hyperhyperwallet-walletico4" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
@@ -1554,14 +1599,19 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 <div class="spacer"></div>
 <button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
 <div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
-<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
 </div>
 <button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
-<div style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">SELL</div>
-<div style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">BUY</div>
+<div id="hypermarkettabbidsell" style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="hypermarkettabbidsell()">SELL</div>
+<div id="hypermarkettabbidbuy" style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="hypermarkettabbidbuy()">BUY</div>
 <div class="spacer" style=""></div>
 <div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div>
-<div id="hyperhyperwallet-walletico41" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
+<div id="hyperhyperwallet-walletico42" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
 <div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Price:</div>
 <div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
 <input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
@@ -1764,12 +1814,17 @@ margin-right: 0px; margin-top: 5px; text-align: right;" ></textarea>
 </div>
 
 
-<div id="markettabask" class="tab tableft" style="display: none;">
+<div id="markettabask" class="tab tabright" style="display: none;">
 <div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="bidlabel" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">ETH</div></div>
 <div class="spacer"></div>
 <button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
 <div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
-<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
 </div>
 <button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
 <div style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">SELL</div>
@@ -1804,13 +1859,17 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 
 
 
-<div id="hypermarkettabask" class="tab tableft" style="display: none;">
+<div id="hypermarkettabask" class="tab tabright" style="display: none;">
 <div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="hyperbidlabel" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
 <div class="spacer"></div>
 <button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
 <div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
-<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div></div>
-</div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer2">0.00001</div></div>
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div></div>
 <button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
 <div style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">SELL</div>
 <div style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">BUY</div>
