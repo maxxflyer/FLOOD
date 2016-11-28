@@ -437,6 +437,61 @@ cy.elements().remove();
 addLocals();
 }
 
+function addSocialUser(addr,selid){
+addAnonymousUser("0x123",selid);
+addEtherrealID("0x98457987f98437ebc837",selid);
+}
+
+function addAnonymousUser(addr,selid){
+cy.add([
+        {group: "nodes", data: {id: addr }}    
+    ]);
+
+cy.$('#'+addr).style({
+                shape: 'octagon',
+                'background-image': 'questionmark.jpg',
+                label: addr
+              }
+           );
+
+cy.add([
+        { group: "edges", data: { id: addr+"-"+selid, source: addr, target: selid}}    
+    ]);
+cy.$('#'+addr+"-"+selid).css({
+        'width': 6,
+        'line-color': '#ffde75',
+        'target-arrow-shape': 'triangle',
+        'target-arrow-color': '#ffde75',
+        'curve-style': 'bezier'
+      });
+}
+
+function addEtherrealID(addr,selid){
+
+cy.add([
+        {group: "nodes", data: {id: addr }}    
+    ]);
+
+cy.$('#'+addr).style({
+                shape: 'hexagon',
+                'background-image': 'etherreal.png',
+                label: addr
+              }
+           );
+
+cy.add([
+        { group: "edges", data: { id: addr+"-"+selid, source: addr, target: selid}}    
+    ]);
+cy.$('#'+addr+"-"+selid).css({
+        'width': 6,
+        'line-color': '#ce93ff',
+        'target-arrow-shape': 'triangle',
+        'target-arrow-color': '#ce93ff',
+        'curve-style': 'bezier'
+      });
+
+}
+
 function addLocals(){
 //alert(localLength());
 for(var i=0;i<localLength();i++){
@@ -444,6 +499,7 @@ for(var i=0;i<localLength();i++){
 cy.add([
         {group: "nodes", data: {id: hyper(i,0) }}    
     ]);
+
 loadBackground(hyper(i,0));
 }
 addLocalRequests();
@@ -617,6 +673,7 @@ xxx="801253029852958720";
                     event.preventDefault();
                  $(".qtip").hide();
                  seeOwner();
+                 addSocialUser("0x0",selectedId);
                 });
 
                 $('#qtipbutton7', this).bind('click', function(event) {
@@ -698,10 +755,11 @@ $("#icocontractaddress").text(this.id());
 createIcon("#hyperwallet-walletico3",this.id());
 if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
 selectedId=this.id();
+console.log("1");
 loadCoin(this.id());
 lastTap=this.id();
 //$("#coinName").text(this.id());
-
+console.log("2");
 cy.$("#"+this.id()).css({'border-color':'red' , 'border-width' : '10px'});
 if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color':lastColor,'target-arrow-color': lastColor});
 selectedEdgeId="";
@@ -709,11 +767,12 @@ $("#cointab").show();
 $("#hometableft").show();
 if(isfavorite(this.id())){$("#addfavoritebutton").html("&#9733");}else{$("#addfavoritebutton").html("&#9734");}
 //$("#twittertab1").show();
+console.log("3");
 fetchTheySay(0);
 lastnode=1;display=2;
 //cy.animate({zoom: 3,center: {eles: cy.$("#"+this.id())}}, {duration: 500});
 //cy.animate({center: {eles: cy.$(".node")}}, {duration: 500});
-
+console.log("4");
 });
 
 cy.on('tap', 'edge', function(e){
@@ -763,7 +822,15 @@ if((!temp)&&(display==0)){$("#twittertab1").hide();$(".tabright").hide();$(".tab
 
 function addNode(){
 cy.add([
-        {group: "nodes", data: {id: "f" }},
+        {group: "nodes", data: {id: "f" },style: [
+            {
+              selector: 'node',
+              style: {
+                shape: 'hexagon',
+                'background-color': 'red',
+                label: 'data(id)'
+              }
+            }]},
         { group: "edges", data: { id: "de", source: "d", target: "f"}} ,
         { group: "edges", data: { id: "af", source: "a", target: "d"}}       
     ])
@@ -1924,6 +1991,7 @@ font-family: arial; color: white;">SETTINGS:</div>
 <div style=" margin: 0; margin-top: -50px; width: 100%; z-index: 100; position: relative; ">
 <div id='avatarwallet' class='walleticon30' style='margin-left: 10px; margin-bottom: 10px; margin-right: 10px; float: left; cursor: pointer;'></div>
 <img id="avatarecho" src="ethereco.png" style="width: 21px; height: 24px; float: right; margin-right: 10px; margin-top: 4px; cursor: pointer;" onclick="alert('Send Message to: 0x000000000000')">
+<img id="avatarecho" src="etherrealhexa.png" style="width: 24px; height: 24px; float: right; margin-right: 10px; margin-top: 4px; cursor: pointer;" onclick="alert('View in EtherRe.al')">
 </div>
 <div id="avatarnamepanel" style="height: 17px; width: calc(100% - 10px); background: black; color: white; padding: 10px 0 10px 10px; margin-top: 41px;"><div id="avatarname" style="float: left;">NAME</div><img id="avatarsettings" src="settingsw.png" style="float: right; margin-right: 10px; width: 18px; height: 18px; cursor: pointer;" onclick="opensettings(selectedPerson)"></div>
 <div id="walletsChooser" style="border-bottom: solid 1px #ddd; margin-top: 10px;"></div><br>
@@ -2224,7 +2292,7 @@ getName($("#offerpartname"+tempcc),data);
 
 });
 }
-
+console.log("list done")
 }
 
 
@@ -2503,6 +2571,7 @@ function checkAllCookies(){
 $.cookie('hyperLayer',"");
 $.cookie('localRequests',[]);
 $.cookie('localPartnerships',[]);
+$.cookie('favorite',JSON.stringify([]));
    if(!checkCookie('hyperLayer')){  //verifica e riempie LOCALS con monete di base
       hyperLayer={};
       socialLayer={};
