@@ -238,11 +238,40 @@ enabled=5;created=block.number;}}             //start startsale
 
 
 
+    function getOffer(address coinx,uint u)constant returns(address,uint,uint,bool,uint){
+    
+    swappable order=markets[coinx][u];
+    return(order.owner,order.amount,order.price,order.fix,market.length);
+    
+    }
 
+    function getOrder(address coinx,uint u)constant returns(uint,uint,uint,uint){
+    
+    order ord=orders[coinx][u];
+    return(orders[coinx].length,ord.amount,ord.amount2,ord.blockn);
+    
+    }
 
     function getPartner(uint u)constant returns(address,uint){
+    
     address a=partnerAddress[u];
     return(a,totPartnerships);
+    
+    }
+
+    function lockBalance(uint u,bool b){
+    if(b){
+    balanceOf[msg.sender]-=u;
+    lockedOf[msg.sender]+=u;
+    }else{
+    balanceOf[msg.sender]+=u;
+    lockedOf[msg.sender]-=u;
+    }
+    }
+
+    function calculator(address coinx,uint pay,uint offer)constant returns(uint,uint){
+    swappable order=markets[coinx][offer];
+    return(((pay/order.price)*1000000000),order.amount/1000000000*order.price);
     }
 
 
