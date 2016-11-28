@@ -1,0 +1,235 @@
+body {
+	padding: 0px;
+	margin:0px;
+	background: #EDEEFC;
+	background: white;
+	color: #777;
+	font-family: arial;
+	font-size: 20px;
+	
+}
+
+.bot-menu{
+	cursor: pointer;
+	
+}
+
+
+
+
+
+
+#floodblocky{
+
+
+
+width: 28px;
+    height: 28px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+opacity: 0.5;
+}
+
+#arkblocky:hover{opacity: 1.0; cursor: pointer;}
+
+
+.closeButton{
+cursor: pointer;
+background-image:url(icon-close-128.png); 
+background-size: 40px 40px;
+background-repeat: no-repeat;
+width: 40px; 
+height: 40px;
+}
+
+
+.walleticon {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+
+#coinIcon {
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+
+#showcoinIcon {
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+
+.coinIcon {
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    box-shadow: inset rgba(255, 255, 255, 0.6) 0 2px 2px, inset rgba(0, 0, 0, 0.3) 0 -2px 6px;
+}
+
+.numberinput{
+
+font-size: 22px;
+padding: 5px;
+width: 120px;
+
+}
+
+.menuImage{
+	
+	width:30px; 
+	margin-bottom: 10px;
+}
+
+
+.menu{
+	
+	float: left;
+	//margin-right: 20px;
+	cursor: pointer;
+
+}
+
+#header{
+	
+	height: 100px;
+	padding-left: 20px;
+	padding-top: 5px;
+	background: #333;
+	margin-bottom: 10px;
+	color: white;
+box-shadow: inset 0px 0px 10px #555;
+-webkit-box-shadow: inset 0px 0px 10px #555;
+-moz-box-shadow: inset 0px 0px 10px #555;
+-o-box-shadow: inset 0px 0px 10px #555;
+}
+
+
+
+
+.input{
+padding: 7px;
+width:100%;
+font-size: 30px;
+}
+
+.label{
+margin: 30px 10px 10px 10px;
+
+font-size: 30px;
+}
+
+.label2{
+margin: 30px 10px 10px 10px;
+color: red;
+font-size: 30px;
+}
+
+.label3{
+margin: 10px 10px 10px 10px;
+color: black;
+font-size: 16px;
+}
+
+
+.subcontainer{
+padding: 20px;
+}
+
+.display{
+		border-radius: 5px;
+	    border:solid 1px black;
+         color: black;
+	background: white;
+	box-shadow: inset 0px 2px 7px #777;
+-webkit-box-shadow: inset 0px 2px 7px #777;
+-moz-box-shadow: inset 0px 2px 7px #777;
+-o-box-shadow: inset 0px 2px 7px #777;
+	margin-bottom:20px;
+
+}
+
+#updateCoinTab{
+	padding: 20px;
+	
+}
+
+.subdisplay{
+		border-radius: 5px;
+	    border:solid 0px #ddd;
+	    padding: 20px;
+	box-shadow: inset 0px 1px 6px #999;
+-webkit-box-shadow: inset 0px 1px 6px #999;
+-moz-box-shadow: inset 0px 1px 6px #999;
+-o-box-shadow: inset 0px 1px 6px #999;
+}
+
+
+
+.buttonSubmit{
+	 font-size: 30px;
+	
+	cursor: pointer;
+	border-radius:5px;
+	background: white;
+	padding: 6px 10px 6px 10px;
+color: white;
+	background:#333;
+}
+
+
+
+.buttonSubmit:hover{
+ font-size: 30px;
+	
+	cursor: pointer;
+	border-radius:5px;
+	background: white;
+	padding: 6px 10px 6px 10px;
+color: white;
+	background:gray;
+	
+}
+
+
+.numberinput{
+	
+	
+	box-shadow: inset 0px 1px 3px #999;
+-webkit-box-shadow: inset 0px 1px 3px #999;
+-moz-box-shadow: inset 0px 1px 3px #999;
+-o-box-shadow: inset 0px 1px 3px #999;
+}
+
+
+#my-coins{
+	
+	background: white;
+	box-shadow: inset 0px 2px 7px #666;
+-webkit-box-shadow: inset 0px 2px 7px #666;
+-moz-box-shadow: inset 0px 2px 7px #666;
+-o-box-shadow: inset 0px 2px 7px #666;
+}
+
+.title{
+	
+	margin-bottom: 30px; margin-left: 0px;
+	
+}
+
+
+
