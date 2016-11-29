@@ -609,6 +609,15 @@ layout: {
 cy.on('click', 'node', function(event) {
     var node = event.cyTarget;
  cy.$(".qtip").hide();
+animate(this.id());
+setTimeout(function(){showQtip(node,event);}, 600);
+
+});
+
+function animate(id){cy.animate({zoom: 2,center: {eles: cy.$("#"+id)}}, {duration: 500});}
+
+
+function showQtip(node,event){
     node.qtip({
          content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.png"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton7" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="chat.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="etherecobw.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-iconbw.png"></div>',
 position: {
@@ -685,7 +694,7 @@ xxx="801253029852958720";
             }
         }
     }, event);
-});
+}
 
 function seeOwner(){
 $(".tabright").hide();
@@ -770,7 +779,7 @@ if(isfavorite(this.id())){$("#addfavoritebutton").html("&#9733");}else{$("#addfa
 console.log("3");
 fetchTheySay(0);
 lastnode=1;display=2;
-//cy.animate({zoom: 3,center: {eles: cy.$("#"+this.id())}}, {duration: 500});
+
 //cy.animate({center: {eles: cy.$(".node")}}, {duration: 500});
 console.log("4");
 });
