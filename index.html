@@ -409,9 +409,7 @@ addMyCoins();
 function addMyCoins(){
 temp=$.cookie('myCoinsList');
 for(var i=0;i<temp.length;i++){
-cy.add([
-        {group: "nodes", data: {id: temp[i] }}    
-    ]);
+cyAdd(temp[i]);
 loadBackground(temp[i]);
 }
 cy.layout({
@@ -420,9 +418,7 @@ cy.layout({
 }
 
 function addCoin(addr){
-cy.add([
-        {group: "nodes", data: {id: addr }}    
-    ]);
+cyAdd(addr);
 loadBackground(addr);
 }
 
@@ -453,7 +449,7 @@ cy.$('#'+addr).style({
                 label: addr
               }
            );
-
+cy.$('#'+addr).attr("type" , 3);
 cy.add([
         { group: "edges", data: { id: addr+"-"+selid, source: addr, target: selid}}    
     ]);
@@ -471,7 +467,7 @@ function addEtherrealID(addr,selid){
 cy.add([
         {group: "nodes", data: {id: addr }}    
     ]);
-
+cy.$('#'+addr).attr("type" , 2);
 cy.$('#'+addr).style({
                 shape: 'hexagon',
                 'background-image': 'etherreal.png',
@@ -496,10 +492,7 @@ function addLocals(){
 //alert(localLength());
 for(var i=0;i<localLength();i++){
 //alert(hyper(i,1));
-cy.add([
-        {group: "nodes", data: {id: hyper(i,0) }}    
-    ]);
-
+cyAdd(hyper(i,0));
 loadBackground(hyper(i,0));
 }
 addLocalRequests();
@@ -618,8 +611,165 @@ function animate(id){cy.animate({zoom: 2,center: {eles: cy.$("#"+id)}}, {duratio
 
 
 function showQtip(node,event){
+tempN=cy.$("#"+node.id()).attr("type");
+if(tempN==1)
     node.qtip({
          content: '<div class="qtipbutton" id="qtipbutton2" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="trade-icon.png"></div><div class="qtipbutton" id="qtipbutton4" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="cash.png"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton7" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="chat.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="etherecobw.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-iconbw.png"></div>',
+position: {
+    my: 'bottom center',
+    at: 'top center'
+  },
+  style: {
+    classes: 'qtip-bootstrap',
+    tip: {
+      width: 26,
+      height: 8
+    }
+  },
+         show: {
+            event: event.type,
+            ready: true
+         },
+         hide: {
+           // event: 'mouseout unfocus'
+         },events: {
+            render: function(event, api) {
+                // Capture click events
+
+                $('#qtipbutton1', this).bind('click', function(event) {
+                $(".tableft").hide();
+
+                
+                    event.preventDefault();
+                    $("#hometableft").show();
+                });
+                $('#qtipbutton2', this).bind('click', function(event) {
+                  $(".tableft").hide(); $(".tabright").hide();
+                    event.preventDefault();
+                    $("#markettabbid").show();
+                    $("#markettabask").show();
+                });
+                $('#qtipbutton3', this).bind('click', function(event) {
+
+                $(".tab").hide();
+                $("#timeline").html("");
+//embedTwitter("theysay2");
+xxx="801252941134962688";
+$("#twittertab3").html('<a class="twitter-timeline"  href="" data-widget-id="801252941134962688">Tweets about to:taylorswift13</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</scr'+'ipt>');
+$("#twittertab3").show();
+xxx="801253029852958720";
+                    embedTwitter("timeline");
+ 
+                    event.preventDefault();
+                $(".tabright").hide();
+                $("#cointab").hide();
+                $("#twittertab").show();
+                $("#twittertab1").show();
+                });
+                $('#qtipbutton4', this).bind('click', function(event) {
+                    event.preventDefault();
+                 $(".qtip").hide();
+                 loadwalletETH();
+                    $("#wallet").show();
+                });
+
+                $('#qtipbutton6', this).bind('click', function(event) {
+                    event.preventDefault();
+                 $(".qtip").hide();
+                 seeOwner();
+                 addSocialUser("0x0",selectedId);
+                });
+
+                $('#qtipbutton7', this).bind('click', function(event) {
+                 event.preventDefault();
+                 $(".qtip").hide();
+                 $( "#openchat" ).trigger( "click" );
+
+                });
+            }
+        }
+    }, event);
+
+
+if(tempN==2)node.qtip({
+         content: '<div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton7" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="chat.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="etherecobw.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-iconbw.png"></div>',
+position: {
+    my: 'bottom center',
+    at: 'top center'
+  },
+  style: {
+    classes: 'qtip-bootstrap',
+    tip: {
+      width: 26,
+      height: 8
+    }
+  },
+         show: {
+            event: event.type,
+            ready: true
+         },
+         hide: {
+           // event: 'mouseout unfocus'
+         },events: {
+            render: function(event, api) {
+                // Capture click events
+
+                $('#qtipbutton1', this).bind('click', function(event) {
+                $(".tableft").hide();
+
+                
+                    event.preventDefault();
+                    $("#hometableft").show();
+                });
+                $('#qtipbutton2', this).bind('click', function(event) {
+                  $(".tableft").hide(); $(".tabright").hide();
+                    event.preventDefault();
+                    $("#markettabbid").show();
+                    $("#markettabask").show();
+                });
+                $('#qtipbutton3', this).bind('click', function(event) {
+
+                $(".tab").hide();
+                $("#timeline").html("");
+//embedTwitter("theysay2");
+xxx="801252941134962688";
+$("#twittertab3").html('<a class="twitter-timeline"  href="" data-widget-id="801252941134962688">Tweets about to:taylorswift13</a><scr'+'ipt>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?"http":"https";if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</scr'+'ipt>');
+$("#twittertab3").show();
+xxx="801253029852958720";
+                    embedTwitter("timeline");
+ 
+                    event.preventDefault();
+                $(".tabright").hide();
+                $("#cointab").hide();
+                $("#twittertab").show();
+                $("#twittertab1").show();
+                });
+                $('#qtipbutton4', this).bind('click', function(event) {
+                    event.preventDefault();
+                 $(".qtip").hide();
+                 loadwalletETH();
+                    $("#wallet").show();
+                });
+
+                $('#qtipbutton6', this).bind('click', function(event) {
+                    event.preventDefault();
+                 $(".qtip").hide();
+                 seeOwner();
+                 addSocialUser("0x0",selectedId);
+                });
+
+                $('#qtipbutton7', this).bind('click', function(event) {
+                 event.preventDefault();
+                 $(".qtip").hide();
+                 $( "#openchat" ).trigger( "click" );
+
+                });
+            }
+        }
+    }, event);
+
+if(tempN==3)node.qtip({
+         content: '<div class="qtipbutton" id="qtipbutton7" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="chat.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="etherecobw.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-iconbw.png"></div>',
 position: {
     my: 'bottom center',
     at: 'top center'
@@ -765,7 +915,8 @@ createIcon("#hyperwallet-walletico3",this.id());
 if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
 selectedId=this.id();
 console.log("1");
-loadCoin(this.id());
+if(cy.$("#"+this.id()).attr("type")==1)loadCoin(this.id());
+
 lastTap=this.id();
 //$("#coinName").text(this.id());
 console.log("2");
@@ -2321,14 +2472,17 @@ addFreeNode(data);
 }
 
 function addFreeNode(addr){
-cy.add([
-        {group: "nodes", data: {id: addr }}    
-    ]);
+cyAdd(addr);
 action--;
 loadBackground(addr);
 if(action==0)cy.layout({
     name: 'circle'
 });
+}
+
+function cyAdd(addr){
+cy.add([{group: "nodes", data: {id: addr }}]);
+cy.$("#"+addr).attr("type" , "1");
 }
 
 function CoinNameByAddress(a){
