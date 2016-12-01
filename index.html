@@ -433,22 +433,24 @@ cy.elements().remove();
 addLocals();
 }
 
-function addSocialUser(addr,selid){
-addAnonymousUser("0x123",selid);
-addEtherrealID("0x98457987f98437ebc837",selid);
+function addSocialUser(addr,selid,x,y){
+addAnonymousUser("0x123",selid,x-100,y-100);
+addEtherrealID("0x98457987f98437ebc837",selid,x+100,y-100);
 }
 
-function addAnonymousUser(addr,selid){
+function addAnonymousUser(addr,selid,x,y){
 cy.add([
-        {group: "nodes", data: {id: addr }}    
+        {group: "nodes", data: {id: addr },position: { x: x, y: y }}    
     ]);
+createIcon($('#tempicon'),addr);
 
 cy.$('#'+addr).style({
                 shape: 'octagon',
-                'background-image': 'questionmark.jpg',
+                'background-image': $("#tempicon").css("background-image"),
                 label: addr
               }
            );
+
 cy.$('#'+addr).attr("type" , 3);
 cy.add([
         { group: "edges", data: { id: addr+"-"+selid, source: addr, target: selid}}    
@@ -462,10 +464,10 @@ cy.$('#'+addr+"-"+selid).css({
       });
 }
 
-function addEtherrealID(addr,selid){
+function addEtherrealID(addr,selid,x,y){
 
 cy.add([
-        {group: "nodes", data: {id: addr }}    
+        {group: "nodes", data: {id: addr },position: { x: x, y: y }}    
     ]);
 cy.$('#'+addr).attr("type" , 2);
 cy.$('#'+addr).style({
@@ -677,7 +679,8 @@ xxx="801253029852958720";
                     event.preventDefault();
                  $(".qtip").hide();
                  seeOwner();
-                 addSocialUser("0x0",selectedId);
+//alert(cy.$("#"+node.id()).position("y"));
+                 addSocialUser("0x0",selectedId,parseInt(cy.$("#"+node.id()).position("x")),parseInt(cy.$("#"+node.id()).position("y")));
                 });
 
                 $('#qtipbutton7', this).bind('click', function(event) {
@@ -692,7 +695,7 @@ xxx="801253029852958720";
 
 
 if(tempN==2)node.qtip({
-         content: '<div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guy.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton7" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="chat.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="etherecobw.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-iconbw.png"></div>',
+         content: '<div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guyvalidators.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton6" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="guyvalidating.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton7" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="chat.png" style="width: 24px; height: 24px;"></div><div class="qtipbutton" id="qtipbutton5" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="etherecobw.png" style="width: 24px; height: 24px;" onclick="sendEtherEcoMessage()"></div><div class="qtipbuttonlast" id="qtipbutton3" style="width: 24px; height: 24px; border: solid 0px red;"><img class="qtipicon" src="twitter-iconbw.png"></div>',
 position: {
     my: 'bottom center',
     at: 'top center'
@@ -898,6 +901,7 @@ if(err)console.log("Error: "+err);$("#ETHwalletbalance").text(tempu.substring(0,
  
 
 cy.on('tap', 'node', function(e){
+
 $("#avatarecho").hide();
 $("#avatar").attr("src" , "avatar.jpg");
 $("#walletsChooser").show();
@@ -915,7 +919,31 @@ createIcon("#hyperwallet-walletico3",this.id());
 if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
 selectedId=this.id();
 console.log("1");
-if(cy.$("#"+this.id()).attr("type")==1)loadCoin(this.id());
+
+if(cy.$("#"+this.id()).attr("type")==1){
+loadCoin(this.id());
+$("#hometableft").show();
+$("#cointab").show();
+fetchTheySay(0);
+}
+
+if(cy.$("#"+this.id()).attr("type")==2){
+$(".tabright").hide();
+createIcon("#avatarwallet",this.id());
+$("#avatarreal").show();
+$("#avatarecho").show();
+$("#walletsChooser").hide();
+seeOwner();
+}
+if(cy.$("#"+this.id()).attr("type")==3){
+$(".tabright").hide();
+createIcon("#avatarwallet",this.id());
+$("#avatarreal").hide();
+$("#avatarecho").show();
+$("#walletsChooser").hide();
+seeOwner();
+}
+
 
 lastTap=this.id();
 //$("#coinName").text(this.id());
@@ -923,12 +951,11 @@ console.log("2");
 cy.$("#"+this.id()).css({'border-color':'red' , 'border-width' : '10px'});
 if(selectedEdgeId!="")cy.$("#"+selectedEdgeId).css({'line-color':lastColor,'target-arrow-color': lastColor});
 selectedEdgeId="";
-$("#cointab").show();
-$("#hometableft").show();
+
 if(isfavorite(this.id())){$("#addfavoritebutton").html("&#9733");}else{$("#addfavoritebutton").html("&#9734");}
 //$("#twittertab1").show();
 console.log("3");
-fetchTheySay(0);
+
 lastnode=1;display=2;
 
 //cy.animate({center: {eles: cy.$(".node")}}, {duration: 500});
@@ -963,10 +990,13 @@ createIcon($("#hyperhyperwallet-walletico42"),selectedWallet);
 });
 
 cy.on('tap', function(event){
+
+if( event.cyTarget === cy ){
+
 $("#avatar").attr("src" , "avatar.jpg");
 $("#avatarecho").hide();
+$("#avatarreal").show();
 $("#walletsChooser").show();
-if( event.cyTarget === cy ){
 
 if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
 selectedId="";
@@ -2153,7 +2183,7 @@ font-family: arial; color: white;">SETTINGS:</div>
 <div style=" margin: 0; margin-top: -50px; width: 100%; z-index: 100; position: relative; ">
 <div id='avatarwallet' class='walleticon30' style='margin-left: 10px; margin-bottom: 10px; margin-right: 10px; float: left; cursor: pointer;'></div>
 <img id="avatarecho" src="ethereco.png" style="width: 21px; height: 24px; float: right; margin-right: 10px; margin-top: 4px; cursor: pointer;" onclick="alert('Send Message to: 0x000000000000')">
-<img id="avatarecho" src="etherrealhexa.png" style="width: 24px; height: 24px; float: right; margin-right: 10px; margin-top: 4px; cursor: pointer;" onclick="alert('View in EtherRe.al')">
+<img id="avatarreal" src="etherrealhexa.png" style="width: 24px; height: 24px; float: right; margin-right: 10px; margin-top: 4px; cursor: pointer;" onclick="alert('View in EtherRe.al')">
 </div>
 <div id="avatarnamepanel" style="height: 17px; width: calc(100% - 10px); background: black; color: white; padding: 10px 0 10px 10px; margin-top: 41px;"><div id="avatarname" style="float: left;">NAME</div><img id="avatarsettings" src="settingsw.png" style="float: right; margin-right: 10px; width: 18px; height: 18px; cursor: pointer;" onclick="opensettings(selectedPerson)"></div>
 <div id="walletsChooser" style="border-bottom: solid 1px #ddd; margin-top: 10px;"></div><br>
@@ -2897,6 +2927,6 @@ $(document).on("click" , ".offerpartnershipnow" , function(e){sendPartnership($(
 <div id="openchat2"></div>
 <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 </script>
-
+<div id="tempicon" style="display: none;"></div>
 </body>
 </html>
