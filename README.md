@@ -16,19 +16,16 @@ INTEGRATED ETHEREUM CONSOLE
 
 GOALS:
 
-    Create Flood HyperCoin Minter. HyperCoins are ERC 20 special tokens you can swap WITHOUT THIRD PARTY EXCHANGE PLATFORMS. Flood will bring cutting edge cryptos to the masses, delivering an Integrated ICO Platform in each HyperCoin. Prepare for the flooding!
+Create Flood HyperCoin Minter. HyperCoins are ERC 20 special tokens you can swap WITHOUT THIRD PARTY EXCHANGE PLATFORMS. Flood will bring cutting edge cryptos to the masses, delivering an Integrated ICO Platform in each HyperCoin. Prepare for the flooding!
 
 
-    Create Layers:Machine.js Browser in order to browse the HyperLayer, the Autonomous Exchange Layer resulting from the connections between HyperCoins. Traders will be able to trade in total autonomy (no third party platform = no owners = zero fees )
+Create Layers:Machine.js Browser in order to browse the HyperLayer, the Autonomous Exchange Layer resulting from the connections between HyperCoins. Traders will be able to trade in total autonomy (no third party platform = no owners = zero fees )
 
+Transform HyperLayer into a Social Platform, coin managers will be able to deal with their community.
 
-    Transform HyperLayer into a Social Platform, coin managers will be able to deal with their community.
+Do what Zuckerberg would never do: building an inner indeed-very-simple Decentralized Advertising System and Fill The Wallets Of Social Users
 
-
-    Do what Zuckerberg would never do: building an inner indeed-very-simple Decentralized Advertising System and Fill The Wallets Of Social Users
-
-
-    [ future ICO ] Transform Hyperlayer into a  wordpress of coins, adding SmartLayer with Dapps Market. Developers will sell smart modules, coin managers will buy and EXTEND their Hypercoins superpowers. All the community will consume dapps and general smartware, filling this missing link along with traders and general community consumers, gathering all the Ethereum Population under one lovely roof.
+[ future ICO ] Transform Hyperlayer into a  wordpress of coins, adding SmartLayer with Dapps Market. Developers will sell smart modules, coin managers will buy and EXTEND their Hypercoins superpowers. All the community will consume dapps and general smartware, filling this missing link along with traders and general community consumers, gathering all the Ethereum Population under one lovely roof.
 
 
 
