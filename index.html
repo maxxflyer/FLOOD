@@ -678,7 +678,7 @@ xxx="801253029852958720";
                 $('#qtipbutton6', this).bind('click', function(event) {
                     event.preventDefault();
                  $(".qtip").hide();
-                 seeOwner();
+                 seeOwner(2);
 //alert(cy.$("#"+node.id()).position("y"));
                  addSocialUser("0x0",selectedId,parseInt(cy.$("#"+node.id()).position("x")),parseInt(cy.$("#"+node.id()).position("y")));
                 });
@@ -757,7 +757,7 @@ xxx="801253029852958720";
                 $('#qtipbutton6', this).bind('click', function(event) {
                     event.preventDefault();
                  $(".qtip").hide();
-                 seeOwner();
+                 seeOwner(2);
                  addSocialUser("0x0",selectedId);
                 });
 
@@ -834,7 +834,7 @@ xxx="801253029852958720";
                 $('#qtipbutton6', this).bind('click', function(event) {
                     event.preventDefault();
                  $(".qtip").hide();
-                 seeOwner();
+                 seeOwner(3);
                  addSocialUser("0x0",selectedId);
                 });
 
@@ -849,13 +849,14 @@ xxx="801253029852958720";
     }, event);
 }
 
-function seeOwner(){
+function seeOwner(tip){
 $(".tabright").hide();
 $(".tableft").hide();
 $("#walletsChooser").hide();
 $("#avatarecho").show();
 $("#avatar").attr("src" , "punisher.jpg");
-$("#etherrealtab").show();
+if(tip==2)$("#etherrealtab").show();
+if(tip==3)$("#wallettableft").show();
 $("#hypercontroltab").show();
 }
 
@@ -931,19 +932,23 @@ fetchTheySay(0);
 
 if(cy.$("#"+this.id()).attr("type")==2){
 $(".tabright").hide();
+$(".tableft").hide();
 createIcon("#avatarwallet",this.id());
 $("#avatarreal").show();
 $("#avatarecho").show();
 $("#walletsChooser").hide();
-seeOwner();
+
+seeOwner(2);
 }
 if(cy.$("#"+this.id()).attr("type")==3){
 $(".tabright").hide();
+$(".tableft").hide();
 createIcon("#avatarwallet",this.id());
 $("#avatarreal").hide();
 $("#avatarecho").show();
 $("#walletsChooser").hide();
-seeOwner();
+$("#wallettableft").show();
+seeOwner(3);
 }
 
 
@@ -1839,10 +1844,13 @@ CONTROL PANEL <img id="avatarreal" src="etherrealhexa.png" style="width: 18px; h
 <button id="partnershippanelbutton" class="mainbutton" style=" border: 0; border-bottom: solid 1px #ddd; width: 215px; margin: 0px 0px 0 0px; position: relative; top: 0px; text-align: left; height: 36px;" onclick="openPartnershipButtons()"><img src="partnerships.png" style="width: 18px; height: 18px; padding-top: 3px;"></button>
 
 <div id="socialdisclaimer" style="text-align: center; color: gray; margin-bottom: 20px; padding: 20px; text-align: justify; margin-top: 0px;">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</div>
+</div>
 
 
-
-
+<div id="wallettableft" class="tab tableft" style="display: none; font-family: arial;">
+<img id="coinlogo" style="width: 250px; height: 250px; border-bottom: solid 1px #ddd;" src="coinbanner.png">
+<div id="web" style=" color: gray;width: 100%; height: 38px;left: 0; margin-top: -4px; background: black;
+  "></div>
 </div>
 
 <div id="offerpartnershippanel" class="tab tableft" style="display: none; font-family: arial;">
