@@ -1122,12 +1122,14 @@ $("#hypermarkettabbid").show();
 tempss=pair;
 temps1=tempss.substring(0,tempss.indexOf("-"));
 displayHyperName($("#hyperbidlabel"),temps1);
-setTradeBalance($("#hypercoinbalancelabel"),temps1);
+tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel"),temps1,2);
+$("#ethbalancelabel2").text(tempOtherSymbol);
+$("#ethtotallabel2").text(tempOtherSymbol);
 temps2=tempss.substring(tempss.indexOf("-")+1);
 displayHyperName($("#hyperasklabel"),temps2);
-setTradeBalance($("#hypercoinbalancelabel2"),temps2);
+tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel2"),temps2,1);
 
-displayHyperAmountSymbol($("#hypercoinbalancelabel2"),temps2);
+//displayHyperAmountSymbol($("#hypercoinbalancelabel2"),temps2);
 createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
 createIcon($("#hyperhyperwallet-walletico42"),selectedWallet);
 }
@@ -1978,18 +1980,18 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 <div id="hyperhyperwallet-walletico42" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
 <div id="hypermarkettabbid-pricefield"><div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Price:</div>
 <div id="ethbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
-<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
-margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<input type="text" id="hyperprice" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="1">
 <div class="spacer" style="border:0px;"></div></div>
 <div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px;  margin-left: 10px; margin-right: 0; font-size: 12px;">Amount:</div>
 <div id="hypercoinsymbollabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ZAP</div>
-<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
-margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<input type="text" id="hypersellamount" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="1">
 <div class="spacer" style="border:0px;"></div>
 <div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Total:</div>
 <div id="ethtotallabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
-<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
-margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="0.0001">
+<input type="text" id="hyperselltotal" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="1">
 <div class="spacer"></div>
 <button id="hyperbidsetoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;"/>SET OFFER</button>
 </div>
@@ -2243,18 +2245,18 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 <div id="hyperhyperwallet-walletico41" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
 <div id="hypermarkettabask-pricefield"><div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Price:</div>
 <div id="ethbalancelabel2" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
-<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
-margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<input type="text" id="hyperprice2" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="1">
 <div class="spacer" style="border:0px;"></div></div>
 <div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px;  margin-left: 10px; margin-right: 0; font-size: 12px;">Amount:</div>
 <div id="hypercoinsymbollabel2" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ZAP</div>
-<input type="text" id="hyperlogo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
-margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
+<input type="text" id="hypersellamount2" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px; margin-top: 5px; text-align: right;" value="1">
 <div class="spacer" style="border:0px;"></div>
 <div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Total:</div>
 <div id="ethtotallabel2" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
-<input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
-margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="0.0001">
+<input type="text" id="hyperselltotal2" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="1">
 <div class="spacer"></div>
 <button id="hyperbidsetoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;"/>SET OFFER</button>
 </div>
@@ -2866,16 +2868,27 @@ cy.layout({
 });
 }
 
-function setTradeBalance(ob,id){
+function setTradeBalance(ob,id,n){
 connect("Flood_Standard_Ethereum_Coin",id);
+tempx="";
 contracts["Flood_Standard_Ethereum_Coin"].contract.symbol(function(err,data0){
 if(err)console.log("Error: "+err);
+if(n==1){
+$("#hypercoinsymbollabel2").text(data0);
+$("#ethbalancelabel").text(data0);
+$("#ethtotallabel").text(data0);}
+if(n==2){
+$("#hypercoinsymbollabel").text(data0);
+$("#ethbalancelabel2").text(data0);
+$("#ethtotallabel2").text(data0);}
 connect("Flood_Standard_Ethereum_Coin",id);
 contracts["Flood_Standard_Ethereum_Coin"].contract.balanceOf(selectedWallet,function(err,data){
 if(err)console.log("Error: "+err);
-ob.text(data/1000000000000000000+" "+data0);
+alert(data+" "+(web3.fromWei(data, "ether")));
+ob.text((web3.fromWei(data, "ether"))+" "+data0);
 });
 });
+return tempx;
 }
 
 //returns the relative coin
@@ -3038,6 +3051,16 @@ if(err)console.log("Error: "+err);$("#ETHwalletbalance").text(tempu.substring(0,
 
 });
 
+$("#hyperprice").change(function(){$("#hyperselltotal").val(round(multiply($("#hyperprice").val(),$("#hypersellamount").val()),8));});
+
+$("#hyperprice2").change(function(){$("#hyperselltotal2").text(round(multiply($("#hyperprice2").val(),$("#hypersellamount2").val()),8));});
+
+
+$("#hypersellamount").change(function(){$("#hyperselltotal").val(round(multiply($("#hyperprice").val(),$("#hypersellamount").val()),8));});
+
+$("#hypersellamount2").change(function(){$("#hyperselltotal2").text(round(multiply($("#hyperprice2").val(),$("#hypersellamount2").val()),8));});
+
+
 twttr.widgets.load();
 
 });
@@ -3053,10 +3076,85 @@ $(document).on("click" , ".offerpartnershipnow" , function(e){sendPartnership($(
     activationElement: '#openchat2'
   };
 
+function multiply (a, b) {
+    // get number of decimal places to shift
+    exp = b.toString().length - 2;
 
+   function makeInt (num) {
+       return num * Math.pow(10, exp);
+   }
 
+   function makeFloat(num) {
+       return num / Math.pow(100, exp);
+   }
 
-  
+   return makeFloat(makeInt(a) * makeInt(b));
+} 
+
+function multFloats(a,b){
+  var atens = Math.pow(10,String(a).length - String(a).indexOf('.') - 1), 
+      btens = Math.pow(10,String(b).length - String(b).indexOf('.') - 1); 
+  return (a * atens) * (b * btens) / (atens * btens); 
+}
+function round (value, precision, mode) {
+  //  discuss at: http://locutus.io/php/round/
+  // original by: Philip Peterson
+  //  revised by: Onno Marsman (https://twitter.com/onnomarsman)
+  //  revised by: T.Wild
+  //  revised by: Rafał Kukawski (http://blog.kukawski.pl)
+  //    input by: Greenseed
+  //    input by: meo
+  //    input by: William
+  //    input by: Josep Sanz (http://www.ws3.es/)
+  // bugfixed by: Brett Zamir (http://brett-zamir.me)
+  //      note 1: Great work. Ideas for improvement:
+  //      note 1: - code more compliant with developer guidelines
+  //      note 1: - for implementing PHP constant arguments look at
+  //      note 1: the pathinfo() function, it offers the greatest
+  //      note 1: flexibility & compatibility possible
+  //   example 1: round(1241757, -3)
+  //   returns 1: 1242000
+  //   example 2: round(3.6)
+  //   returns 2: 4
+  //   example 3: round(2.835, 2)
+  //   returns 3: 2.84
+  //   example 4: round(1.1749999999999, 2)
+  //   returns 4: 1.17
+  //   example 5: round(58551.799999999996, 2)
+  //   returns 5: 58551.8
+
+  var m, f, isHalf, sgn // helper variables
+  // making sure precision is integer
+  precision |= 0
+  m = Math.pow(10, precision)
+  value *= m
+  // sign of the number
+  sgn = (value > 0) | -(value < 0)
+  isHalf = value % 1 === 0.5 * sgn
+  f = Math.floor(value)
+
+  if (isHalf) {
+    switch (mode) {
+      case 'PHP_ROUND_HALF_DOWN':
+      // rounds .5 toward zero
+        value = f + (sgn < 0)
+        break
+      case 'PHP_ROUND_HALF_EVEN':
+      // rouds .5 towards the next even integer
+        value = f + (f % 2 * sgn)
+        break
+      case 'PHP_ROUND_HALF_ODD':
+      // rounds .5 towards the next odd integer
+        value = f + !(f % 2)
+        break
+      default:
+      // rounds .5 away from zero
+        value = f + (sgn > 0)
+    }
+  }
+
+  return (isHalf ? value : Math.round(value)) / m
+}
 
 </script>
 <div id="openchat2"></div>
