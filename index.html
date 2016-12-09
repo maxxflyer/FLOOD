@@ -1109,6 +1109,8 @@ tempcount++;
 
 function showTradePlatform(pair){
 
+$("#hypermarkettabbidcontainer").html("");
+
 
 if(isPartnership(pair)){
 $("#hypermarkettabpartnershipalert").hide();
@@ -1121,20 +1123,42 @@ $("#hypermarkettabpartnershipalert").show();
 $("#hypermarkettabbid").show();
 tempss=pair;
 temps1=tempss.substring(0,tempss.indexOf("-"));
+
 displayHyperName($("#hyperbidlabel"),temps1);
 tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel"),temps1,2);
 $("#ethbalancelabel2").text(tempOtherSymbol);
 $("#ethtotallabel2").text(tempOtherSymbol);
 temps2=tempss.substring(tempss.indexOf("-")+1);
+getOffers(temps1,temps2,0);
+getOffers(temps1,temps2,1);
+getOffers(temps1,temps2,2);
+getOffers(temps1,temps2,3);
+
 displayHyperName($("#hyperasklabel"),temps2);
 tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel2"),temps2,1);
-
+getOffers(temps2,temps1,0);
+getOffers(temps2,temps1,1);
+getOffers(temps2,temps1,2);
+getOffers(temps2,temps1,3);
 //displayHyperAmountSymbol($("#hypercoinbalancelabel2"),temps2);
 createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
 createIcon($("#hyperhyperwallet-walletico42"),selectedWallet);
 }
 
+function getOffers(addr,addr2,i){
+connect('Flood_Standard_Ethereum_Coin',addr);
+contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,i,function(error, data) {
+if(error)alert("Error: "+error);
+t=1;
+if(data[3]==false)t=2;
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" index="'+i+'" tipo="'+t+'" onclick="alert()"><div class="suboffer">'+data[1]+'</div><div class="suboffer">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+console.log(addr+" "+i+" "+data);
+});
+}
+
 function backtosettings(){$('.tabright').hide();showcontrolpanel();}
+
+
 
 function openPartnershipButtons(){
 $("#hometableft").hide();
@@ -1739,12 +1763,16 @@ function hypermarkettabbidsell(){
 $("#hypermarkettabbidbuy").css({"background" : "white" , "color" : "black"});
 $("#hypermarkettabbidsell").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabbid-pricefield").show();
+$("#hyperbidsetbuyoffer").hide();
+$("#hyperbidsetselloffer").show();
 }
 
 function hypermarkettabbidbuy(){
 $("#hypermarkettabbidsell").css({"background" : "white" , "color" : "black"});
 $("#hypermarkettabbidbuy").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabbid-pricefield").hide();
+$("#hyperbidsetbuyoffer").show();
+$("#hyperbidsetselloffer").hide();
 }
 
 function hypermarkettabasksell(){
@@ -1759,7 +1787,18 @@ $("#hypermarkettabaskbuy").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabask-pricefield").hide();
 }
 
+function hyperbidSetSellOffer(){
+connect("Flood_Standard_Ethereum_Coin","0xa4ca2945c1f9246e1b7ae4ee7991081a05d61655");
+contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer("0x8c9b9c60af2ea5cd320bf372f6db2b4c46f9bbea",2,1000000000,false,2,function(err,data){
+if(err)console.log("Error: "+err);
+console.log(data);
+});
+}
 
+function hyperbidSetBuyOffer(){
+
+
+}
 </script>
 
 
@@ -1948,7 +1987,8 @@ margin-right: 10px; margin-top: 5px; text-align: right;" value="0.0001">
 <input type="text" id="logo" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
 margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="0.0001">
 <div class="spacer"></div>
-<button id="hyperbidsetoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;"/>SET OFFER</button>
+<button id="hyperbidsetloffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;"/>SET OFFER</button>
+<button id="hyperbidsetoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px; display: none;"/>SET OFFER</button>
 </div>
 
 
@@ -1968,7 +2008,7 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 <div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="hyperbidlabel" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
 <div class="spacer"></div>
 <button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
-<div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
+<div  id="hypermarkettabbidcontainer" style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
 <div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
 
 </div>
@@ -1993,7 +2033,8 @@ margin-right: 10px; margin-top: 5px; text-align: right;" value="1">
 <input type="text" id="hyperselltotal" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
 margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="1">
 <div class="spacer"></div>
-<button id="hyperbidsetoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;"/>SET OFFER</button>
+<button id="hyperbidsetselloffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidSetSellOffer()"/>SET SELL OFFER</button>
+<button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;display: none;" onclick="hyperbidSetBuyOffer()"/>BUY</button>
 </div>
 
 
@@ -2234,7 +2275,7 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 <div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="hyperasklabel" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
 <div class="spacer"></div>
 <button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
-<div style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
+<div id="hypermarkettabaskcontainer" style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
 <div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
 </div>
 <button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
