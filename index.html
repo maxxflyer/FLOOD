@@ -1126,6 +1126,7 @@ temps1=tempss.substring(0,tempss.indexOf("-"));
 
 displayHyperName($("#hyperbidlabel"),temps1);
 tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel"),temps1,2);
+setTradeBalance($("#hypercoinbalancelabelbuy2"),temps1,2)
 $("#ethbalancelabel2").text(tempOtherSymbol);
 $("#ethtotallabel2").text(tempOtherSymbol);
 temps2=tempss.substring(tempss.indexOf("-")+1);
@@ -1136,6 +1137,7 @@ getOffers(temps1,temps2,3);
 
 displayHyperName($("#hyperasklabel"),temps2);
 tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel2"),temps2,1);
+setTradeBalance($("#hypercoinbalancelabelbuy"),temps2,1);
 getOffers(temps2,temps1,0);
 getOffers(temps2,temps1,1);
 getOffers(temps2,temps1,2);
@@ -1151,9 +1153,51 @@ contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,i,function(err
 if(error)alert("Error: "+error);
 t=1;
 if(data[3]==false)t=2;
-if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" index="'+i+'" tipo="'+t+'" onclick="alert()"><div class="suboffer">'+data[1]+'</div><div class="suboffer">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" index="'+i+'" tipo="'+t+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
 console.log(addr+" "+i+" "+data);
 });
+}
+
+
+
+function setDisplayBuy(t,x,y){
+hypermarkettabbidbuy();
+$("#hypersellamount").val(x);
+$("#hyperselltotal").val(y);
+if(t==1){
+
+$("#hypersellamount").prop('disabled', true);
+$("#hyperselltotal").prop('disabled', true);
+
+}else{
+$("#hypersellamount").prop('disabled', false);
+$("#hyperselltotal").prop('disabled', false);
+}
+
+
+}
+
+function setDisplaySell(){
+hypermarkettabbidsell();
+$("#hypersellamount").prop('disabled', false);
+$("#hyperselltotal").prop('disabled', false);
+
+}
+
+function setDisplaySellAmount(x){
+hypermarkettabbidsell();
+$("#hypersellamount").val(x);
+$("#hyperselltotal").val($("#hyperprice").val()*x);
+$("#hypersellamount").prop('disabled', false);
+$("#hyperselltotal").prop('disabled', false);
+}
+
+function setDisplaySellPrice(x){
+hypermarkettabbidsell();
+$("#hyperprice").val(x);
+$("#hyperselltotal").val($("#hypersellamount").val()*x);
+$("#hypersellamount").prop('disabled', false);
+$("#hyperselltotal").prop('disabled', false);
 }
 
 function backtosettings(){$('.tabright').hide();showcontrolpanel();}
@@ -1739,18 +1783,21 @@ function markettabbidsell(){
 $("#markettabbidbuy").css({"background" : "white" , "color" : "black"});
 $("#markettabbidsell").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabbid-pricefield").show();
+
 }
 
 function markettabbidbuy(){
 $("#markettabbidsell").css({"background" : "white" , "color" : "black"});
 $("#markettabbidbuy").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabbid-pricefield").hide();
+
 }
 
 function markettabasksell(){
 $("#markettabaskbuy").css({"background" : "white" , "color" : "black"});
 $("#markettabasksell").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabask-pricefield").show();
+
 }
 
 function markettabaskbuy(){
@@ -1765,6 +1812,10 @@ $("#hypermarkettabbidsell").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabbid-pricefield").show();
 $("#hyperbidsetbuyoffer").hide();
 $("#hyperbidsetselloffer").show();
+$("#hypercoinbalancelabel").show();
+$("#hypercoinbalancelabelbuy").hide();
+$("#hyperbidchoosetype").show();
+$("#hypercoinbidmsg").hide();
 }
 
 function hypermarkettabbidbuy(){
@@ -1773,12 +1824,17 @@ $("#hypermarkettabbidbuy").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabbid-pricefield").hide();
 $("#hyperbidsetbuyoffer").show();
 $("#hyperbidsetselloffer").hide();
+$("#hypercoinbalancelabel").hide();
+$("#hypercoinbalancelabelbuy").show();
+$("#hyperbidchoosetype").hide();
+$("#hypercoinbidmsg").show();
 }
 
 function hypermarkettabasksell(){
 $("#hypermarkettabaskbuy").css({"background" : "white" , "color" : "black"});
 $("#hypermarkettabasksell").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabask-pricefield").show();
+
 }
 
 function hypermarkettabaskbuy(){
@@ -2017,7 +2073,11 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 <div id="hypermarkettabbidbuy" style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="hypermarkettabbidbuy()">BUY</div>
 <div class="spacer" style=""></div>
 <div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div>
+<div id="hypercoinbalancelabelbuy" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px; display: none;">30 BLU</div>
+
 <div id="hyperhyperwallet-walletico42" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
+<div class="spacer" style="border:0;"></div>
+<div id="hypercoinbidmsg" style="display: none; margin-right: 45px; font-family: arial; font-size: 14px; margin-top: 10px; float: right; margin-bottom: 10px;">Select an offer to Buy</div><div class="spacer" style="border:0;"></div>
 <div id="hypermarkettabbid-pricefield"><div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Price:</div>
 <div id="ethbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
 <input type="text" id="hyperprice" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
@@ -2031,8 +2091,10 @@ margin-right: 10px; margin-top: 5px; text-align: right;" value="1">
 <div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Total:</div>
 <div id="ethtotallabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
 <input type="text" id="hyperselltotal" class="settingsfield" style="float: right; width: calc(100% - 114px); color: gray;margin-left: 0px;
-margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" value="1">
-<div class="spacer"></div>
+margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 10px;" value="1">
+<div id="hyperbidchoosetype" style="float: right; margin-right: 45px; margin-bottom: 15px; font-family: arial; font-size: 14px;"><div style="float: left;"><input type="radio" name="hyperbidselltype" value="fixed"> Fixed</div>
+<div style="float: left; margin-left: 10px;"><input type="radio" name="hyperbidselltype" value="flexy"> Flexy</div></div>
+<div class="spacer" style=" margin-top: 10px;"></div>
 <button id="hyperbidsetselloffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidSetSellOffer()"/>SET SELL OFFER</button>
 <button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;display: none;" onclick="hyperbidSetBuyOffer()"/>BUY</button>
 </div>
@@ -2283,6 +2345,7 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 15px;" val
 <div style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;">BUY</div>
 <div class="spacer" style=""></div>
 <div id="hypercoinbalancelabel2" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div>
+<div id="hypercoinbalancelabelbuy2" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px; display: none;">30 BLU</div>
 <div id="hyperhyperwallet-walletico41" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
 <div id="hypermarkettabask-pricefield"><div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;">Price:</div>
 <div id="ethbalancelabel2" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
@@ -2925,7 +2988,7 @@ $("#ethtotallabel2").text(data0);}
 connect("Flood_Standard_Ethereum_Coin",id);
 contracts["Flood_Standard_Ethereum_Coin"].contract.balanceOf(selectedWallet,function(err,data){
 if(err)console.log("Error: "+err);
-alert(data+" "+(web3.fromWei(data, "ether")));
+//alert(data+" "+(web3.fromWei(data, "ether")));
 ob.text((web3.fromWei(data, "ether"))+" "+data0);
 });
 });
