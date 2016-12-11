@@ -917,7 +917,7 @@ $(".tabright").hide();
 $(".tableft").hide();
 //$("#weblink").attr("href" , "https://testnet.etherscan.io/address/"+this.id());
 createIcon("#hyperwallet-walletico7",this.id());
-connect("Flood_Standard_Ethereum_Coin",this.id());
+connect("Flood_Standard_Ethereum_Coin",this.id());console.log("CONNECT: "+this.id());
 $("#icocontractaddress").text(this.id());
 createIcon("#hyperwallet-walletico3",this.id());
 if(selectedId!="")cy.$("#"+selectedId).css({'border-color':'#000' , 'border-width' : '3px'});
@@ -1130,35 +1130,51 @@ setTradeBalance($("#hypercoinbalancelabelbuy2"),temps1,2)
 $("#ethbalancelabel2").text(tempOtherSymbol);
 $("#ethtotallabel2").text(tempOtherSymbol);
 temps2=tempss.substring(tempss.indexOf("-")+1);
-getOffers(temps1,temps2,0);
-getOffers(temps1,temps2,1);
-getOffers(temps1,temps2,2);
-getOffers(temps1,temps2,3);
+//getOffers(temps1,temps2,0);
+//getOffers(temps1,temps2,1);
+//getOffers(temps1,temps2,2);
+//getOffers(temps1,temps2,3);
+getOffers(temps1,temps2);
+
+
 
 displayHyperName($("#hyperasklabel"),temps2);
 tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel2"),temps2,1);
 setTradeBalance($("#hypercoinbalancelabelbuy"),temps2,1);
-getOffers(temps2,temps1,0);
-getOffers(temps2,temps1,1);
-getOffers(temps2,temps1,2);
-getOffers(temps2,temps1,3);
+//getOffers(temps2,"0xd7edb69b2345010c445947bc088675c2e83ca1b6");
+
+//getOffers(temps2,temps1,0);
+//getOffers(temps2,temps1,1);
+//getOffers(temps2,temps1,2);
+//getOffers(temps2,temps1,3);
 //displayHyperAmountSymbol($("#hypercoinbalancelabel2"),temps2);
 createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
 createIcon($("#hyperhyperwallet-walletico42"),selectedWallet);
 }
 
-function getOffers(addr,addr2,i){
-connect('Flood_Standard_Ethereum_Coin',addr);
-contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,i,function(error, data) {
+function getOffers(addr,addr2){
+connect('Flood_Standard_Ethereum_Coin',addr);console.log("CONNECT: "+addr);
+contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,0,function(error, data) {
 if(error)alert("Error: "+error);
-t=1;
-if(data[3]==false)t=2;
-if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" index="'+i+'" tipo="'+t+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
-console.log(addr+" "+i+" "+data);
+
+console.log(addr+" "+0+" "+data);
+for(var i=1;i<data[4];i++){
+getOffer(addr,addr2,i);
+}
 });
 }
 
+function getOffer(addr,addr2,i){
+connect('Flood_Standard_Ethereum_Coin',addr);console.log("CONNECT: "+addr);
+contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,i,function(error, data) {
+if(error)alert("Error: "+error);
 
+t=1;
+if(data[3]==false)t=2;
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+i+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+console.log(addr+" "+i+" "+data);
+});
+}
 
 function setDisplayBuy(t,x,y){
 hypermarkettabbidbuy();
@@ -1255,7 +1271,7 @@ ob.attr('src' , temp);
 }
 
 function displayHyperName(ob,addr){
-connect('Flood_Standard_Ethereum_Coin',addr);
+connect('Flood_Standard_Ethereum_Coin',addr);console.log("CONNECT: "+addr);
 contracts['Flood_Standard_Ethereum_Coin'].contract.name(function(error,data){
 if(error)alert("Error: "+error);
 ob.text(data);
@@ -1264,7 +1280,7 @@ ob.text(data);
 }
 
 function displayHyperSymbol(ob,addr){
-connect('Flood_Standard_Ethereum_Coin',addr);
+connect('Flood_Standard_Ethereum_Coin',addr);console.log("CONNECT: "+addr);
 contracts['Flood_Standard_Ethereum_Coin'].contract.symbol(function(error,data){
 if(error)alert("Error: "+error);
 ob.text(data);
@@ -1272,7 +1288,7 @@ ob.text(data);
 }
 
 function displayHyperAmountSymbol(ob,addr){
-connect('Flood_Standard_Ethereum_Coin',addr);
+connect('Flood_Standard_Ethereum_Coin',addr);console.log("CONNECT: "+addr);
 contracts['Flood_Standard_Ethereum_Coin'].contract.balanceOf(selectedWallet,function(error,data0){
 if(error)alert("Error: "+error);
 contracts['Flood_Standard_Ethereum_Coin'].contract.symbol(function(error,data1){
@@ -1367,7 +1383,7 @@ var tempCost;
 function loadICO(){
 tempCost=0;
 
-connect('Flood_Standard_Ethereum_Coin',selectedId);
+connect('Flood_Standard_Ethereum_Coin',selectedId);console.log("CONNECT: "+selectedId);
 createIcon("#hyperwallet-walletico3",selectedId);
 $("#icocontractaddress").text(selectedId);
 contracts['Flood_Standard_Ethereum_Coin'].contract.name(function(err,data){
@@ -1377,6 +1393,7 @@ $('#mainicolabel').text(data+" ICO");
 
 $('#icofrontend').show();
 
+connect("Flood_Standard_Ethereum_Coin",selectedId);console.log("CONNECT: "+selectedId);
 contracts['Flood_Standard_Ethereum_Coin'].contract.enabled(function(err,data){
 if(err)console.log("Error: "+err);
 if(data<5){$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
@@ -1502,7 +1519,7 @@ function readICObyID(u){
 contracts["Pretorian"].contract.coins_list(u,function(err,data){
 if(err)console.log("Error: "+err);
 
-connect('Flood_Standard_Ethereum_Coin'+u,data);
+connect('Flood_Standard_Ethereum_Coin'+u,data);console.log("CONNECT: "+data);
 contracts['Flood_Standard_Ethereum_Coin'+u].contract.enabled(function(err,data2){
 if(err)console.log("Error: "+err);
 if(data2==5){
@@ -1579,7 +1596,7 @@ $("#hometableft").show();
 
 function sendPartnership(from,to){
 console.log("Partnership Request: from "+from+" to "+to+" - "+selectedWallet);
-connect('Flood_Standard_Ethereum_Coin',from);
+connect('Flood_Standard_Ethereum_Coin',from);console.log("CONNECT: "+from);
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(111,to,"",0,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
 if(error)alert("Error: "+error);
 console.log("Partnership Request: from "+from+" to "+to+" - "+transactionHash);
@@ -1592,7 +1609,7 @@ alert("Partnership Request Transaction Sent");
 
 function buyIco(){
 alert(parseFloat($("#ICOamount2spend").val()));
-connect('Flood_Standard_Ethereum_Coin',selectedId);
+connect('Flood_Standard_Ethereum_Coin',selectedId);console.log("CONNECT: "+selectedId);
 console.log("buyICO: from "+$("#hyperwalletselect").val()+" "+selectedId);
 contracts['Flood_Standard_Ethereum_Coin'].contract.ico({from: $("#hyperwalletselect").val(),value: web3.toWei(parseFloat($("#ICOamount2spend").val()), "ether"), gas: 699999},function(error, transactionHash) {
 if(error)alert("Error: "+error);
@@ -1688,10 +1705,11 @@ $("#coinhyperwalletsubmit").attr("onclick" , "transfer()");
 
 function setico(){
 $(".tabright").hide();
+connect("Flood_Standard_Ethereum_Coin",selectedId);console.log("CONNECT: "+selectedId);
 contracts["Flood_Standard_Ethereum_Coin"].contract.enabled(function(err,data){
 if(err)console.log("Error: "+err);
 $(".icosubpan").hide();
-
+console.log("ENABLED: "+data);
 $("#icosubpanel"+data).show();
 if(data<=5){$("#icosteplabel").text("Step "+data+" of 5");}else{$("#icosteplabel").text("ICO over!");}
 
@@ -1713,9 +1731,11 @@ $('#marketslist').show();
 }
 
 function setCost(){
+connect('Flood_Standard_Ethereum_Coin',selectedId);console.log("CONNECT: "+selectedId);
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(46,0x0,"",parseFloat($("#coincost").val())*1000000000000000000,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
 if(error)alert("Error: "+err);
 console.log("Set ICO Cost: "+(parseFloat($("#coincost").val())*1000000000000000000)+" wei");
+console.log(transactionHash);
 //checkTransaction(data,"setCost",1);
 });
 }
@@ -1757,7 +1777,7 @@ alert($.cookie('myCoinsList'));
 
 $(document).on("click", ".gitter-chat-embed-action-bar-item gitter-chat-embed-action-bar-item-collapse-chat", function(){$(".gitter-open-chat-button").hide();});
 
-$(document).on("click",".openico",function(e){console.log($("#"+e.target.id).attr("name")); $('#icolist').hide();selectedId=$("#"+e.target.id).attr("name");connect("Flood_Standard_Ethereum_Coin",selectedId);loadICO();});
+$(document).on("click",".openico",function(e){console.log($("#"+e.target.id).attr("name")); $('#icolist').hide();selectedId=$("#"+e.target.id).attr("name");connect("Flood_Standard_Ethereum_Coin",selectedId);console.log("CONNECT: "+selectedId);loadICO();});
 
 $(document).on("click",".updatesettings",function(e){
 tempi=0;
@@ -1844,8 +1864,8 @@ $("#hypermarkettabask-pricefield").hide();
 }
 
 function hyperbidSetSellOffer(){
-connect("Flood_Standard_Ethereum_Coin","0xa4ca2945c1f9246e1b7ae4ee7991081a05d61655");
-contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer("0x8c9b9c60af2ea5cd320bf372f6db2b4c46f9bbea",2,1000000000,false,2,function(err,data){
+connect("Flood_Standard_Ethereum_Coin","0x1c4b9e1611972cb45e572831c212bc43b7004793");console.log("CONNECT: "+"0x1c4b9e1611972cb45e572831c212bc43b7004793");
+contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer("0x1c4b9e1611972cb45e572831c212bc43b7004793",9,1000000000,true,2,function(err,data){
 if(err)console.log("Error: "+err);
 console.log(data);
 });
@@ -1853,6 +1873,31 @@ console.log(data);
 
 function hyperbidSetBuyOffer(){
 
+
+}
+
+function hyperbidDeleteOffer(){
+connect("Flood_Standard_Ethereum_Coin","0x1c4b9e1611972cb45e572831c212bc43b7004793");console.log("CONNECT: "+"0x1c4b9e1611972cb45e572831c212bc43b7004793");
+contracts["Flood_Standard_Ethereum_Coin"].contract.removeOffer("0x1c4b9e1611972cb45e572831c212bc43b7004793",2,{from:web3.eth.accounts[selectedWallet], gas: 300000},function(err,data){
+if(err)console.log("Error: "+err);
+console.log(data);
+});
+
+}
+
+function hyperbidMergeOffers(){
+connect("Flood_Standard_Ethereum_Coin","0x1c4b9e1611972cb45e572831c212bc43b7004793");console.log("CONNECT: "+"0x1c4b9e1611972cb45e572831c212bc43b7004793");
+contracts["Flood_Standard_Ethereum_Coin"].contract.mergeOrders("0x1c4b9e1611972cb45e572831c212bc43b7004793",2,3,{from:web3.eth.accounts[selectedWallet], gas: 300000},function(err,data){
+if(err)console.log("Error: "+err);
+console.log(data);
+});
+
+}
+
+
+function openTest(){
+$(".tableft").hide();
+showTradePlatform("0x1c4b9e1611972cb45e572831c212bc43b7004793-0x1c4b9e1611972cb45e572831c212bc43b7004793");
 
 }
 </script>
@@ -1892,6 +1937,7 @@ function hyperbidSetBuyOffer(){
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; "  onclick="showNew()">NEW COINS</button>
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; "  onclick="showAll()">LOAD ALL</button>
 <button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="window.open('minter.html','_blank');">MINT CUSTOM COIN</button>
+<button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="openTest()">OPEN TEST MARKET</button>
 <button id="openchat" class="mainbutton" style="display: none; width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="">MINT CUSTOM COIN</button>
 </div>
 
@@ -2097,6 +2143,8 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 10px;" val
 <div class="spacer" style=" margin-top: 10px;"></div>
 <button id="hyperbidsetselloffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidSetSellOffer()"/>SET SELL OFFER</button>
 <button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;display: none;" onclick="hyperbidSetBuyOffer()"/>BUY</button>
+<button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidDeleteOffer()"/>DELETE</button>
+<button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidMergeOffers()"/>MERGE</button>
 </div>
 
 
@@ -2883,9 +2931,11 @@ stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 });
 
 stepcounter++;
+console.log(selectedId);
+connect("Flood_Standard_Ethereum_Coin",selectedId);console.log("CONNECT: "+selectedId);
 contracts["Flood_Standard_Ethereum_Coin"].contract.enabled(function(err,data){
 if(err)console.log("Error: "+err);
-
+console.log("ENABLED: "+data);
 if(data=="1"){$("#ico").html("Waiting");$("#cost").html("-- ETH");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
 if(data=="2"){$("#ico").html("Waiting");
 contracts["Flood_Standard_Ethereum_Coin"].contract.cost(function(err,data2){$("#cost").html(data2+" ETH");});
@@ -2973,7 +3023,7 @@ cy.layout({
 }
 
 function setTradeBalance(ob,id,n){
-connect("Flood_Standard_Ethereum_Coin",id);
+connect("Flood_Standard_Ethereum_Coin",id);console.log("CONNECT: "+id);
 tempx="";
 contracts["Flood_Standard_Ethereum_Coin"].contract.symbol(function(err,data0){
 if(err)console.log("Error: "+err);
@@ -2985,7 +3035,7 @@ if(n==2){
 $("#hypercoinsymbollabel").text(data0);
 $("#ethbalancelabel2").text(data0);
 $("#ethtotallabel2").text(data0);}
-connect("Flood_Standard_Ethereum_Coin",id);
+connect("Flood_Standard_Ethereum_Coin",id);console.log("CONNECT: "+id);
 contracts["Flood_Standard_Ethereum_Coin"].contract.balanceOf(selectedWallet,function(err,data){
 if(err)console.log("Error: "+err);
 //alert(data+" "+(web3.fromWei(data, "ether")));
