@@ -286,6 +286,11 @@ var selectedId="";
 var selectedEdgeId="";
 var selectedWallet="";
 var selectedPerson="";
+
+
+var currenthyperbid="";
+var currenthyperask="";
+
 function fetchTheySay(id){
 var config = {
   "id": '801253029852958720',
@@ -1123,18 +1128,19 @@ $("#hypermarkettabpartnershipalert").show();
 $("#hypermarkettabbid").show();
 tempss=pair;
 temps1=tempss.substring(0,tempss.indexOf("-"));
-
+currenthyperbid=temps1;
 displayHyperName($("#hyperbidlabel"),temps1);
 tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel"),temps1,2);
 setTradeBalance($("#hypercoinbalancelabelbuy2"),temps1,2)
 $("#ethbalancelabel2").text(tempOtherSymbol);
 $("#ethtotallabel2").text(tempOtherSymbol);
 temps2=tempss.substring(tempss.indexOf("-")+1);
+currenthyperask=temps2;
 //getOffers(temps1,temps2,0);
 //getOffers(temps1,temps2,1);
 //getOffers(temps1,temps2,2);
 //getOffers(temps1,temps2,3);
-getOffers(temps1,temps2);
+getOffers(currenthyperbid,currenthyperask);
 
 
 
@@ -1777,7 +1783,7 @@ alert($.cookie('myCoinsList'));
 
 $(document).on("click", ".gitter-chat-embed-action-bar-item gitter-chat-embed-action-bar-item-collapse-chat", function(){$(".gitter-open-chat-button").hide();});
 
-$(document).on("click",".openico",function(e){console.log($("#"+e.target.id).attr("name")); $('#icolist').hide();selectedId=$("#"+e.target.id).attr("name");connect("Flood_Standard_Ethereum_Coin",selectedId);console.log("CONNECT: "+selectedId);loadICO();});
+$(document).on("click",".openico",function(e){alert("!");console.log($("#"+e.target.id).attr("name")); $('#icolist').hide();selectedId=$("#"+e.target.id).attr("name");connect("Flood_Standard_Ethereum_Coin",selectedId);console.log("CONNECT: "+selectedId);loadICO();});
 
 $(document).on("click",".updatesettings",function(e){
 tempi=0;
@@ -1864,8 +1870,9 @@ $("#hypermarkettabask-pricefield").hide();
 }
 
 function hyperbidSetSellOffer(){
-connect("Flood_Standard_Ethereum_Coin","0x1c4b9e1611972cb45e572831c212bc43b7004793");console.log("CONNECT: "+"0x1c4b9e1611972cb45e572831c212bc43b7004793");
-contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer("0x1c4b9e1611972cb45e572831c212bc43b7004793",9,1000000000,true,2,function(err,data){
+connect("Flood_Standard_Ethereum_Coin",currenthyperbid);console.log("CONNECT: "+currenthyperbid);
+console.log($("#hypersellamount").val()+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000));
+contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer(currenthyperask,$("#hypersellamount").val()*1000000000000000000,($("#hyperprice").val()*1000000000),true,1,{from:selectedWallet, gas: 300000},function(err,data){
 if(err)console.log("Error: "+err);
 console.log(data);
 });
@@ -1874,7 +1881,16 @@ console.log(data);
 function hyperbidSetBuyOffer(){
 
 
+connect("Flood_Standard_Ethereum_Coin","0x267b997e0c3ef72cea93bddc72311cee5cffa8fb");console.log("CONNECT: "+"0x267b997e0c3ef72cea93bddc72311cee5cffa8fb");
+console.log($("#hypersellamount").val()+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000)+" "+web3.toWei(parseFloat($("#hyperselltotal").val()), "ether"));
+contracts["Flood_Standard_Ethereum_Coin"].contract.swap("0x89191ee1c94879a5292f04642a1af43e0f05c498",9,2,"0x1c4b9e1611972cb45e572831c212bc43b7004793",{from:selectedWallet, gas: 300000},function(err,data){
+if(err)console.log("Error: "+err);
+console.log(data);
+});
+
 }
+
+
 
 function hyperbidDeleteOffer(){
 connect("Flood_Standard_Ethereum_Coin","0x1c4b9e1611972cb45e572831c212bc43b7004793");console.log("CONNECT: "+"0x1c4b9e1611972cb45e572831c212bc43b7004793");
@@ -1938,6 +1954,8 @@ showTradePlatform("0x1c4b9e1611972cb45e572831c212bc43b7004793-0x1c4b9e1611972cb4
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; "  onclick="showAll()">LOAD ALL</button>
 <button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="window.open('minter.html','_blank');">MINT CUSTOM COIN</button>
 <button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="openTest()">OPEN TEST MARKET</button>
+<button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="hyperbidSetBuyOffer()">BUY</button>
+
 <button id="openchat" class="mainbutton" style="display: none; width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="">MINT CUSTOM COIN</button>
 </div>
 
@@ -2574,6 +2592,10 @@ margin-right: 20px;font-size: 24px; float: left;" value="1000"><div style="float
 </div>
 
 
+</div>
+
+
+
 <div id="icolist" style="width: 100%; height: 100%; background-image: url(gold.jpg); background-attachment: fixed; background-size: 100% 100%; z-index: 100; position: absolute; font-size: 24px; color: black; display: none;">
 
 <div style="width: 690px; margin: auto; margin-top: 50px;">
@@ -2600,8 +2622,6 @@ margin-right: 20px;font-size: 24px; float: left;" value="1000"><div style="float
 
 <br><br><br><br>
 </div>
-</div>
-
 
 <div id="coinsettings" class="tabright" style="padding: 0 20px 0 20px; position: absolute; display: none; width: calc(100% - 42px); height: 100%; background: white; z-index: 1101;">
 <div id="coinsettingslabel" class="tablabel2" style="text-align: center;
