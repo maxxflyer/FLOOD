@@ -17,11 +17,12 @@ function getController(uint contr)constant returns(address){address temp=0x0;if(
 function addController(address a,bool b){if(b)controllers.push(a);controllersCheck[a]=b;}
 }
 
+contract Dapp{address public owner;}
 
 //10 social disclaimer
 contract Dsocial{
 address owner;
-Pretorian Pretorivs;
+Dapp dapp;
 address controller;
 
 mapping(address => mapping(uint => string))public socialInfo;
@@ -50,45 +51,55 @@ mapping(uint => string[])public addressListLabels;
 
 
 
-function Dsocial(address p){owner=msg.sender;Pretorivs=Pretorian(p);}
+function Dsocial(address p){
+owner=msg.sender;
+}
 
-function addInfo(address addr,uint index,string info){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+function addInfo(address d,address addr,uint index,string info){
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialInfo[addr][index]=info;
 }
 
 function addQuantity(address addr,uint index,uint quant){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialQuantity[addr][index]=quant;
 }
 
 function addCheck(address addr,uint index,bool check){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialCheck[addr][index]=check;
 }
 
 function addAddress(address addr,uint index,address addr){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialAddress[addr][index]=addr;
 }
 
 function addInfoListItem(address addr,uint index,string check){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialList[addr][index].push(check);
 }
 
 function addBoolListItem(address addr,uint index,bool check){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialList[addr][index].push(check);
 }
 
 function addAddressListItem(address addr,uint index,address addr){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialList[addr][index].push(addr);
 }
 
 function addQuantityListItem(address addr,uint index,uint u){
-if((msg.sender!=Pretorivs.coins_owner(addr))&&(msg.sender!=controller))throw;
+dapp=Dapp(d);
+if((msg.sender!=addr)&&(msg.sender!=dapp.owner())&&(msg.sender!=controller))throw;
 socialList[addr][index].push(u);
 }
 
