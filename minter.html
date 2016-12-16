@@ -8,7 +8,7 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
 		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/ui-darkness/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <script src="http://arkdao.com/blockies-master/blockies.js"></script>
-<script type="text/javascript" src="deploymentminter.js"></script>
+<script type="text/javascript" src="deploymentpan.js"></script>
 <link rel="stylesheet" type="text/css" href="stylepan.css">
 <script src="watercanvas.js"></script>
 
@@ -229,14 +229,14 @@ referral='0xdDB318491604F86FF226aC15EE2feD8663A0A326';
 console.log(web3.toWei(parseInt($("#supply").val()),'ether'));
 //var qty = new BigNumber(""+web3.toWei(parseInt($("#supply").val()),'ether'));
 var qty = web3.toWei(parseInt($("#supply").val(),'ether'));
-contracts['Flood_1_00'].contract.create_coin(qty,$("#name").val(),$("#symbol").val(),$("#mining").val(),referral,5,{from:web3.eth.accounts[selectedwallet],value: web3.toWei(0.001, "ether"), gas: 4699999},function(error, transactionHash) {
-if(error)alert("Error: "+err);
+contracts['Flood_1_00'].contract.create_coin(qty,$("#name").val(),$("#symbol").val(),$("#mining").val(),referral,5,{from:web3.eth.accounts[selectedwallet],value: web3.toWei(0.001, "ether"), gas: 4699999},function(error, data) {
+if(error)alert("Error: "+error);
 //console.log(err);
 //console.log(web3.eth.getTransaction(data));
 //console.log(web3.eth.getTransactionReceipt(data));
 
-setMsg("orange","your transaction: <a href='http://testnet.etherscan.io/tx/"+transactionHash+"' target='_blank'>"+transactionHash+"</a>","start");
-//checkTransaction(data,"setCoin",1);
+setMsg("orange","your transaction: <a href='http://testnet.etherscan.io/tx/"+data+"' target='_blank'>"+data+"</a>","start");
+checkTransaction(data,"setCoin",1);
 
 });
 
@@ -244,22 +244,25 @@ setMsg("orange","your transaction: <a href='http://testnet.etherscan.io/tx/"+tra
 
 function checkTransaction(hash,type,n){
     var t=1;
-    for(var ii=0;ii<t;ii++){
+   // for(var ii=0;ii<t;ii++){
 
-    
-    var obj=web3.eth.getTransaction(hash);
-    //console.log(n+" "+obj["blockHash"]);
+    var obj;
+    web3.eth.getTransactionReceipt(hash,function(error, obj) {
+if(error)alert("Error: "+error);
 
-    if(obj["blockHash"]=="0x0000000000000000000000000000000000000000000000000000000000000000"){
+    if(obj!=null)console.log(n+" "+obj["blockHash"]);
+    if(obj!=null) console.log(n+" "+JSON.stringify(obj, null, 4));
+    if(obj!=null){if((obj["blockHash"]=="0x0000000000000000000000000000000000000000000000000000000000000000")||(obj["blockHash"]==null)){
     //se transazione non minata
     t++;
+    console.log("obj not null hash 0 or null");
     
-    sleep(2000);
-
+    setTimeout(function() {checkTransaction(hash,type,n);}, 4000);
     }else{
+    console.log("obj not null hash not null");
     //se transazione minata
 
-        obj=web3.eth.getTransactionReceipt(hash);
+        //obj=web3.eth.getTransactionReceipt(hash);
 
         var gas=1000000;
         
@@ -272,17 +275,24 @@ function checkTransaction(hash,type,n){
 
         }else{
        
-checkWallet();
-reloadWallet();
-    //transazione minata con successo
+        checkWallet();
+        reloadWallet();
+        //transazione minata con successo
            $(".jump").hide();
          
-           if(type=="setCoin"){readLastCoin();$("#coindisplay").show();}
+           //if(type=="setCoin"){readLastCoin();$("#coindisplay").show();}
            setMsg("green","transaction: <a href='http://testnet.etherscan.io/tx/"+hash+"' target='_blank'>"+hash+"</a>","stop");
         }
+
+
     }
 if(t>=120)t=0;
-}
+}else{setTimeout(function() {checkTransaction(hash,type,n);}, 4000);}
+});
+
+//}
+
+
 }
 
 
@@ -302,7 +312,7 @@ function setMsg(color,msg,action){
 
 function last(){
 $(".tab").hide();
-readLastCoin();
+//readLastCoin();
 $("#coindisplay").show();
 }
 
@@ -313,7 +323,7 @@ $("#hometab").show();
 
 
 function readLastCoin(){
-addr=contracts["Flood_1_00"].contract.readLastCoin(web3.eth.accounts[selectedWallet]);
+addr=contracts["Flood_1_00"].contract.readLastCoin(web3.eth.accounts[selectedwallet]);
 $("#coinAddress").html("<a href='http://testnet.etherscan.io/address/"+addr+"' target='_blank' style='color: black;'>"+addr+"</a>");
 createIcon("#coinIcon",addr);
 
