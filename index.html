@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>LAYERS:MACHINE</title>
+    <title>ETHERSCAPE</title>
     <script src="cytoscape.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.min.js"></script>
@@ -871,8 +871,9 @@ $( "#openchat" ).trigger( "click" );
 
 function sendEtherEcoMessage(){
 
-alert('Send Message To Coin Manager 0x6598583177F3a2F8bcd72384F00D76E6D052EC21');
-window.open("https://testnet.etherecho.com/send.html?to=0x6598583177F3a2F8bcd72384F00D76E6D052EC21",'_blank');
+//alert('Send Message To Coin Manager 0x6598583177F3a2F8bcd72384F00D76E6D052EC21');
+
+window.open("https://etherecho.com/?sendto=0x6598583177F3a2F8bcd72384F00D76E6D052EC21%2C0xf2ce3942251a985268342ab6fac25edb6339e428",'_blank');
 
 }
 
@@ -1140,7 +1141,7 @@ currenthyperask=temps2;
 //getOffers(temps1,temps2,1);
 //getOffers(temps1,temps2,2);
 //getOffers(temps1,temps2,3);
-getOffers(currenthyperbid,currenthyperask);
+getOffers(currenthyperbid,currenthyperask,0);
 
 
 
@@ -1158,15 +1159,23 @@ createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
 createIcon($("#hyperhyperwallet-walletico42"),selectedWallet);
 }
 
-function getOffers(addr,addr2){
+function getOffers(addr,addr2,ind){
 connect('Flood_Standard_Ethereum_Coin',addr);console.log("CONNECT: "+addr);
-contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,0,function(error, data) {
+contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,ind,function(error, data) {
 if(error)alert("Error: "+error);
 
-console.log(addr+" "+0+" "+data);
-for(var i=1;i<data[4];i++){
-getOffer(addr,addr2,i);
-}
+//console.log(addr+" "+0+" "+data);
+if(data[6]!=1)getOffers(addr,addr2,data[6]);
+
+
+t=1;
+if(data[3]==false)t=2;
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+ind+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+console.log(addr+" "+ind+" "+data);
+
+//for(var i=1;i<data[4];i++){
+//getOffer(addr,addr2,i);
+//}
 });
 }
 
@@ -1222,8 +1231,10 @@ $("#hypersellamount").prop('disabled', false);
 $("#hyperselltotal").prop('disabled', false);
 }
 
-function backtosettings(){$('.tabright').hide();showcontrolpanel();}
+function backtosettings(){$('.tabright').hide();showcontrolpanel();
+}
 
+//function close(){$('.tabright').hide();showcontrolpanel();}
 
 
 function openPartnershipButtons(){
@@ -1739,45 +1750,105 @@ $('#marketslist').show();
 function setCost(){
 connect('Flood_Standard_Ethereum_Coin',selectedId);console.log("CONNECT: "+selectedId);
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(46,0x0,"",parseFloat($("#coincost").val())*1000000000000000000,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
-if(error)alert("Error: "+err);
+$("#icosubpanel1trans").show();
+if(error)alert("Error: "+error);
 console.log("Set ICO Cost: "+(parseFloat($("#coincost").val())*1000000000000000000)+" wei");
 console.log(transactionHash);
-//checkTransaction(data,"setCost",1);
+checkTransaction("#icosubpanel1trans",transactionHash,"setCost",699999);
 });
 }
+
 function setBonus(){
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(47,0x0,"",parseInt($("#icobonus").val()),true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
-if(error)alert("Error: "+err);
+$("#icosubpanel2trans").show();
+if(error)alert("Error: "+error);
 console.log("setBonus: "+$("#icobonus").val()+" %");
-//checkTransaction(data,"setBonus",1);
+checkTransaction("#icosubpanel2trans",transactionHash,"setBonus",699999);
 });
 }
 function setEndBonus(){
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(48,0x0,"",parseInt($("#icoendbonus").val()),true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
-if(error)alert("Error: "+err);
+$("#icosubpanel3trans").show();
+if(error)alert("Error: "+error);
 console.log("Set ICO Cost: "+$("#icoendbonus").val()+" block");
-//checkTransaction(data,"setEndBonus",1);
+checkTransaction("#icosubpanel3trans",transactionHash,"setEndBonus",699999);
+
 });
 }
 function setEndAndStart(){
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(49,0x0,"",parseInt($("#icoduration").val()),true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
-if(error)alert("Error: "+err);
+$("#icosubpanel4trans").show();
+if(error)alert("Error: "+error);
 console.log("Set ICO Cost: "+$("#icoduration").val()+" blocks");
-//checkTransaction(data,"setEndAndStart",1);
+checkTransaction("#icosubpanel4trans",transactionHash,"setEndAndStart",699999);
 });
 }
 
 function endIco(){
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(50,0x0,"",0,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
 if(error)alert("Error: "+error);
+$("#icosubpanel5trans").show();
 console.log("Set ICO end");
-//checkTransaction(data,"endIco",1);
+checkTransaction("#icosubpanel5trans",transactionHash,"endIco",699999);
 });
 }
 
 function coinlistcookie(){
 alert($.cookie('myCoinsList'));
 }
+
+
+function checkTransaction(item,hash,type,gasSent){
+    var t=1;
+    var obj;
+    web3.eth.getTransactionReceipt(hash,function(error, obj) {
+if(error)alert("Error: "+error);
+
+    if(obj!=null)console.log(obj["blockHash"]);
+    if(obj!=null) console.log(JSON.stringify(obj, null, 4));
+    if(obj!=null){if((obj["blockHash"]=="0x0000000000000000000000000000000000000000000000000000000000000000")||(obj["blockHash"]==null)){
+    //se transazione non minata
+    t++;
+    console.log("obj not null hash 0 or null");
+    
+    setTimeout(function() {checkTransaction(item,hash,type,gasSent);}, 4000);
+    }else{
+    console.log("obj not null hash not null");
+    //se transazione minata
+
+ 
+
+        if(obj["gasUsed"]==gasSent){
+        //errore
+ 
+           $("#msgclose").show();
+           //setMsg("red","some problem occured: <a href='http://testnet.etherscan.io/tx/"+hash+"' target='_blank'>"+hash+"</a>","stop");
+
+        }else{
+           $(item).hide();
+           resolveInterface(type);
+           //setMsg("green","transaction: <a href='http://testnet.etherscan.io/tx/"+hash+"' target='_blank'>"+hash+"</a>","stop");
+        }
+
+
+    }
+if(t>=120)t=0;
+}else{setTimeout(function() {checkTransaction(item,hash,type,gasSent);}, 4000);}
+});
+
+//}
+
+
+}
+
+function resolveInterface(type){
+if(type=="setCost"){$("#icosubpanel1").hide();$("#icosubpanel2").show();$("#icosteplabel").text("Step 2 of 5");}
+if(type=="setBonus"){$("#icosubpanel2").hide();$("#icosubpanel3").show();$("#icosteplabel").text("Step 3 of 5");}
+if(type=="setEndBonus"){$("#icosubpanel3").hide();$("#icosubpanel4").show();$("#icosteplabel").text("Step 4 of 5");}
+if(type=="setEndAndStart"){$("#icosubpanel4").hide();$("#icosubpanel5").show();$("#icosteplabel").text("Step 5 of 5");}
+if(type=="endIco"){$("#icosubpanel5").hide();$("#icosteplabel").text("ICO is Over!");}
+}
+
     </script>
 <script>$("#qtipbutton").on( "click",function(e){console.log("!");});
 
@@ -1878,12 +1949,23 @@ console.log(data);
 });
 }
 
+function hyperbidSet(){
+
+
+connect("Flood_Standard_Ethereum_Coin","0x02F09C32773cFEE4aa77e3A46176F664bC863eaB");console.log("CONNECT: "+"0x02F09C32773cFEE4aa77e3A46176F664bC863eaB");
+contracts["Flood_Standard_Ethereum_Coin"].contract.set("0x596034D9E5Cc3F9347f0B478302921b6B4381c96",{from:selectedWallet, gas: 300000},function(err,data){
+if(err)console.log("Error: "+err);
+console.log(data);
+});
+
+}
+
 function hyperbidSetBuyOffer(){
 
 
-connect("Flood_Standard_Ethereum_Coin","0x267b997e0c3ef72cea93bddc72311cee5cffa8fb");console.log("CONNECT: "+"0x267b997e0c3ef72cea93bddc72311cee5cffa8fb");
+connect("Flood_Standard_Ethereum_Coin","0x596034D9E5Cc3F9347f0B478302921b6B4381c96");console.log("CONNECT: "+"0x596034D9E5Cc3F9347f0B478302921b6B4381c96");
 console.log($("#hypersellamount").val()+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000)+" "+web3.toWei(parseFloat($("#hyperselltotal").val()), "ether"));
-contracts["Flood_Standard_Ethereum_Coin"].contract.swap("0x89191ee1c94879a5292f04642a1af43e0f05c498",9,2,"0x1c4b9e1611972cb45e572831c212bc43b7004793",{from:selectedWallet, gas: 300000},function(err,data){
+contracts["Flood_Standard_Ethereum_Coin"].contract.swap("0x02F09C32773cFEE4aa77e3A46176F664bC863eaB",9,2,"0x1c4b9e1611972cb45e572831c212bc43b7004793",{from:selectedWallet, gas: 300000},function(err,data){
 if(err)console.log("Error: "+err);
 console.log(data);
 });
@@ -1930,23 +2012,23 @@ showTradePlatform("0x1c4b9e1611972cb45e572831c212bc43b7004793-0x1c4b9e1611972cb4
 </div>
 <div id="hypertab" class="tableft">
 
-<div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; height: 250px; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial;"><img src="layersbanner.png" style=""></div>
-<button class="mainbutton" style="width: 100%; border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showmycoins()">
-<div id="totcoinlabel" class="tablabel3" style="float: left;">Tot Coins:</div>
-<div id="totcoin" class="tablabel4" style="float: right; color: gray;">?</div>
-</button>
-<button class="mainbutton" style="width: 100%; border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showhypermarketcap()">
-<div id="tothypercaplabel" class="tablabel3" style="float: left;">HyperCap:</div>
-<div id="tothypercap" class="tablabel4" style="float: right; color: gray; margin-top: 10px; margin-right: 10px;">?</div>
-</button>
-<button class="mainbutton" style="width: 100%; border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showMarkets()">
-<div id="tothypermarketslabel" class="tablabel3" style="float: left;">Hypermarkets:</div>
-<div id="tothypermarkets" class="tablabel4" style="float: right; color: gray;">?</div>
-</button>
-<button class="mainbutton" style="width: 100%; border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="openIcoList()">
-<div id="toticolabel" class="tablabel3" style="float: left;">Tot ICO:</div>
-<div id="totico" class="tablabel4" style="float: right; color: gray;">?</div>
-</button>
+<div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; height: 250px; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial;"><img src="etherscape-logo.png" style=""></div>
+<div style="height: 38px; width: 100%; background: black; border-top:solid 1px #777">
+<div id="totcoinlabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/coinwhite.png); background-size: 16px 16px; width: 16px; height: 16px;margin-right: 5px;"></div>
+<div id="totcoin" class="tablabel4" style="float: left; color: white;  margin-left: 0px;">?</div>
+<div class="" style="float: left;  border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showhypermarketcap()">
+<div id="tothypercaplabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/trade-iconwhite.png); background-size: 16px 16px; width: 16px; height: 16px; margin-bottom: 0px; margin-right: 5px;"></div>
+<div id="tothypercap" class="tablabel4" style="float: right;margin-left: 0px; margin-bottom: 0px; color: white;">1.3M</div>
+</div>
+<div class="" style=" border-top: solid 0px #ddd; cursor: pointer; border: 0px; float: right; height: 36px;" onclick="openIcoList()">
+<div id="toticolabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/icoswhite.png); background-size: 16px 16px; width: 16px; height: 16px; margin-bottom: 0px;margin-right: 5px;"></div>
+<div id="totico" class="tablabel4" style="float: right; margin-left: 0px; margin-bottom: 0px; color: white;">?</div>
+</div>
+<div class="" style="float: right; border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showMarkets()">
+<div id="tothypermarketslabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/partnershipswhite.png); background-size: 16px 16px; width: 16px; height: 16px; margin-bottom: 0px;margin-right: 5px;"></div>
+<div id="tothypermarkets" class="tablabel4" style="float: right;margin-left: 0px; margin-bottom: 0px; color: white;">?</div>
+</div>
+</div>
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; " onclick="showLocals()">LOAD LOCALS</button>
 <button id="showmycoinsbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; "  onclick="showmycoins()">MY COINS</button>
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"  onclick="showfavorites()">&#9733 FAVORITES</button>
@@ -1954,6 +2036,7 @@ showTradePlatform("0x1c4b9e1611972cb45e572831c212bc43b7004793-0x1c4b9e1611972cb4
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; "  onclick="showAll()">LOAD ALL</button>
 <button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="window.open('minter.html','_blank');">MINT CUSTOM COIN</button>
 <button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="openTest()">OPEN TEST MARKET</button>
+<button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="hyperbidSet()">SET</button>
 <button id="minecustomcoinbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="hyperbidSetBuyOffer()">BUY</button>
 
 <button id="openchat" class="mainbutton" style="display: none; width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px;"   onclick="">MINT CUSTOM COIN</button>
@@ -2248,29 +2331,39 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 10px;" val
 <input type="text" id="coincost" class="settingsfield" style=" width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="0.0001">
 <button id="" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setCost()">SET COST</button>
-<div class="spacer"></div></div>
+<div class="spacer"></div>
+<div id="icosubpanel1trans" style="width: 48px; height: 48px; margin: auto; margin-top: 20px; display: none;"><img src="transacting.png" style="width: 48px; height: 48px;"></div>
+</div>
 <div id="icosubpanel2" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Bonus (%):</div>
 <input type="text" id="icobonus" class="settingsfield" style="  width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="10">
 <button id="" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setBonus()">SET BONUS</button>
-<div class="spacer"></div></div>
+<div class="spacer"></div>
+<div id="icosubpanel2trans" style="width: 48px; height: 48px; margin: auto; margin-top: 20px; display: none;"><img src="transacting.png" style="width: 48px; height: 48px;"></div>
+</div>
 <div id="icosubpanel3" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Endbonus (after blocks):</div>
 <input type="text" id="icoendbonus" class="settingsfield" style="  width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="1000">
 <button id="" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setEndBonus()">SET END BONUS</button>
-<div class="spacer"></div></div>
+<div class="spacer"></div>
+<div id="icosubpanel3trans" style="width: 48px; height: 48px; margin: auto; margin-top: 20px; display: none;"><img src="transacting.png" style="width: 48px; height: 48px;"></div>
+</div>
 <div id="icosubpanel4" class="icosubpan">
 <div id="logolabel" class="tablabel" style="float: left; font-size: 14px; margin-left: 0px; margin-top: 15px;">Duration (blocks):</div>
 <input type="text" id="icoduration" class="settingsfield" style="  width: calc(100% - 4px); color: gray;margin-left: 0px;
 margin-right: 0px; margin-top: 5px; text-align: right;" value="10000">
 <button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="setEndAndStart()">SET AND START ICO NOW</button>
-<div class="spacer"></div></div>
+<div class="spacer"></div>
+<div id="icosubpanel4trans" style="width: 48px; height: 48px; margin: auto; margin-top: 20px; display: none;"><img src="transacting.png" style="width: 48px; height: 48px;"></div>
+</div>
 <button id="bactToSettings" class="mainbutton" style="width: 100%; margin: 0; border: 0; padding: 10px 0 10px 0;" onclick="backtosettings()">CANCEL</button>
 <div id="icosubpanel5" class="icosubpan">
 <button id="setdisclaimerbutton" class="mainbutton" style="width: 100%; margin: 0; border: 0; height: 36px;" onclick="endIco()">END ICO</button>
-</div></div>
+</div>
+<div id="icosubpanel5trans" style="width: 48px; height: 48px; margin: auto; margin-top: 20px; display: none;"><img src="transacting.png" style="width: 48px; height: 48px;"></div>
+</div>
 
 <div id="ownerpanel" class="tabright" style="display: none; margin: 0px; font-family: arial">
 <div style="text-align: center; color: white; margin: 0px; width: 100%; background: black; padding: 10px 0 10px 0;">SET OWNER PANEL</div>
@@ -2629,13 +2722,13 @@ width: 100%;
 color: gray;
 margin-top: 20px;
 margin-bottom: 20px;
-font-family: arial;">COIN SETTINGS:</div>
+font-family: arial;">DSocial Settings:</div>
 <div id="coinsettingscontainer">
 
 </div>
 
 
-<button id="cancelsettings" class="check" style="width: calc(100% - 15px); margin: 30px 0px 0 5px;" onclick="backtosettings();"/>Cancel</button>
+<button id="cancelsettings" class="check" style="width: calc(100% - 15px); margin: 30px 0px 0 5px;" onclick="$('#coinsettings').hide()"/>Cancel</button>
 
 </div>
 
