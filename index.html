@@ -117,6 +117,7 @@ background: #fff;
 .tablabel{margin: 10px 10px 10px 20px; font-family: arial;}
 .tablabel3{margin: 10px 10px 10px 10px; font-family: arial;}
 .tablabel4{margin: 10px 10px 10px 10px; font-family: arial;}
+.tablabel5{margin: 11px 10px 10px 10px; font-family: arial; font-size: 14px;}
 .spacer{height: 0px; width: 100%; border-bottom: solid 1px #ddd;  clear: both;}
 
 
@@ -287,7 +288,7 @@ var selectedEdgeId="";
 var selectedWallet="";
 var selectedPerson="";
 
-
+var hyperbidselected="";
 var currenthyperbid="";
 var currenthyperask="";
 
@@ -1165,12 +1166,12 @@ contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,ind,function(e
 if(error)alert("Error: "+error);
 
 //console.log(addr+" "+0+" "+data);
-if(data[6]!=1)getOffers(addr,addr2,data[6]);
+if(data[6]>1)getOffers(addr,addr2,data[6]);
 
 
 t=1;
 if(data[3]==false)t=2;
-if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+ind+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div id="hyperbid'+ind+'" class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+ind+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+','+ind+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+','+ind+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+','+ind+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
 console.log(addr+" "+ind+" "+data);
 
 //for(var i=1;i<data[4];i++){
@@ -1186,12 +1187,13 @@ if(error)alert("Error: "+error);
 
 t=1;
 if(data[3]==false)t=2;
-if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+i+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div id="hyperbid'+ind+'" class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+i+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+','+ind+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+','+ind+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+','+ind+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
 console.log(addr+" "+i+" "+data);
 });
 }
 
-function setDisplayBuy(t,x,y){
+function setDisplayBuy(t,x,y,ind){
+hyperbidselected=ind;
 hypermarkettabbidbuy();
 $("#hypersellamount").val(x);
 $("#hyperselltotal").val(y);
@@ -1215,7 +1217,8 @@ $("#hyperselltotal").prop('disabled', false);
 
 }
 
-function setDisplaySellAmount(x){
+function setDisplaySellAmount(x,ind){
+hyperbidselected=ind;
 hypermarkettabbidsell();
 $("#hypersellamount").val(x);
 $("#hyperselltotal").val($("#hyperprice").val()*x);
@@ -1223,7 +1226,8 @@ $("#hypersellamount").prop('disabled', false);
 $("#hyperselltotal").prop('disabled', false);
 }
 
-function setDisplaySellPrice(x){
+function setDisplaySellPrice(x,ind){
+hyperbidselected=ind;
 hypermarkettabbidsell();
 $("#hyperprice").val(x);
 $("#hyperselltotal").val($("#hypersellamount").val()*x);
@@ -1616,9 +1620,11 @@ console.log("Partnership Request: from "+from+" to "+to+" - "+selectedWallet);
 connect('Flood_Standard_Ethereum_Coin',from);console.log("CONNECT: "+from);
 contracts['Flood_Standard_Ethereum_Coin'].contract.manager(111,to,"",0,true,{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
 if(error)alert("Error: "+error);
+$("#sendpartnershiptrans").show();
 console.log("Partnership Request: from "+from+" to "+to+" - "+transactionHash);
 alert("Partnership Request Transaction Sent");
-//checkTransaction(data,"setPartner",1);
+checkTransaction("#sendpartnershiptrans",transactionHash,"setPartner",699999);
+
 });
 }
 
@@ -1802,7 +1808,7 @@ function checkTransaction(item,hash,type,gasSent){
     var t=1;
     var obj;
     web3.eth.getTransactionReceipt(hash,function(error, obj) {
-if(error)alert("Error: "+error);
+if(error){console.log(error);}else{
 
     if(obj!=null)console.log(obj["blockHash"]);
     if(obj!=null) console.log(JSON.stringify(obj, null, 4));
@@ -1820,7 +1826,8 @@ if(error)alert("Error: "+error);
 
         if(obj["gasUsed"]==gasSent){
         //errore
- 
+ console.log("TRANSACTION PROBLEM");
+$(item).hide();
            $("#msgclose").show();
            //setMsg("red","some problem occured: <a href='http://testnet.etherscan.io/tx/"+hash+"' target='_blank'>"+hash+"</a>","stop");
 
@@ -1834,6 +1841,8 @@ if(error)alert("Error: "+error);
     }
 if(t>=120)t=0;
 }else{setTimeout(function() {checkTransaction(item,hash,type,gasSent);}, 4000);}
+
+}
 });
 
 //}
@@ -1850,7 +1859,11 @@ if(type=="endIco"){$("#icosubpanel5").hide();$("#icosteplabel").text("ICO is Ove
 }
 
     </script>
-<script>$("#qtipbutton").on( "click",function(e){console.log("!");});
+<script>
+
+
+
+$("#qtipbutton").on( "click",function(e){console.log("!");});
 
 $(document).on("click", ".gitter-chat-embed-action-bar-item gitter-chat-embed-action-bar-item-collapse-chat", function(){$(".gitter-open-chat-button").hide();});
 
@@ -1942,10 +1955,12 @@ $("#hypermarkettabask-pricefield").hide();
 
 function hyperbidSetSellOffer(){
 connect("Flood_Standard_Ethereum_Coin",currenthyperbid);console.log("CONNECT: "+currenthyperbid);
-console.log($("#hypersellamount").val()+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000));
-contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer(currenthyperask,$("#hypersellamount").val()*1000000000000000000,($("#hyperprice").val()*1000000000),true,1,{from:selectedWallet, gas: 300000},function(err,data){
+console.log(($("#hypersellamount").val()*1000000000000000000)+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000));
+contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer(currenthyperask,$("#hypersellamount").val()*1000000000000000000,($("#hyperprice").val()*1000000000),true,1,{from:selectedWallet, gas: 300000},function(err,transactionHash){
+$("#hyperbidtranssell").show();
 if(err)console.log("Error: "+err);
-console.log(data);
+console.log(transactionHash);
+checkTransaction("#hyperbidtranssell",transactionHash,"hyperbidSetSellOffer",300000);
 });
 }
 
@@ -1963,11 +1978,13 @@ console.log(data);
 function hyperbidSetBuyOffer(){
 
 
-connect("Flood_Standard_Ethereum_Coin","0x596034D9E5Cc3F9347f0B478302921b6B4381c96");console.log("CONNECT: "+"0x596034D9E5Cc3F9347f0B478302921b6B4381c96");
-console.log($("#hypersellamount").val()+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000)+" "+web3.toWei(parseFloat($("#hyperselltotal").val()), "ether"));
-contracts["Flood_Standard_Ethereum_Coin"].contract.swap("0x02F09C32773cFEE4aa77e3A46176F664bC863eaB",9,2,"0x1c4b9e1611972cb45e572831c212bc43b7004793",{from:selectedWallet, gas: 300000},function(err,data){
+connect("Flood_Standard_Ethereum_Coin",currenthyperask);console.log("CONNECT: "+currenthyperask);
+console.log($("#hypersellamount").val()+" "+hyperbidselected+" "+selectedWallet+" "+$("#hyperbid"+hyperbidselected).attr("owner")+" "+web3.toWei(parseFloat($("#hyperselltotal").val()), "ether"));
+contracts["Flood_Standard_Ethereum_Coin"].contract.swap(currenthyperbid,$("#hypersellamount").val(),hyperbidselected,$("#hyperbid"+hyperbidselected).attr("owner"),{from:selectedWallet, gas: 300000},function(err,transactionHash){
+$("#hyperbidtransbuy").show();
 if(err)console.log("Error: "+err);
-console.log(data);
+console.log(transactionHash);
+checkTransaction("#hyperbidtransbuy",transactionHash,"hyperbidSetBuyOffer",300000);
 });
 
 }
@@ -1995,7 +2012,24 @@ console.log(data);
 
 function openTest(){
 $(".tableft").hide();
-showTradePlatform("0x1c4b9e1611972cb45e572831c212bc43b7004793-0x1c4b9e1611972cb45e572831c212bc43b7004793");
+var a=""; var b="";
+contracts["Pretorian"].contract.coins_list(totCoins,function(err,data){
+if(err)console.log("Error: "+err);
+a=data;
+contracts["Pretorian"].contract.coins_list(totCoins-1,function(err,data){
+if(err)console.log("Error: "+err);
+b=data;
+localPartnerships=$.cookie('localPartnerships');
+localPartnerships.push(a+"-"+b);
+$.cookie('localPartnerships',localPartnerships);
+showTradePlatform(a+"-"+b);
+console.log("TRADING: "+a+"-"+b);
+});
+});
+
+
+
+
 
 }
 </script>
@@ -2015,18 +2049,18 @@ showTradePlatform("0x1c4b9e1611972cb45e572831c212bc43b7004793-0x1c4b9e1611972cb4
 <div id="titlelabel" class="tablabel2" style="text-align: center; width: 100%; height: 250px; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial;"><img src="etherscape-logo.png" style=""></div>
 <div style="height: 38px; width: 100%; background: black; border-top:solid 1px #777">
 <div id="totcoinlabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/coinwhite.png); background-size: 16px 16px; width: 16px; height: 16px;margin-right: 5px;"></div>
-<div id="totcoin" class="tablabel4" style="float: left; color: white;  margin-left: 0px;">?</div>
+<div id="totcoin" class="tablabel5" style="float: left; color: white;  margin-left: 0px;">?</div>
 <div class="" style="float: left;  border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showhypermarketcap()">
 <div id="tothypercaplabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/trade-iconwhite.png); background-size: 16px 16px; width: 16px; height: 16px; margin-bottom: 0px; margin-right: 5px;"></div>
-<div id="tothypercap" class="tablabel4" style="float: right;margin-left: 0px; margin-bottom: 0px; color: white;">1.3M</div>
+<div id="tothypercap" class="tablabel5" style="float: right;margin-left: 0px; margin-bottom: 0px; color: white;">1.3M</div>
 </div>
 <div class="" style=" border-top: solid 0px #ddd; cursor: pointer; border: 0px; float: right; height: 36px;" onclick="openIcoList()">
 <div id="toticolabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/icoswhite.png); background-size: 16px 16px; width: 16px; height: 16px; margin-bottom: 0px;margin-right: 5px;"></div>
-<div id="totico" class="tablabel4" style="float: right; margin-left: 0px; margin-bottom: 0px; color: white;">?</div>
+<div id="totico" class="tablabel5" style="float: right; margin-left: 0px; margin-bottom: 0px; color: white;">?</div>
 </div>
 <div class="" style="float: right; border-top: solid 1px #ddd; cursor: pointer; border: 0px;" onclick="showMarkets()">
 <div id="tothypermarketslabel" class="tablabel3" style="float: left; background-image:url(http://etherscape.io/partnershipswhite.png); background-size: 16px 16px; width: 16px; height: 16px; margin-bottom: 0px;margin-right: 5px;"></div>
-<div id="tothypermarkets" class="tablabel4" style="float: right;margin-left: 0px; margin-bottom: 0px; color: white;">?</div>
+<div id="tothypermarkets" class="tablabel5" style="float: right;margin-left: 0px; margin-bottom: 0px; color: white;">?</div>
 </div>
 </div>
 <button id="showfavoritesbutton" class="mainbutton" style="width: 100%; padding: 11px 0 11px 0; font-size: 14px; color: #444; cursor: pointer; border: 0px; " onclick="showLocals()">LOAD LOCALS</button>
@@ -2134,7 +2168,10 @@ CONTROL PANEL <img id="avatarreal" src="etherrealhexa.png" style="width: 18px; h
 <div class="spacer"></div>
 <div id="offerpartnershipscontainer"></div>
 <div class="spacer"></div>
-<div style=" color: black; padding: 15px 0 15px 0px;  background: #ddd; width: 100%;"><div style="margin-left: 20px;">To: this coin</div></div>
+<div style=" color: black; padding: 15px 0 15px 0px;  background: #ddd; width: 100%; height: 20px;">
+<div style="margin-left: 20px;float: left;">To: this coin</div>
+<div style="float: right;width: 18px; height: 18px; margin-right: 20px;"><img id="sendpartnershiptrans" src="transacting.png" style="display: none; width: 18px; height: 18px;"></div>
+</div>
 <div class="spacer"></div>
 <button id="offerpartnershippanelcancel" class="mainbutton" style="width: 100%; border: 0px; border-bottom: solid 1px #ddd; height: 40px;" onclick="closePartnershipPanel()">CANCEL</button>
 
@@ -2242,10 +2279,11 @@ margin-right: 10px;margin-top: 5px; text-align: right; margin-bottom: 10px;" val
 <div id="hyperbidchoosetype" style="float: right; margin-right: 45px; margin-bottom: 15px; font-family: arial; font-size: 14px;"><div style="float: left;"><input type="radio" name="hyperbidselltype" value="fixed"> Fixed</div>
 <div style="float: left; margin-left: 10px;"><input type="radio" name="hyperbidselltype" value="flexy"> Flexy</div></div>
 <div class="spacer" style=" margin-top: 10px;"></div>
-<button id="hyperbidsetselloffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidSetSellOffer()"/>SET SELL OFFER</button>
-<button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;display: none;" onclick="hyperbidSetBuyOffer()"/>BUY</button>
+<button id="hyperbidsetselloffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidSetSellOffer()"/><div style="float: left; width: 18px; height: 18px;"></div>SET SELL OFFER<div style="float: right;width: 18px; height: 18px;"><img id="hyperbidtranssell" src="transacting.png" style="display: none; width: 18px; height: 18px;"></div></button>
+<button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;display: none;" onclick="hyperbidSetBuyOffer()"/><div style="float: left; width: 18px; height: 18px;"></div>BUY<div style="float: right;width: 18px; height: 18px;"><img id="hyperbidtransbuy" src="transacting.png" style="display: none; width: 18px; height: 18px;"></div></button>
 <button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidDeleteOffer()"/>DELETE</button>
 <button id="hyperbidsetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperbidMergeOffers()"/>MERGE</button>
+
 </div>
 
 
@@ -2865,7 +2903,7 @@ ownedCoinsList.push(data);console.log("3ownedCoinsList "+ownedCoinsList);
 $.cookie('myCoinsList',ownedCoinsList);
 tempcc++;
 
-$("#offerpartnershipscontainer").append("<div id='offerpartnershipitem"+data+"' class='partneritem' style='width: 100%; margin: 0;'><div class='offerpartnershipnow' style='float: left; margin:10px 10px 6px 20px;' value='"+data+"'><img class='offerpartnershipnow' id='offerpartlogo"+tempcc+"' src='' style='width: 24px; height: 24px;cursor: pointer; ' value='"+data+"'></div><div class='offerpartnershipnow' id='offerpartname"+tempcc+"' style='cursor: pointer; float: left; margin:14px 0 0 0;' value='"+data+"'></div><div style='clear: both'></div></div>");
+$("#offerpartnershipscontainer").append("<div id='offerpartnershipitem"+data+"' class='partneritem offerpartnershipnow' style='width: 100%; margin: 0;' value='"+data+"'><div class='' style='float: left; margin:10px 10px 6px 20px;' value='"+data+"'><img class='' id='offerpartlogo"+tempcc+"' src='' style='width: 24px; height: 24px;cursor: pointer; ' value='"+data+"'></div><div class='' id='offerpartname"+tempcc+"' style='cursor: pointer; float: left; margin:14px 0 0 0;' value='"+data+"'></div><div style='clear: both'></div></div>");
 getImage($("#offerpartlogo"+tempcc),data);
 getName($("#offerpartname"+tempcc),data);
 
@@ -2923,7 +2961,7 @@ contracts["Dsocial"].contract.readInfo(addr,5,function(err,datz){
 if(err)console.log("Error: "+err);
 temps='url('+datz[0]+')';
 tempz=datz[0];
-if(datz[0]==""){temps="url(http://flood.monkeyscage.org/coin.png)";tempz="http://flood.monkeyscage.org/coin.png";}
+if(datz[0]==""){temps="url(coin.png)";tempz="coin.png";}
 cy.$("#"+addr).css('background-image' , temps);
 cy.$("#"+addr).attr("value" , tempz);
 //social[0]=tempz;
@@ -2972,7 +3010,7 @@ if(err)console.log("Error: "+err);
 
 temps='url('+datz[0]+')';
 tempz=datz[0];
-if(datz[0]==""){temps="url(http://flood.monkeyscage.org/coin.png)";tempz="http://flood.monkeyscage.org/coin.png";}
+if(datz[0]==""){temps="url(coin.png)";tempz="coin.png";}
 cy.$("#"+addr).css('background-image' , temps);
 cy.$("#"+addr).attr("value" , tempz);
 $("#coinlogo").attr("src" , tempz);
@@ -3051,7 +3089,7 @@ if(err)console.log("Error: "+err);
 console.log("ENABLED: "+data);
 if(data=="1"){$("#ico").html("Waiting");$("#cost").html("-- ETH");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
 if(data=="2"){$("#ico").html("Waiting");
-contracts["Flood_Standard_Ethereum_Coin"].contract.cost(function(err,data2){$("#cost").html(data2+" ETH");});
+contracts["Flood_Standard_Ethereum_Coin"].contract.cost(function(err,data2){$("#cost").html((data2/1000000000000000000)+" ETH");});
 $("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
 if(data=="3"){$("#ico").html("Waiting");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
 if(data=="4"){$("#ico").html("Waiting");$("#icostatus").html("WAITING");$("#icostatus").css("color" , "orange");}
@@ -3187,7 +3225,7 @@ $.cookie('favorite',JSON.stringify([]));
       socialLayer={};
       //var singlecoin=["coinAddress","coinName","symbol","supply","mining","type","ico","volume","cost","owner"];
       //var social=["logo","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
-
+if(0==1){
       zapcoin=["0xf2ce3942251a985268342ab6fac25edb6339e428","ZAPcoin","ZAP","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];    
       floodcoin=["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784","FLOODcoin","FLOOD","1000","1","1","1","0","1","0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"];
       bridgecoin=["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05","BRIDGEcoin","BRDG","2000","2","1","1","0","1","0x6598583177F3a2F8bcd72384F00D76E6D052EC21"];
@@ -3199,6 +3237,7 @@ $.cookie('favorite',JSON.stringify([]));
       socialLayer["xf2ce3942251a985268342ab6fac25edb6339e428"]=["coin.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
       socialLayer["0xef7f8121782a18d74ae2b6c2144b2ad0143ef784"]=floodsocial;
       socialLayer["0xf2ec6ee596cf831705a3ffd2388cbfc73f948e05"]=bridgesocial;
+}
      // $.cookie('hyperLayer',JSON.stringify(hyperLayer));
  $.cookie('hyperLayer',hyperLayer);
 
