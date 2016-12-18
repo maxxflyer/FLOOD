@@ -13,7 +13,7 @@
 <script src="https://platform.twitter.com/widgets.js"></script>
 <script src="http://arkdao.com/blockies-master/blockies.js"></script>
 <script src="twitter-fetcher.js"></script>
-<script type="text/javascript" src="deploymentpan.js"></script>
+
 <script type="text/javascript" src="http://arkdao.com/web3.js"></script>
 
 <script src="https://cdn.rawgit.com/cytoscape/cytoscape.js-spread/1.0.9/cytoscape-spread.js"></script>
@@ -1171,7 +1171,7 @@ if(data[6]>1)getOffers(addr,addr2,data[6]);
 
 t=1;
 if(data[3]==false)t=2;
-if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div id="hyperbid'+ind+'" class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+ind+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+','+ind+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+','+ind+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+','+ind+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div id="hyperbid'+ind+'" class="hyperoffer" owner="'+data[0]+'" amount="'+(data[1]/1000000000000000000)+'" price="'+(data[2]/1000000000)+'" index="'+ind+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+(data[1]/1000000000000000000)+','+ind+')">'+(data[1]/1000000000000000000)+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(data[2]/1000000000)+','+ind+')">'+(data[2]/1000000000)+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+(data[1]/1000000000000000000)+','+((data[1]*(data[2]/1000000000))/1000000000000000000)+','+ind+')">'+((data[1]*(data[2]/1000000000))/1000000000000000000)+'</div></div>');
 console.log(addr+" "+ind+" "+data);
 
 //for(var i=1;i<data[4];i++){
@@ -1187,7 +1187,7 @@ if(error)alert("Error: "+error);
 
 t=1;
 if(data[3]==false)t=2;
-if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div id="hyperbid'+ind+'" class="hyperoffer" owner="'+data[0]+'" amount="'+data[1]+'" index="'+i+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+data[1]+','+ind+')">'+data[1]+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(1000000000/data[2])+','+ind+')">'+(1000000000/data[2])+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]+','+(data[1]*(1000000000/data[2]))+','+ind+')">'+(data[1]*(1000000000/data[2]))+'</div></div>');
+if(parseInt(data[1])!=0)$("#hypermarkettabbidcontainer").append('<div id="hyperbid'+ind+'" class="hyperoffer" owner="'+data[0]+'" amount="'+(data[1]/1000000000000000000)+'" price="'+(data[2]/1000000000)+'" index="'+i+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="setDisplaySellAmount('+(data[1]/1000000000000000000)+','+ind+')">'+(data[1]/1000000000000000000)+'</div><div class="suboffer" onclick="setDisplaySellPrice('+(data[2]/1000000000)+','+ind+')">'+(data[2]/1000000000)+'</div><div class="suboffer'+t+'" onclick="setDisplayBuy('+t+','+data[1]/1000000000000000000+','+((data[1]*(data[2]/1000000000))/1000000000000000000)+','+ind+')">'+((data[1]*(data[2]/1000000000))/1000000000000000000)+'</div></div>');
 console.log(addr+" "+i+" "+data);
 });
 }
@@ -1856,6 +1856,7 @@ if(type=="setBonus"){$("#icosubpanel2").hide();$("#icosubpanel3").show();$("#ico
 if(type=="setEndBonus"){$("#icosubpanel3").hide();$("#icosubpanel4").show();$("#icosteplabel").text("Step 4 of 5");}
 if(type=="setEndAndStart"){$("#icosubpanel4").hide();$("#icosubpanel5").show();$("#icosteplabel").text("Step 5 of 5");}
 if(type=="endIco"){$("#icosubpanel5").hide();$("#icosteplabel").text("ICO is Over!");}
+if(type=="hyperbidSetSellOffer"){$("#hypermarkettabbidcontainer").html("");getOffers(currenthyperbid,currenthyperask,0);}
 }
 
     </script>
@@ -1955,25 +1956,32 @@ $("#hypermarkettabask-pricefield").hide();
 
 function hyperbidSetSellOffer(){
 connect("Flood_Standard_Ethereum_Coin",currenthyperbid);console.log("CONNECT: "+currenthyperbid);
-console.log(($("#hypersellamount").val()*1000000000000000000)+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000));
-contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer(currenthyperask,$("#hypersellamount").val()*1000000000000000000,($("#hyperprice").val()*1000000000),true,1,{from:selectedWallet, gas: 300000},function(err,transactionHash){
+console.log(($("#hypersellamount").val()*1000000000000000000)+" "+selectedWallet+" "+($("#hyperprice").val()*1000000000)+" "+currenthyperask);
+contracts["Flood_Standard_Ethereum_Coin"].contract.createOffer(currenthyperask,$("#hypersellamount").val()*1000000000000000000,($("#hyperprice").val()*1000000000),true,getMinHyperbid(($("#hyperprice").val())),{from:selectedWallet, gas: 600000},function(err,transactionHash){
 $("#hyperbidtranssell").show();
-if(err)console.log("Error: "+err);
+if(err){console.log("Error1: "+err);$("#hyperbidtranssell").hide();}else{
 console.log(transactionHash);
-checkTransaction("#hyperbidtranssell",transactionHash,"hyperbidSetSellOffer",300000);
+checkTransaction("#hyperbidtranssell",transactionHash,"hyperbidSetSellOffer",600000);
+}
 });
 }
 
-function hyperbidSet(){
-
-
-connect("Flood_Standard_Ethereum_Coin","0x02F09C32773cFEE4aa77e3A46176F664bC863eaB");console.log("CONNECT: "+"0x02F09C32773cFEE4aa77e3A46176F664bC863eaB");
-contracts["Flood_Standard_Ethereum_Coin"].contract.set("0x596034D9E5Cc3F9347f0B478302921b6B4381c96",{from:selectedWallet, gas: 300000},function(err,data){
-if(err)console.log("Error: "+err);
-console.log(data);
+function getMinHyperbid(price){
+var counter=0;
+var tempindex=0;
+if($('#hypermarkettabbidcontainer').children().length==0){tempindex=1;}else{
+$('#hypermarkettabbidcontainer').children().each(function () {
+    counter=0;
+alert($(this).attr("price"));
+    if(parseFloat(price)==parseFloat($(this).attr("price"))){alert($(this).attr("index")+" "+$(this).attr("price"));counter++;tempindex=$(this).attr("index");}
+    if(parseFloat(price)>parseFloat($(this).attr("price"))){alert($(this).attr("next")+" "+$(this).attr("price"));counter++;tempindex=$(this).attr("next");}
 });
-
+if(counter>0)tempindex=1;
+alert("end "+tempindex);
 }
+return tempindex;
+}
+
 
 function hyperbidSetBuyOffer(){
 
@@ -2009,21 +2017,32 @@ console.log(data);
 
 }
 
+function hyperbidSet(){
 
+
+connect("Flood_Standard_Ethereum_Coin",a1);console.log("CONNECT: "+a1);
+contracts["Flood_Standard_Ethereum_Coin"].contract.set(b1,{from:selectedWallet, gas: 600000},function(err,data){
+if(err)console.log("Error: "+err);
+console.log(data);
+});
+
+}
+
+var a1=""; var b1="";
 function openTest(){
 $(".tableft").hide();
-var a=""; var b="";
+
 contracts["Pretorian"].contract.coins_list(totCoins,function(err,data){
 if(err)console.log("Error: "+err);
-a=data;
+a1=data;
 contracts["Pretorian"].contract.coins_list(totCoins-1,function(err,data){
 if(err)console.log("Error: "+err);
-b=data;
+b1=data;
 localPartnerships=$.cookie('localPartnerships');
-localPartnerships.push(a+"-"+b);
+localPartnerships.push(a1+"-"+b1);
 $.cookie('localPartnerships',localPartnerships);
-showTradePlatform(a+"-"+b);
-console.log("TRADING: "+a+"-"+b);
+showTradePlatform(a1+"-"+b1);
+console.log("TRADING: "+a1+"-"+b1);
 });
 });
 
@@ -2782,7 +2801,10 @@ $.cookie.json = true;
  
 
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function() {});
+
+
+function checkWeb3(){
 alert("For Ropsten Testnet - please use Mist or Metamask");
   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined' && typeof Web3 !== 'undefined') {
@@ -2811,7 +2833,7 @@ alert("Please Enable your Wallet");
 }
  
 
-});
+}
 
 function startApp(){
 
@@ -3267,14 +3289,18 @@ $.cookie('socialLayer',socialLayer);
 //floodsocial=["logo.png","web","disclaimer","twitter1","twitter2","twitter3","facebook","email"];
 
 $(document).ready(function(){
+$.getScript('deploymentpan.js',function(){
+
+
+checkWeb3();
+
+//sleep(2000);
 checkAllCookies();
 startApp();
 countCoins();
 //showAll();
 countOwnedCoins();
-console.log("!!");
 
-console.log("!2!");
 //addNode();
 //storeToCookie();
 //cleanfavorite();
@@ -3289,6 +3315,12 @@ $("input[name='selectWallet']").change(function(){
 selectedWallet=web3.eth.accounts[$(this).val()];alert("selected="+selectedWallet);
 createIcon($("#hyperhyperwallet-walletico4"),selectedWallet);
 });
+});
+
+
+
+
+
 cy.on('mouseover', 'node', function (evt) {                            
                         $('html,body').css('cursor', 'pointer');
                     } );
