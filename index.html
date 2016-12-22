@@ -289,6 +289,7 @@ var selectedEdgeId="";
 var selectedWallet="";
 var selectedPerson="";
 
+var hyperselected=[];
 var hyperbidselected="";
 var currenthyperbid="";
 var currenthyperask="";
@@ -1137,10 +1138,11 @@ createIcon("#DSocialwallet",addr);
 $("#coinsettingscontainer").html("");
 for(var i=0;i<10;i++){
 contracts['Dsocial'].contract.readInfo(addr,i,function(error,data1) {
-if(error)alert("Error: "+error);
-
+if(error){alert("Error opensettings readInfo: "+error);}else{
+console.log(data1);
 tempR=Math.floor((Math.random() * 10000) + 1);
-$("#coinsettingscontainer").append('<div class="settingsminitab"><div id="logolabel" class="tablabel" style="float: left; margin: 5px 0 0 0px;">'+data1[1]+'</div><div style="clear: both"></div><input type="text" id="setting'+tempR+'" class="settingsfield" style="width: 350px; color: gray;margin-left: 0px; margin-right: 0px; padding: 5px; font-size:16px;" value="'+data1[0]+'"><br><div id="trans'+tempR+'" style="float: left; display: none;"><img src="transacting.png" style="width: 24px; height: 24px; margin-top: margin-top: 8px;"></div><button id="'+tempR+'" class="updatesettings" name="'+data1[1]+'" style="cursor: pointer; width: 100px; margin: 10px 0px 0 0px; float: right; padding: 5px; font-size:14px;border-radius: 3px; border: 0px;">Update</button>');
+$("#coinsettingscontainer").append('<div class="settingsminitab"><div id="logolabel" class="tablabel" style="float: left; margin: 5px 0 5px 0px;">'+data1[1]+'</div><div style="clear: both"></div><input type="text" id="setting'+tempR+'" class="settingsfield" style="width: 350px; color: gray;margin-left: 0px; margin-right: 0px; padding: 5px; font-size:16px;" value="'+data1[0]+'"><br><div id="trans'+tempR+'" style="float: left; display: none;"><img src="transacting.png" style="width: 24px; height: 24px; margin-top: 8px;"></div><button id="'+tempR+'" class="updatesettings" name="'+data1[1]+'" style="cursor: pointer; width: 100px; margin: 10px 0px 0 0px; float: right; padding: 5px; font-size:14px;border-radius: 3px; border: 0px;">Update</button>');
+}
 tempcount++;
 });
 }
@@ -1156,19 +1158,22 @@ function hex2a(hexx) {
 
 function showTradePlatform(pair){
 
-$("#hypermarkettabbidcontainer").html("");
+
 
 
 if(isPartnership(pair)){
 $("#hypermarkettabpartnershipalert").hide();
-$("#hypermarkettabask").show();
+//$("#hypermarkettabask").show();
 }else{
 $("#hypermarkettabask").hide();
 $("#hypermarkettabpartnershipalert").show();
 }
 
-$("#hypermarkettabbid").show();
+
 tempss=pair;
+
+$("#hypermarkettabbidcontainer").html("");
+$("#hypermarkettabbid").show();
 temps1=tempss.substring(0,tempss.indexOf("-"));
 currenthyperbid=temps1;
 displayHyperName($("#hyperbidlabel"),temps1);
@@ -1176,8 +1181,10 @@ tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel"),temps1,2);
 setTradeBalance($("#hypercoinbalancelabelbuy2"),temps1,2)
 $("#ethbalancelabel2").text(tempOtherSymbol);
 $("#ethtotallabel2").text(tempOtherSymbol);
+
 temps2=tempss.substring(tempss.indexOf("-")+1);
 currenthyperask=temps2;
+
 //getOffers(temps1,temps2,0);
 //getOffers(temps1,temps2,1);
 //getOffers(temps1,temps2,2);
@@ -1198,6 +1205,25 @@ setTradeBalance($("#hypercoinbalancelabelbuy"),temps2,1);
 //displayHyperAmountSymbol($("#hypercoinbalancelabel2"),temps2);
 createIcon($("#hyperhyperwallet-walletico41"),selectedWallet);
 createIcon($("#hyperhyperwallet-walletico42"),selectedWallet);
+
+
+$(".tabright").hide();
+createMarketTab("#sidebar-right",0);
+initMarketPanel(0,temps2,temps1);
+}
+
+function initMarketPanel(u,temps1,temps2){
+
+$("#hypermarkettabcontainer"+u).html("");
+$("#hypermarkettab"+u).show();
+
+displayHyperName($("#hyperlabel"+u),temps1);
+tempOtherSymbol=setTradeBalance($("#hypercoinbalancelabel"+u),temps1,2);
+//setTradeBalance($("#hypercoinbalancelabelbuy2"),temps1,2)
+//$("#ethbalancelabel2").text(tempOtherSymbol);
+//$("#ethtotallabel2").text(tempOtherSymbol);
+
+getHyperOffers(temps1,temps2,0,u);
 }
 
 function getOffers(addr,addr2,ind){
@@ -1217,6 +1243,23 @@ console.log(addr+" "+ind+" "+data);
 //for(var i=1;i<data[4];i++){
 //getOffer(addr,addr2,i);
 //}
+});
+}
+
+function getHyperOffers(addr,addr2,ind,u){
+connect('Flood_Standard_Ethereum_Coin',addr);console.log("CONNECT: "+addr);
+contracts['Flood_Standard_Ethereum_Coin'].contract.getOffer(addr2,ind,function(error, data) {
+if(error)alert("Error: "+error);
+
+//console.log(addr+" "+0+" "+data);
+if(data[6]>1)getHyperOffers(addr,addr2,data[6],u);
+
+
+t=1;
+if(""+data[3]=="false")t=2;
+if(parseInt(data[1])!=0)$("#hypermarkettabcontainer"+u).append('<div id="hyperbid'+ind+u+'" class="hyperoffer" owner="'+data[0]+'" amount="'+(data[1]/1000000000000000000)+'" price="'+(data[2]/1000000000)+'" index="'+ind+'" tipo="'+t+'" prev="'+data[5]+'" next="'+data[6]+'"><div class="suboffer" onclick="hypersetDisplaySellAmount('+(data[1]/1000000000000000000)+','+ind+','+u+')">'+(data[1]/1000000000000000000)+'</div><div class="suboffer" onclick="hypersetDisplaySellPrice('+(data[2]/1000000000)+','+ind+','+u+')">'+(data[2]/1000000000)+'</div><div class="suboffer'+t+'" onclick="hypersetDisplayBuy('+t+','+(data[1]/1000000000000000000)+','+((data[1]*(data[2]/1000000000))/1000000000000000000)+','+ind+','+u+')">'+((data[1]*(data[2]/1000000000))/1000000000000000000)+'</div></div>');
+console.log(addr+" "+ind+" "+u+" "+data);
+
 });
 }
 
@@ -1250,10 +1293,36 @@ $("#hypercoinbidmsg").text("Selected offer n."+ind);
 
 }
 
+function hypersetDisplayBuy(t,x,y,ind,u){
+hyperselected[u]=ind;
+hypermarkettabbuy(u);
+$("#hypersellamount"+u).val(x);
+$("#hyperselltotal"+u).val(y);
+if(t==1){
+
+$("#hypersellamount"+u).prop('disabled', true);
+$("#hyperselltotal"+u).prop('disabled', true);
+
+}else{
+$("#hypersellamount"+u).prop('disabled', false);
+$("#hyperselltotal"+u).prop('disabled', false);
+}
+$("#hypercoinbidmsg"+u).text("Selected offer n."+ind);
+
+}
+
 function setDisplaySell(){
 hypermarkettabbidsell();
 $("#hypersellamount").prop('disabled', false);
 $("#hyperselltotal").prop('disabled', false);
+
+}
+
+
+function hypersetDisplaySell(u){
+hypermarkettabsell(u);
+$("#hypersellamount"+u).prop('disabled', false);
+$("#hyperselltotal"+u).prop('disabled', false);
 
 }
 
@@ -1266,6 +1335,15 @@ $("#hypersellamount").prop('disabled', false);
 $("#hyperselltotal").prop('disabled', false);
 }
 
+function hypersetDisplaySellAmount(x,ind,u){
+hyperselected[u]=ind;
+hypermarkettabsell(u);
+$("#hypersellamount"+u).val(x);
+$("#hyperselltotal"+u).val($("#hyperprice"+u).val()*x);
+$("#hypersellamount"+u).prop('disabled', false);
+$("#hyperselltotal"+u).prop('disabled', false);
+}
+
 function setDisplaySellPrice(x,ind){
 hyperbidselected=ind;
 hypermarkettabbidsell();
@@ -1273,6 +1351,15 @@ $("#hyperprice").val(x);
 $("#hyperselltotal").val($("#hypersellamount").val()*x);
 $("#hypersellamount").prop('disabled', false);
 $("#hyperselltotal").prop('disabled', false);
+}
+
+function hypersetDisplaySellPrice(x,ind,u){
+hyperbidselected[u]=ind;
+hypermarkettabsell(u);
+$("#hyperprice"+u).val(x);
+$("#hyperselltotal"+u).val($("#hypersellamount"+u).val()*x);
+$("#hypersellamount"+u).prop('disabled', false);
+$("#hyperselltotal"+u).prop('disabled', false);
 }
 
 function backtosettings(){$('.tabright').hide();showcontrolpanel();
@@ -1920,18 +2007,18 @@ $(document).on("click",".openico",function(e){alert("!");console.log($("#"+e.tar
 
 $(document).on("click",".updatesettings",function(e){
 tempi=0;
-if($("#"+e.target.id).attr("name")=="WEB SITE"){tempi=0;}
-if($("#"+e.target.id).attr("name")=="Twitter"){tempi=1;}
-if($("#"+e.target.id).attr("name")=="Manager"){tempi=2;}
-if($("#"+e.target.id).attr("name")=="Email"){tempi=3;}
-if($("#"+e.target.id).attr("name")=="Logo 512*512"){tempi=4;}
-if($("#"+e.target.id).attr("name")=="Logo 256*256"){tempi=5;}
-if($("#"+e.target.id).attr("name")=="Logo 128*128"){tempi=6;}
-if($("#"+e.target.id).attr("name")=="Logo 64*64"){tempi=7;}
-if($("#"+e.target.id).attr("name")=="Logo 32*32"){tempi=8;}
-if($("#"+e.target.id).attr("name")=="Logo 16*16"){tempi=9;}
-tempi=5;
-contracts['Dsocial'].contract.addInfo(selectedId,selectedId,tempi,convertToAscii($("#setting"+$("#"+e.target.id).attr("id")).val()),{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
+if($("#"+e.target.id).attr("name")=="name"){tempi=0;}
+if($("#"+e.target.id).attr("name")=="address"){tempi=1;}
+if($("#"+e.target.id).attr("name")=="email"){tempi=2;}
+if($("#"+e.target.id).attr("name")=="disclaimer"){tempi=3;}
+if($("#"+e.target.id).attr("name")=="logo512*512"){tempi=4;}
+if($("#"+e.target.id).attr("name")=="logo256*256"){tempi=5;}
+if($("#"+e.target.id).attr("name")=="logo128*128"){tempi=6;}
+if($("#"+e.target.id).attr("name")=="logo64*64"){tempi=7;}
+if($("#"+e.target.id).attr("name")=="logo32*32"){tempi=8;}
+if($("#"+e.target.id).attr("name")=="logo16*16"){tempi=9;}
+
+contracts['Dsocial'].contract.addInfo(selectedId,selectedId,tempi,$("#setting"+$("#"+e.target.id).attr("id")).val(),{from:web3.eth.accounts[selectedWallet], gas: 699999},function(error, transactionHash) {
 if(error)alert("Error: "+error);
 console.log("Settings updated "+tempi+" "+$("#"+e.target.id).attr("name"));
 checkTransaction("#trans"+$("#"+e.target.id).attr("id"),transactionHash,"DSocial",699999);
@@ -1949,6 +2036,20 @@ function markettabbidbuy(){
 $("#markettabbidsell").css({"background" : "white" , "color" : "black"});
 $("#markettabbidbuy").css({"background" : "black" , "color" : "white"});
 $("#hypermarkettabbid-pricefield").hide();
+
+}
+
+function markettabsell(u){
+$("#markettabbuy"+u).css({"background" : "white" , "color" : "black"});
+$("#markettabsell"+u).css({"background" : "black" , "color" : "white"});
+$("#hypermarkettab-pricefield"+u).show();
+
+}
+
+function markettabbuy(u){
+$("#markettabsell"+u).css({"background" : "white" , "color" : "black"});
+$("#markettabbuy"+u).css({"background" : "black" , "color" : "white"});
+$("#hypermarkettab-pricefield"+u).hide();
 
 }
 
@@ -1979,6 +2080,20 @@ $("#hypersellamount").prop('disabled', false);
 $("#hyperselltotal").prop('disabled', false);
 }
 
+function hypermarkettabsell(u){
+$("#hypermarkettabbuy"+u).css({"background" : "white" , "color" : "black"});
+$("#hypermarkettabsell"+u).css({"background" : "black" , "color" : "white"});
+$("#hypermarkettab-pricefield"+u).show();
+$("#hypersetbuyoffer"+u).hide();
+$("#hypersetselloffer"+u).show();
+$("#hypercoinbalancelabel"+u).show();
+$("#hypercoinbalancelabelbuy"+u).hide();
+$("#hyperchoosetype"+u).show();
+$("#hypercoinmsg"+u).hide();
+$("#hypersellamount"+u).prop('disabled', false);
+$("#hyperselltotal"+u).prop('disabled', false);
+}
+
 function hypermarkettabbidbuy(){
 $("#hypermarkettabbidsell").css({"background" : "white" , "color" : "black"});
 $("#hypermarkettabbidbuy").css({"background" : "black" , "color" : "white"});
@@ -1990,6 +2105,20 @@ $("#hypercoinbalancelabelbuy").show();
 $("#hyperbidchoosetype").hide();
 $("#hypercoinbidmsg").show();
 //$("#hypercoinbidmsg").text("Select an offer to Buy");
+
+}
+
+function hypermarkettabbuy(u){
+$("#hypermarkettabsell"+u).css({"background" : "white" , "color" : "black"});
+$("#hypermarkettabbuy"+u).css({"background" : "black" , "color" : "white"});
+$("#hypermarkettab-pricefield"+u).hide();
+$("#hypersetbuyoffer"+u).show();
+$("#hypersetselloffer"+u).hide();
+$("#hypercoinbalancelabel"+u).hide();
+$("#hypercoinbalancelabelbuy"+u).show();
+$("#hyperchoosetype"+u).hide();
+$("#hypercoinmsg"+u).show();
+//$("#hypercoinbidmsg"+u).text("Select an offer to Buy");
 
 }
 
@@ -2205,6 +2334,11 @@ if(err){console.log("Error: "+err);}else{
 checkTransaction("#jointrans"+ind,transactionHash,"abandonCommunity",300000);
 }
 });
+}
+
+
+function createMarketTab(ob,u){
+$(ob).append('<div id="hypermarkettab'+u+'" class="tab tableft" style=""><div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="hyperlabel'+u+'" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">BLU</div></div><div class="spacer"></div><button id="hyperupdatesettings'+u+'" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;">'+'&#x25B2;'+'</button><div  id="hypermarkettabcontainer'+u+'" style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;"><div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div></div><button id="hyperupdatesettings'+u+'" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;">&#x25BC;</button><div id="hypermarkettabsell'+u+'" style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="hypermarkettabsell('+u+')">SELL</div><div id="hypermarkettabbuy'+u+'" style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="hypermarkettabbuy('+u+')">BUY</div><div class="spacer" style=""></div><div id="hypercoinbalancelabel'+u+'" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div><div id="hypercoinbalancelabelbuy'+u+'" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px; display: none;">30 BLU</div><div id="hyperhyperwallet-walletico42'+u+'" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div><div class="spacer" style="border:0;"></div><div id="hypercoinmsg'+u+'" style="display: none; margin-right: 45px; font-family: arial; font-size: 14px; margin-top: 10px; float: right; margin-bottom: 10px;">Select an offer to Buy</div><div class="spacer" style="border:0;"></div><div id="hypermarkettab-pricefield'+u+'"><div id="hyperlogolabel1'+u+'" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;width: 50px;">Price</div><div id="ethbalancelabel'+u+'" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div><input type="text" id="hyperprice'+u+'" class="settingsfield" style="float: left; width: calc(100% - 114px); color: gray;margin-left: 0px; margin-right: 0px; margin-top: 5px; text-align: right;" value="1"><div class="spacer" style="border:0px;"></div></div><div id="hyperlogolabel2'+u+'" class="tablabel" style="float: left; font-size: 14px;  margin-left: 10px; margin-right: 0; font-size: 12px;width: 50px;">Amount:</div><div id="hypercoinsymbollabel'+u+'" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ZAP</div><input type="text" id="hypersellamount'+u+'" class="settingsfield" style="float: left; width: calc(100% - 114px); color: gray;margin-left: 0px; margin-right: 0px; margin-top: 5px; text-align: right;" value="1"><div class="spacer" style="border:0px;"></div><div id="hyperlogolabel3'+u+'" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;width: 50px;">Total:</div><div id="ethtotallabel'+u+'" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div><input type="text" id="hyperselltotal'+u+'" class="settingsfield" style="float: left; width: calc(100% - 114px); color: gray;margin-left: 0px; margin-right: 0px;margin-top: 5px; text-align: right; margin-bottom: 10px;" value="1"><div id="hyperchoosetype'+u+'" style="float: right; margin-right: 45px; margin-bottom: 15px; font-family: arial; font-size: 14px;"><div style="float: left;"><input type="radio" name="hyperselltype'+u+'" value="1" checked> Fixed</div><div style="float: left; margin-left: 10px;"><input type="radio" name="hyperselltype'+u+'" value="0"> Flexy</div></div><div class="spacer" style=" margin-top: 10px;"></div><button id="hypersetselloffer'+u+'" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperSetSellOffer()"><div style="float: left;  width: 18px; height: 18px;"></div>SET SELL OFFER<div style="float: right;width: 18px; height: 18px;"><img id="hypertranssell'+u+'" src="transacting.png" style="display: none; width: 18px; height: 18px;"></div></button><button id="hypersetbuyoffer'+u+'" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;display: none;" onclick="hyperSetBuyOffer('+u+')"><div style="float: left; width: 18px; height: 18px;"></div>BUY<div style="float: right;width: 18px; height: 18px;"><img id="hypertransbuy'+u+'" src="transacting.png" style="display: none; width: 18px; height: 18px;"></div></button></div>');
 }
 </script>
 
@@ -2491,6 +2625,43 @@ margin-right: 0px;margin-top: 5px; text-align: right; margin-bottom: 10px;" valu
 
 <div id="sidebar-right" style="">
 <div id="socialpanel" style="width: 250px; height: 250px; border-bottom: solid 1px #ddd; height: 34px;"><img src="settings.png" style="cursor: pointer; width: 20px; height: 20px; margin: 7px 15px 0px 10px; float: left;" onclick="showSettings()"><img src="ethereconotify.png" style="display: none; cursor: pointer; width: 24px; height: 24px; margin: 5px 10px 0px 5px; float: left;" onclick="alert('Ether Eco Messenger')"><div id='etherecho_unread_icon' style="margin-right: 5px; margin-top: 7px; width:20px;height:20px; float: right;"></div><div id="openchat2" style="float: right; background-image: url(chat.png);  background-size: 24px 24px;cursor: pointer; width: 24px; height: 24px; margin: 5px 6px 0px 5px;"></div></div>
+
+<div id="hypermarkettab" class="tab tableft" style="display: none;">
+<div id="" class="tablabel2" style="float: left;text-align: center; color: gray; margin-top: 0px; margin-bottom: 0px; font-family: arial; color: white; background: black; width: 100%;"><div style=" background: black;float: left; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 10px;">Offer:</div><div id="hyperbidlabel" class="tablabel2" style=" background: black; color: white; padding-top: 20px; padding-bottom: 20px; font-family: arial;float: left;">BLU</div></div>
+<div class="spacer"></div>
+<button id="hyperupdatesettings" class="check" style="position: absolute; width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25B2;</button>
+<div  id="hypermarkettabcontainer" style="width: 250px; margin-left: 0px; border: solid 0px #ccc; height: 300px; margin-bottom: 0px; position: relative; top: 12px;">
+<div class="hyperoffer"><div class="suboffer">0.00001</div><div class="suboffer">0.00001</div><div class="suboffer1">0.00001</div></div>
+</div>
+<button id="hyperupdatesettings" class="check" style="width: 100%; margin: -4px 0 0 0;  height: 16px; font-size: 7px;"/>&#x25BC;</button>
+<div id="hypermarkettabsell" style="width: 50%; float: left; background: black; color: white; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="hypermarkettabsell()">SELL</div>
+<div id="hypermarkettabbuy" style="width: 50%; float: left; background: white; color: black; text-align: center; height: 24px; font-family: Arial; padding-top: 8px; font-size: 14px; cursor: pointer;" onclick="hypermarkettabbuy()">BUY</div>
+<div class="spacer" style=""></div>
+<div id="hypercoinbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px;">30 BLU</div>
+<div id="hypercoinbalancelabelbuy" class="tablabel" style="float: right; font-size: 14px; margin-right: 44px;margin-left: 0px; font-size: 12px; margin-top: 20px; display: none;">30 BLU</div>
+<div id="hyperhyperwallet-walletico42" class="walleticon16" style="float: left; margin: 20px 10px 0 10px;"></div><div style="clear : both;"></div>
+<div class="spacer" style="border:0;"></div>
+<div id="hypercoinmsg" style="display: none; margin-right: 45px; font-family: arial; font-size: 14px; margin-top: 10px; float: right; margin-bottom: 10px;">Select an offer to Buy</div><div class="spacer" style="border:0;"></div>
+<div id="hypermarkettab-pricefield"><div id="hyperlogolabel1" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;width: 50px;">Price:</div>
+<div id="ethbalancelabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
+<input type="text" id="hyperprice" class="settingsfield" style="float: left; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="1">
+<div class="spacer" style="border:0px;"></div></div>
+<div id="hyperlogolabel2" class="tablabel" style="float: left; font-size: 14px;  margin-left: 10px; margin-right: 0; font-size: 12px;width: 50px;">Amount:</div>
+<div id="hypercoinsymbollabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ZAP</div>
+<input type="text" id="hypersellamount" class="settingsfield" style="float: left; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 0px; margin-top: 5px; text-align: right;" value="1">
+<div class="spacer" style="border:0px;"></div>
+<div id="hyperlogolabel3" class="tablabel" style="float: left; font-size: 14px; margin-left: 10px; margin-right: 0; font-size: 12px;width: 50px;">Total:</div>
+<div id="ethtotallabel" class="tablabel" style="float: right; font-size: 14px; margin-right: 10px;margin-left: 0px; font-size: 12px;">ETH</div>
+<input type="text" id="hyperselltotal" class="settingsfield" style="float: left; width: calc(100% - 114px); color: gray;margin-left: 0px;
+margin-right: 0px;margin-top: 5px; text-align: right; margin-bottom: 10px;" value="1">
+<div id="hyperchoosetype" style="float: right; margin-right: 45px; margin-bottom: 15px; font-family: arial; font-size: 14px;"><div style="float: left;"><input type="radio" name="hyperselltype" value="1" checked> Fixed</div>
+<div style="float: left; margin-left: 10px;"><input type="radio" name="hyperselltype" value="0"> Flexy</div></div>
+<div class="spacer" style=" margin-top: 10px;"></div>
+<button id="hypersetselloffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;" onclick="hyperSetSellOffer()"/><div style="float: left; width: 18px; height: 18px;"></div>SET SELL OFFER<div style="float: right;width: 18px; height: 18px;"><img id="hypertranssell" src="transacting.png" style="display: none; width: 18px; height: 18px;"></div></button>
+<button id="hypersetbuyoffer" class="mainbutton" class="check" style="width: 100%; margin: 0; border: 0; float: right; height: 36px;display: none;" onclick="hyperSetBuyOffer()"/><div style="float: left; width: 18px; height: 18px;"></div>BUY<div style="float: right;width: 18px; height: 18px;"><img id="hypertransbuy" src="transacting.png" style="display: none; width: 18px; height: 18px;"></div></button>
+</div>
 
 
 <div id="cointab" class="tabright" style="display: none;">
@@ -2966,6 +3137,7 @@ margin-right: 20px;font-size: 24px; float: left;" value="1000"><div style="float
 
 <div id="coinsettings" class="tabright" style="padding: 0 20px 0 20px; position: absolute; display: none; width: calc(100% - 42px); height: 100%; background: #333; z-index: 1101;">
 <div id='DSocialwallet' class='walleticon30' style='margin-left: 10px; margin-top: 46px; margin-bottom: 10px; float: left; cursor: pointer;float: left;'></div>
+<div id="settingscoinName" style="margin-top: 46px; margin-left: 10px; font-size: 20px; color: white; font-family: arial; padding-top: 4px; padding-bottom: 6px; float: left;"></div>
 <div id="coinsettingslabel" class="tablabel2" style="margin-left: 20px;margin-top: 50px;height:  50px;color:  gray; font-family: arial; font-size: 20px;float: left;">DSocial Settings:</div>
 
 <div style="clear: both;"></div>
@@ -3238,6 +3410,7 @@ stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.name(function(err,data){
 if(err)console.log("Error: "+err);
 $("#coinName").text(data);
+$("#settingscoinName").text(data);
 
 singlecoin[1]=data;
 $("#hyperwalletmainlabel").text(singlecoin[1]+" HyperWallet");
@@ -3262,7 +3435,7 @@ stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.totalSupply(function(err,data){
 if(err)console.log("Error: "+err);
-$("#totalsupply").text(""+(data/1000000000000000000));
+$("#totalsupply").text(""+trimdecimals(""+(data/1000000000000000000)));
 singlecoin[3]=data;
 stepcounter--;if(stepcounter==0)endLoadCoin(addr);
 });
@@ -3323,6 +3496,7 @@ singlecoin=hyperLayer[addr];
 social=socialLayer[addr];
 createIcon("#hyperwallet-walletico6",singlecoin[9]);
 $("#coinName").text(singlecoin[1]);
+$("#settingscoinName").text(singlecoin[1]);
 
 $("#socialdisclaimer").text(social[2]);
 $("#ownerlink").attr("href" , "https://testnet.etherscan.io/address/"+singlecoin[9]);
@@ -3330,7 +3504,7 @@ $("#ownerlink2").attr("href" , "https://testnet.etherscan.io/address/"+addr);
 if(singlecoin[9]==selectedWallet){$("#avatarsettings").show();}else{$("#avatarsettings").hide();}
 $("#mainicolabel").text(singlecoin[1]+" ICO");
 $("#symbol").text(singlecoin[2]);
-$("#totalsupply").text(""+(singlecoin[3]/1000000000000000000));
+$("#totalsupply").text(""+trimdecimals(""+(singlecoin[3]/1000000000000000000)));
 $("#volume").text(parseFloat(singlecoin[7])/1000000000000000000);
 $("#hyperwalletmainlabel").text(singlecoin[1]);
 $("#coinlogo").attr("src" , social[0]);
@@ -3351,7 +3525,7 @@ $("#coinhyperwalletsymbol").attr("value" , data0);
 stepcounter++;
 contracts["Flood_Standard_Ethereum_Coin"].contract.balanceOf(selectedWallet,function(err,data){
 if(err){console.log("Error balance: "+err);}else{
-$("#balance").text(data/1000000000000000000);
+$("#balance").text(trimdecimals(""+data/1000000000000000000));
 $("#hypercoinbalancelabel").text(data/1000000000000000000+" "+data0);
 $("#hyperwalletcoinbalance").text(data/1000000000000000000+" "+data0);
 }
@@ -3377,6 +3551,12 @@ function coinExist(t){
 temp=false;
 if($.cookie('hyperLayer')[t]!=undefined)temp=true;
 return temp;
+}
+
+function trimdecimals(st){
+stri=st;
+if(stri.indexOf(".")>=0)stri=stri.substr(0,stri.indexOf(".")+6);
+return stri;
 }
 
 function deleteLocalCoins(){
